@@ -1,0 +1,393 @@
+.appointment {
+  width: 100%;
+}
+.sub-header {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  margin-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 4px;
+  .step {
+    gap: 4px;
+    cursor: pointer;
+  }
+  .step.step-active {
+    .step-name {
+      color: #0098d3;
+    }
+  }
+  .step-name {
+    color: #b8c2cc;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.main-content {
+  width: 100%;
+}
+
+.steps {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  color: black;
+}
+
+.steps-left {
+  width: 480px;
+  margin-right: 24px;
+  border-radius: 10px;
+  border: 1px solid #b8c2cc;
+  margin-bottom: 20px;
+}
+
+.steps-left-tilte {
+  padding: 24px;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.steps-left-tilte p {
+  text-align: center;
+}
+
+.steps-left-body {
+  padding: 24px;
+  height: 100%;
+  border-top: 1px solid #b8c2cc;
+  display: block;
+}
+.steps-left-body p {
+  font-size: 10px;
+  padding: 16px;
+  text-align: justify;
+}
+
+.v-combobox {
+  width: 50%;
+}
+
+.steps-right {
+  width: 400px;
+  margin-left: 24px;
+  border-radius: 10px;
+  border: 1px solid #b8c2cc;
+  align-self: flex-start;
+}
+.appointment-details {
+  padding: 24px;
+}
+
+.main-info__center {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  margin-bottom: 16px;
+  color: black;
+}
+.sidebar-item__left {
+  img {
+    width: 100px;
+    height: 130px;
+    border-radius: 10px;
+  }
+}
+.sidebar-item__right {
+  width: 100%;
+  justify-self: flex-start;
+  padding-left: 12px;
+  flex: 1;
+  img,
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+a {
+  color: #000;
+}
+.gara-name__wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  .gara-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #424242;
+  }
+}
+.rating {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  gap: 4px;
+}
+
+.address {
+  width: 100%;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 20px;
+  color: #424242;
+  margin: 4px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  .address-text {
+    flex: 1;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.facebook,
+.phone,
+.vehicle,
+.problem {
+  display: flex;
+  span,
+  a {
+    font-size: 14px;
+    margin-left: 0;
+  }
+}
+ul {
+  margin-left: 48px;
+  font-size: 14px;
+}
+.next-steps-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  padding: 24px;
+  border-top: 1px solid #b8c2cc;
+}
+
+.next-step {
+  width: 100%;
+  height: 100%;
+  background-color: #0098d3;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  span {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.summary-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 500px;
+}
+
+.summary-drop-off {
+  box-sizing: border-box;
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid #b8c2cc;
+  max-height: 430px;
+}
+
+.drop-off-info {
+  display: flex;
+  padding-top: 24px;
+}
+.drop-off__left img {
+  width: 88px;
+  height: 78px;
+  margin-right: 24px;
+  border-radius: 10px;
+}
+.drop-off__right {
+  display: block;
+}
+.drop-off__right .gara-name__wrapper,
+.address {
+  display: flex;
+  justify-content: space-between;
+}
+
+.drop-off-time,
+.drop-off-intro {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  box-sizing: border-box;
+}
+.drop-off-time .time-icon,
+.car-icon,
+.problem-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.time-text {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 4px;
+}
+.time-text .date-time {
+  font-weight: bold;
+}
+.drop-off-time a {
+  font-size: 12px;
+  color: #74d2f0;
+}
+
+.drop-off-time a:hover {
+  text-decoration: underline;
+}
+
+.drop-off-intro .intro-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.intro-text {
+  font-weight: bold;
+}
+
+.garage-detail {
+  font-size: 14px;
+  width: 100%;
+  height: 144px;
+  text-align: justify;
+  padding-left: 2px;
+}
+.summary-vehicle,
+.summary-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid #b8c2cc;
+  box-sizing: border-box;
+  max-height: 210px;
+}
+.car-detail {
+  display: flex;
+  align-items: center;
+}
+.sub-h1 {
+  display: flex;
+  justify-content: space-between;
+}
+.sub-h1 a {
+  color: #424242;
+  font-size: 12px;
+}
+
+.sub-h1 a:hover {
+  text-decoration: underline;
+}
+
+.car-problem {
+  display: flex;
+  align-items: center;
+}
+
+button.next-step:hover {
+  background-color: #006890;
+  cursor: pointer;
+}
+
+button.next-step:active {
+  background-color: #eeeeee;
+}
+
+button.next-step span {
+  display: flex;
+  align-items: center;
+}
+
+.steps-left-tilte h2 {
+  text-align: center;
+}
+
+.top__left {
+  gap: 4px;
+  color: #3d4852;
+  span {
+    font-weight: 500;
+  }
+  &:hover {
+    color: #08a5ce;
+  }
+}
+.top__center {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 32px;
+  flex: 1;
+  text-align: center;
+}
+.dp__calendar_row {
+  margin: 0;
+}
+.time-slots {
+  border-radius: 46px;
+  margin: 4px;
+  padding: 8px 16px;
+  color: #3d4852;
+  border: 1px solid #b8c2cc;
+  cursor: pointer;
+}
+.time-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  margin: 20px 0;
+}
+.time-picker-selected {
+  border-color: #006890 !important;
+  color: #006890;
+  background-color: #e6f8ff;
+}
+.sub-h1 {
+  height: 16px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #424242;
+  font-weight: 500;
+}
+.time-open {
+  span.active {
+    color: rgb(35, 204, 100);
+  }
+  span.close {
+    color: rgba(217, 48, 37, 1);
+  }
+}

@@ -1,0 +1,52 @@
+@import "@/styles/mixin.scss";
+#toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 9999;
+}
+
+.toast {
+  right: 10;
+  padding: 0 18px;
+  animation: show_slide 1s ease forwards;
+  height: var(--toast-height);
+  width: var(--toast-width);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  overflow: hidden;
+  span {
+    margin-left: 24px;
+    font-size: 14px;
+  }
+}
+.toast.error {
+  border: 1px solid red;
+  span {
+    color: red;
+  }
+}
+
+.toast.success {
+  border: 1px solid var(--primary-btn-bc);
+  span {
+    color: var(--primary-btn-bc);
+  }
+}
+
+.icon-drop {
+  @include iconMixin(-419px, -363px, 10px, 10px);
+}
+.icon-success-medium {
+  @include iconMixin(-96px, -962px, 32px, 32px);
+  flex-shrink: 0;
+}
+.icon-warning-red {
+  @include iconMixin(-752px, -462px, 36px, 36px);
+  flex-shrink: 0;
+}

@@ -1,0 +1,70 @@
+.navigation-top-signup {
+  width: 100%;
+}
+.navigation-top__left {
+  color: #3d4852;
+  gap: 8px;
+  cursor: pointer;
+  span {
+    font-weight: 500;
+  }
+}
+.signup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.signup__container {
+  flex-direction: column;
+  display: flex;
+  width: 320px;
+}
+
+.logo__center {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 24px;
+}
+.forgot-password {
+  font-weight: 500;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0);
+  color: #0098d3;
+  margin: 0;
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: 15px;
+  &:hover {
+    color: #006890;
+  }
+}
+
+.reset-password {
+  width: 420px;
+  border-radius: 8px;
+}
+
+.reset-password__top {
+  padding: 16px 16px 8px 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.reset-password__body {
+  margin: 0 48px 64px;
+  color: #424242;
+
+  p {
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+.medium-text {
+  font-size: 23px;
+  font-weight: 500;
+  line-height: 32px;
+}

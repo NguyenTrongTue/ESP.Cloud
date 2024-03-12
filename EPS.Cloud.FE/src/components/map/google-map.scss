@@ -1,0 +1,116 @@
+.info-window {
+  width: 300px;
+}
+.info-window__top {
+  margin-bottom: 10px;
+}
+.gm-style-iw.gm-style-iw-c {
+  padding: 0 !important;
+}
+.gm-style-iw-d {
+  overflow-y: unset !important;
+}
+.gm-ui-hover-effect {
+  top: 4px !important;
+  right: 4px !important;
+  background-color: #212121 !important;
+  border-radius: 50%;
+  box-shadow: 1px 2px 6px #b8c2cc;
+  span {
+    width: 20px !important;
+    height: 20px !important;
+    background-color: white !important;
+    margin: 5px !important;
+  }
+}
+.info-window__top-img {
+  width: 300px;
+  height: 160px;
+  object-fit: cover;
+}
+.info-window__bottom {
+  padding: 4px;
+  img,
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  gap: 4px;
+}
+
+.address {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 20px;
+  color: #424242;
+  margin: 4px 0;
+  width: 290px;
+  display: flex;
+  .address-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .address-distance {
+    font-size: 12px;
+  }
+}
+.time-open,
+.facebook,
+.phone {
+  display: flex;
+  margin: 4px 0;
+  span {
+    margin-left: 4px;
+    font-size: 14px;
+  }
+}
+.booking {
+  background-color: #0098d3;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+  padding: 8px 10px;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.custom-marker {
+  width: 76px;
+  height: 40px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 20px;
+  cursor: pointer;
+  .custom-marker__img {
+    font-size: 16px;
+  }
+  span {
+    font-size: 14px;
+  }
+}
+a {
+  color: #000;
+}
+.current-location {
+  width: 12px;
+  height: 12px;
+  background-color: rgb(89, 138, 230);
+  border: 1px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0px 0px 20px 2px #2d94bd;
+}
