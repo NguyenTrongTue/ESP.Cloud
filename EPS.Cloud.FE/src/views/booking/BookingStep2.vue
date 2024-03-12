@@ -18,7 +18,7 @@
             label="Năm"
             default-text="Chọn năm"
             class="mb-4"
-            :items="makeList"
+            :items="yearList"
             v-model="BookingInfo.year"
             :disabled="!BookingInfo.make"
           />
@@ -26,7 +26,7 @@
             label="Mẫu xe"
             default-text="Chọn mẫu xe"
             class="mb-4"
-            :items="makeList"
+            :items="modelList"
             v-model="BookingInfo.model"
             :disabled="!BookingInfo.year"
           />
@@ -65,7 +65,6 @@
 
 <script>
 import BaseBooking from "./BaseBooking.vue";
-import validateMixin from "@/mixins/validateMixin.vue";
 import { convertDate } from "@/utils/common";
 import BookingAPI from "@/apis/BookingAPI";
 export default {
@@ -87,24 +86,10 @@ export default {
 
   data() {
     return {
-      makeList: [
-        "Acura",
-        "BMW",
-        "Chevrolet",
-        "Dodge",
-        "Ford",
-        "GMC",
-        "Honda",
-        "Infiniti",
-        "Jeep",
-        "Kia",
-        "Lexus",
-        "Mazda",
-        "Nissan",
-        "Toyota",
-        "Volkswagen",
-        "Volvo",
-      ],
+      makeList: [],
+      yearList: [],
+      modelList: [],
+      modelAndIdCarList: [],
       formName: "Booking",
       booking_date: this.bookingInfo.booking_date,
     };
@@ -116,6 +101,27 @@ export default {
     "bookingInfo.booking_date"(newValue) {
       if (newValue) {
         this.booking_date = newValue;
+      }
+    },
+
+    "BookingInfo.make"(newValue) {
+      if (newValue) {
+        this.fetchYears();
+        this.BookingInfo.year = null;
+        this.BookingInfo.model = null;
+      }
+    },
+    "BookingInfo.year"(newValue) {
+      if (newValue) {
+        this.fetchModel();
+        this.BookingInfo.model = null;
+      }
+    },
+    "BookingInfo.model"(newValue) {
+      if (newValue) {
+        this.BookingInfo.cars_id = this.modelAndIdCarList.find(
+          (item) => item.model == newValue
+        ).cars_id;
       }
     },
   },
@@ -138,7 +144,7 @@ export default {
   methods: {
     handleNextStep() {
       if (!this.handleValidate()) {
-        this.$emit("nextStep");
+        this.$emit("nextStep", this.BookingInfo);
       }
     },
 
@@ -146,6 +152,30 @@ export default {
       try {
         const result = await BookingAPI.getMakeByGarageId(this.garageId);
         this.makeList = result.map((item) => item.make);
+      } catch {
+        // ignore error
+      }
+    },
+    async fetchYears() {
+      try {
+        const result = await BookingAPI.getYearsByGarageIdAndMake(
+          this.garageId,
+          this.BookingInfo.make
+        );
+        this.yearList = result.map((item) => item.year);
+      } catch {
+        // ignore error
+      }
+    },
+    async fetchModel() {
+      try {
+        const result = await BookingAPI.getModelsByGarageId(
+          this.garageId,
+          this.BookingInfo.make,
+          this.BookingInfo.year
+        );
+        this.modelList = result.map((item) => item.model);
+        this.modelAndIdCarList = result;
       } catch {
         // ignore error
       }

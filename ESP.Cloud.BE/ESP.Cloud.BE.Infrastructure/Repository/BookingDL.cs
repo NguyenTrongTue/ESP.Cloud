@@ -37,7 +37,7 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
                     { $"@year", year }
                 };
             var param = new DynamicParameters(paramDicnary);
-            var sql = "select distinct c.model  from garage_services gs \r\nleft join cars c on c.cars_id = gs.cars_id \r\nwhere garage_id =  @garageId\r\nand c.make = @make and c.\"year\" = @year \r\n;";
+            var sql = "select distinct c.model,c.cars_id from garage_services gs \r\nleft join cars c on c.cars_id = gs.cars_id \r\nwhere garage_id =  @garageId\r\nand c.make = @make and c.\"year\" = @year \r\n;";
             var models = await _uow.Connection.QueryAsync<object>(sql, param);
 
             return models.ToList();

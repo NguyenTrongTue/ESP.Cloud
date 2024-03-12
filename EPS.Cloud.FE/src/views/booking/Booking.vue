@@ -45,14 +45,18 @@
       <div class="steps" v-else-if="currentStep === 2">
         <BookingStep2
           :bookingInfo="BookingInfo"
-          :garage-id="garage_id"
-          @nextStep="currentStep = 3"
+          :garage-id="BookingInfo.garage_id"
+          @nextStep="handleNextStep3"
           :garageProps="garage"
         />
       </div>
       <!-- Bước nhập thông tin liên lạc -->
       <div class="steps" v-else-if="currentStep === 3">
-        <BookingStep3 @nextStep="currentStep = 4" :garageProps="garage" />
+        <BookingStep3
+          @nextStep="currentStep = 4"
+          :garageProps="garage"
+          :bookingInfo="BookingInfo"
+        />
       </div>
       <!-- Bước tổng kết -->
       <div class="steps" v-else>
@@ -101,22 +105,34 @@ export default {
         },
       ],
       garage: null,
-      BookingInfo: {},
-      garage_id: null,
+      BookingInfo: { garage_id: null },
     };
   },
   methods: {
     handleSubmit() {},
-    handleChooseStep() {},
+    handleChooseStep(item) {
+      if (item.step > this.currentStep) {
+        return;
+      } else {
+        this.currentStep = item.step;
+      }
+    },
     handleNextStep2(timeInfo) {
       this.currentStep = 2;
       this.BookingInfo.booking_date = timeInfo;
     },
+    handleNextStep3(bookingInfo) {
+      this.currentStep = 3;
+      this.BookingInfo.cars_id = bookingInfo.cars_id;
+      this.BookingInfo.make = bookingInfo.make;
+      this.BookingInfo.year = bookingInfo.year;
+      this.BookingInfo.model = bookingInfo.model;
+    },
   },
   async mounted() {
-    this.garage_id = this.$route.params.id;
+    this.BookingInfo.garage_id = this.$route.params.id;
 
-    const result = await GarageAPI.getGarageById(this.garage_id);
+    const result = await GarageAPI.getGarageById(this.BookingInfo.garage_id);
     this.garage = result;
   },
 };
