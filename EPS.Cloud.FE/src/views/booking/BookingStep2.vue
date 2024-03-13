@@ -126,6 +126,11 @@ export default {
     },
   },
   computed: {
+    /**
+     * Calculate the drop-off time based on the booking date, and return the formatted drop-off time string.
+     *
+     * @return {string} the formatted drop-off time string
+     */
     computedDropOff() {
       if (this.booking_date) {
         let day = convertDate(new Date(this.booking_date).getDay()),
@@ -142,6 +147,9 @@ export default {
     },
   },
   methods: {
+    /**
+     * Handle the next step by validating and emitting the "nextStep" event if validation passes.
+     */
     handleNextStep() {
       if (!this.handleValidate()) {
         this.$emit("nextStep", this.BookingInfo);
