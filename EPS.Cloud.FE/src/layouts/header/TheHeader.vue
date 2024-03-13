@@ -13,9 +13,25 @@
       </div>
     </div>
     <div class="header__right">
-      <MSearch />
-      <div class="header__right-user">
-        <img src="@/assets/icon/avatar-default.png" alt="" class="avatar" />
+      <div class="header__right-user flex-center">
+        <micon type="Search" />
+      </div>
+      <div
+        class="header__right-user flex-center"
+        @click="showPopupAvatar = !showPopupAvatar"
+      >
+        <micon type="Avatar" />
+        <div class="popup-avatar" v-if="showPopupAvatar">
+          <div class="title mb-1">
+            Xe, dịch vụ và cuộc hẹn của bạn ở cùng một nơi.
+          </div>
+          <mbutton button-text="Đăng nhập" @click="handleLogin" class="mb-2" />
+          <mbutton
+            button-text="Đăng ký"
+            @click="handleSingup"
+            class="none-background"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -31,7 +47,7 @@ export default {
   inheritAttrs: false,
   props: { ...RouterLink.props },
   data() {
-    return {};
+    return { showPopupAvatar: false };
   },
   computed: {
     isExternalLink() {
@@ -39,7 +55,18 @@ export default {
     },
   },
 
-  methods: {},
+  methods: {
+    handleLogin() {
+      this.$router.push({
+        path: "/login",
+      });
+    },
+    handleSingup() {
+      this.$router.push({
+        path: "/signup",
+      });
+    },
+  },
 
   /**
    * Đăng ký sự kiện resize cho widow

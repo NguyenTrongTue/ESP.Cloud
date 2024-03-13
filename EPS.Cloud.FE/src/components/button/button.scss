@@ -17,6 +17,14 @@
     border: 1px solid #006890;
   }
 }
+.btn.none-background {
+  background-color: #fff;
+  color: #0098d3;
+  &:hover {
+    border: 2px solid #0098d3;
+    color: #0098d3;
+  }
+}
 
 .btn.icon {
   display: flex;
