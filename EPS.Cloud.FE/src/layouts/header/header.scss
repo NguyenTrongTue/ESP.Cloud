@@ -48,8 +48,36 @@
 }
 .header__right-user {
   cursor: pointer;
-  img {
-    width: 36px;
-    height: 36px;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  transition: 0.2 all linear;
+  &:hover {
+    background: #f2f8fa;
+    color: #08a5ce;
+  }
+}
+.popup-avatar {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding: 16px 32px 32px;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #dae1e7;
+  position: absolute;
+  z-index: 99;
+  width: 350px;
+  top: calc(100% + 10px);
+  right: -20px;
+  .title {
+    font-weight: 700;
+    font-stretch: 110%;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: #212121;
+    text-align: center;
   }
 }

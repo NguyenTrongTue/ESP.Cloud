@@ -19,6 +19,8 @@
   <ArrowRight v-if="type == 'ArrowRight'" />
   <Stars v-if="type == 'Stars'" />
   <Note v-if="type == 'Note'" />
+  <Avatar v-if="type == 'Avatar'" />
+  <Search v-if="type == 'Search'" />
 </template>
 
 <script>
@@ -41,6 +43,8 @@ import Previous from "./Previous.vue";
 import Next from "./Next.vue";
 import Stars from "./Stars.vue";
 import Note from "./Note.vue";
+import Avatar from "./Avatar.vue";
+import Search from "./Search.vue";
 export default {
   name: "Icon",
   props: {
@@ -70,6 +74,8 @@ export default {
     ChevronTop,
     Stars,
     Note,
+    Avatar,
+    Search,
   },
 };
 </script>
