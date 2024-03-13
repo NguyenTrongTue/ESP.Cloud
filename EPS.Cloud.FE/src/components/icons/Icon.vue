@@ -18,6 +18,7 @@
   <Next v-if="type == 'Next'" />
   <ArrowRight v-if="type == 'ArrowRight'" />
   <Stars v-if="type == 'Stars'" />
+  <Note v-if="type == 'Note'" />
 </template>
 
 <script>
@@ -39,6 +40,7 @@ import Logo from "./Logo.vue";
 import Previous from "./Previous.vue";
 import Next from "./Next.vue";
 import Stars from "./Stars.vue";
+import Note from "./Note.vue";
 export default {
   name: "Icon",
   props: {
@@ -67,6 +69,7 @@ export default {
     ArrowRight,
     ChevronTop,
     Stars,
+    Note,
   },
 };
 </script>

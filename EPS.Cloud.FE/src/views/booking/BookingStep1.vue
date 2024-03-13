@@ -78,6 +78,11 @@ export default {
     },
   },
   computed: {
+    /**
+     * A function to build and return a formatted text representing the date.
+     *
+     * @return {string} The formatted text representing the date.
+     */
     buildText() {
       const { day, month, year } = {
         day: new Date(this.BookingInfo.date).getDate(),
@@ -88,6 +93,13 @@ export default {
     },
   },
   methods: {
+    /**
+     * A method to handle moving to the next step.
+     *
+     * @param {Date} date - the date to adjust
+     * @param {string} timeSelected - the selected time
+     * @return {void}
+     */
     handleNextStep() {
       let timeInfo = this.adjustTime(
         new Date(this.BookingInfo.date),
@@ -96,6 +108,13 @@ export default {
 
       this.$emit("nextStep", timeInfo);
     },
+    /**
+     * Adjusts the time of the original date by adding the specified number of hours.
+     *
+     * @param {Date} originalDate - the original date to be adjusted
+     * @param {number} hoursToAdd - the number of hours to add to the original date
+     * @return {Date} the adjusted date
+     */
     adjustTime(originalDate, hoursToAdd) {
       // Tạo một bản sao của đối tượng Date
       var adjustedDate = new Date(originalDate);
@@ -113,6 +132,12 @@ export default {
       return adjustedDate;
     },
 
+    /**
+     * Calculate the list of available times for booking based on the garage's open and close times.
+     *
+     * @param None
+     * @return None
+     */
     calculationTimeList() {
       const { open_time, close_time } = this.garage;
 

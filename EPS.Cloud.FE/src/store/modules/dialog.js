@@ -1,6 +1,8 @@
 const state = {
   isShowMessage: false,
-  errorMessage: "",
+  content: "",
+  callback: null,
+  title: "",
 };
 
 const mutations = {
@@ -9,16 +11,16 @@ const mutations = {
    * @param {Object} state
    * @param {String} message Thông báo lỗi
    */
-  setErrorMessage(state, message) {
-    console.log(message);
-
+  showMessage(state, obj) {
     state.isShowMessage = true;
-    state.errorMessage = message;
+    state.content = obj.content;
+    state.callback = obj.callback;
+    state.title = obj.title;
   },
   /**
    * Hàm thực hiện ẩn dialog khi người dùng đóng dialog.
    */
-  hideErrorMessage(state) {
+  hideMessage(state) {
     state.isShowMessage = false;
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="modal">
+  <div class="modal" v-if="showLoading">
     <div class="load-wrapp loading-container flex-center">
       <div class="load-3">
         <div class="line"></div>
@@ -11,12 +11,18 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "MLoading",
   props: {},
   data() {},
   watch: {},
-
+  /**
+   * Sử dụng computed để lấy ra các state global
+   */
+  computed: mapState({
+    showLoading: (state) => state.toast.showLoading,
+  }),
   methods: {},
 };
 </script>

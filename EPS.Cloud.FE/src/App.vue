@@ -4,6 +4,7 @@
   ></DefaultLayout>
   <MToast></MToast>
   <MDialog />
+  <mloading />
 </template>
 
 <script>
