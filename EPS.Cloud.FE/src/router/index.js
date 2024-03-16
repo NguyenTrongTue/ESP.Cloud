@@ -6,7 +6,7 @@ import Promo from "@/views/promo/Promo.vue";
 import HistoryBooking from "@/views/history-booking/HistoryBooking.vue";
 import Login from "@/views/login/Login.vue";
 import SignUp from "@/views/signup/SignUp.vue";
-
+import Estimator from "@/views/estimator/Estimator.vue";
 const routes = [
   {
     name: "home",
@@ -19,6 +19,12 @@ const routes = [
     component: Booking,
     path: "/booking/:id",
     meta: { requiresAuth: true, title: "Đặt lịch", showHeader: false },
+  },
+  {
+    name: "estimator",
+    component: Estimator,
+    path: "/estimator",
+    meta: { requiresAuth: false, title: "Ước tính", showHeader: true },
   },
   {
     name: "promo",
