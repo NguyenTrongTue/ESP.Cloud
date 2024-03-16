@@ -50,7 +50,7 @@ namespace ESP.Cloud.BE.Core.Model
         /// <summary>
         /// Bình luận về đặt chỗ
         /// </summary>
-        public string? email { get; set; } = string.Empty;
+        public string email { get; set; } = string.Empty;
         /// <summary>
         /// Bình luận về đặt chỗ
         /// </summary>

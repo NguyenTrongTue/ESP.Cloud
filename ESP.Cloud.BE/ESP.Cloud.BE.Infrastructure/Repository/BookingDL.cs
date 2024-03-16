@@ -15,6 +15,15 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<List<BookingHistoryEntity>> CheckBooking()
+        {
+            var sql = "SELECT *\r\nFROM booking_history\r\nWHERE DATE(booking_date) = CURRENT_DATE + INTERVAL '1 day';";
+
+            var bookings = await _uow.Connection.QueryAsync<BookingHistoryEntity>(sql);
+
+            return bookings.ToList();
+        }
+
         public async Task<List<object>> GetMakeByGarageId(Guid garageId)
         {
             var paramDicnary = new Dictionary<string, object>

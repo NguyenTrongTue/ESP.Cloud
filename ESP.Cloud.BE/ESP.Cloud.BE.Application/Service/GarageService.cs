@@ -69,7 +69,7 @@ namespace ESP.Cloud.BE.Application.Service
             return result;
         }
 
-        public async Task<object> GetGarageByIdAsync(Guid garage_id)
+        public async Task<object?> GetGarageByIdAsync(Guid garage_id)
         {
             var result = await _garageDL.GetGarageByIdAsync(garage_id);
 

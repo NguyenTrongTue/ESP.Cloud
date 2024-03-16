@@ -1,4 +1,4 @@
-﻿namespace ESP.Cloud.BE.Application.Dto
+﻿namespace ESP.Cloud.BE.Email
 {
     public class EmailDto
     {

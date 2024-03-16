@@ -10,4 +10,4 @@ function getCache(key) {
   return JSON.parse(localStorage.getItem(key));
 }
 
-export { setCache, getCache };
+export const cache = { setCache, getCache };

@@ -2,7 +2,7 @@
   <NavigationTop>
     <template v-slot:container>
       <div class="flex-between">
-        <div class="top__left flex-center pointer">
+        <div class="top__left flex-center pointer" @click="handleBack">
           <micon type="ChevronLeft" />
           <span>{{ $t("i18nBooking.Back") }}</span>
         </div>
@@ -120,9 +120,23 @@ export default {
     };
   },
   methods: {
+    handleBack() {
+      this.$router.push({
+        path: "/",
+      });
+    },
+    /**
+     * Handles the submission process, including showing loading state, posting data to BookingAPI,
+     * and displaying success or error messages.
+     *
+     * @param {void} None
+     * @return {Promise<void>} A promise that resolves when the submission process is complete
+     */
     async handleSubmit() {
       try {
         this.$store.commit("showLoading");
+        const value = this.$common.cache.getCache("user");
+        this.BookingInfo.user_id = value.user_id;
         await BookingAPI.post(this.BookingInfo);
         this.$store.commit("hideLoading");
 

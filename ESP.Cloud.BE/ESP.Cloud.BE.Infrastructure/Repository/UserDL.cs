@@ -3,7 +3,7 @@ using ESP.Cloud.BE.Core.BaseDL;
 using ESP.Cloud.BE.Core.DL.UserDL;
 using ESP.Cloud.BE.Core.Model;
 using ESP.Cloud.BE.Infrastructure.Repository.Base;
-using ESP.Cloud.BE.Infrastructure.UnitOfWork;
+using ESP.Cloud.BE.Infrastructure;
 
 namespace ESP.Cloud.BE.Infrastructure.Repository
 {

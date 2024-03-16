@@ -59,7 +59,9 @@ export default {
       timeList: [],
     };
   },
-
+  mounted() {
+    // this.calculationTimeList();
+  },
   watch: {
     garageProps: {
       /**

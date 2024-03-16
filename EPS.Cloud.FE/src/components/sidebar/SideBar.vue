@@ -42,7 +42,6 @@
 import SideBarItem from "@/components/sidebar-item/SideBarItem.vue";
 import MFilter from "@/components/filter/MFilter.vue";
 import GarageAPI from "@/apis/GarageAPI";
-import { setCache, getCache } from "@/utils/cache";
 export default {
   name: "Sidebar",
   components: {
@@ -180,8 +179,8 @@ export default {
       }
     },
     async initialData() {
-      let carsList = getCache("cars");
-      let servicesList = getCache("services");
+      let carsList = this.$common.cache.getCache("cars");
+      let servicesList = this.$common.cache.getCache("services");
       if (carsList && carsList.length >= 0) {
         this.listFilter[0].data = [...carsList];
       } else {
@@ -194,7 +193,7 @@ export default {
           };
         });
         this.listFilter[0].data = [...dataConvert];
-        setCache("cars", dataConvert);
+        this.$common.cache.setCache("cars", dataConvert);
       }
 
       if (servicesList && servicesList.length >= 0) {
@@ -209,7 +208,7 @@ export default {
           };
         });
         this.listFilter[3].data = [...dataConvert];
-        setCache("services", dataConvert);
+        this.$common.cache.setCache("services", dataConvert);
       }
     },
     showFilter(event, index) {

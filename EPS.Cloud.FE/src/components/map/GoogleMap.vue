@@ -8,7 +8,6 @@
 
 <script>
 import { Loader } from "@googlemaps/js-api-loader";
-
 export default {
   props: {
     locations: {
@@ -71,6 +70,15 @@ export default {
           "marker"
         );
 
+        if (!this.center.lat || !this.center.lng) {
+          let value = this.$common.cache.getCache("coords");
+          if (value) {
+            this.center = {
+              lat: value.latitude,
+              lng: value.longitude,
+            };
+          }
+        }
         this.map = new google.maps.Map(this.$el, {
           center: { lat: this.center.lat, lng: this.center.lng },
           zoom: 12,

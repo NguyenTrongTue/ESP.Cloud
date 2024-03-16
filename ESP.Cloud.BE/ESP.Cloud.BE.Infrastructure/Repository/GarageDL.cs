@@ -69,7 +69,7 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
 
         }
 
-        public async Task<object> GetGarageByIdAsync(Guid garage_id)
+        public async Task<object?> GetGarageByIdAsync(Guid garage_id)
         {
             var param = new Dictionary<string, object>
                 {
