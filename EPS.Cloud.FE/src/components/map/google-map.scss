@@ -114,3 +114,13 @@ a {
   border-radius: 50%;
   box-shadow: 0px 0px 20px 2px #2d94bd;
 }
+.gara-name__wrapper {
+  display: flex;
+  justify-content: space-between;
+  .gara-name {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #424242;
+  }
+}

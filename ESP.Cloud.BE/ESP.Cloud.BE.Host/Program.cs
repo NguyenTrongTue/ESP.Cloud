@@ -1,19 +1,13 @@
-﻿using AutoMapper;
-using ESP.Cloud.BE.Application.Interface;
-using ESP.Cloud.BE.Application.Service;
-using ESP.Cloud.BE.Cache;
-using ESP.Cloud.BE.Core.BaseDL;
-using ESP.Cloud.BE.Core.DL;
-using ESP.Cloud.BE.Core.DL.GarageDL;
-using ESP.Cloud.BE.Core.DL.UserDL;
+﻿using ESP.Cloud.BE.Cache;
 using ESP.Cloud.BE.Core.ESPException;
 using ESP.Cloud.BE.Core.Resource;
 using ESP.Cloud.BE.Host.Middleware;
-using ESP.Cloud.BE.Infrastructure.Repository;
-using ESP.Cloud.BE.Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Reflection;
+using ESP.Cloud.BE.Jobs;
+using ESP.Cloud.BE.Infrastructure;
+using ESP.Cloud.BE.Application;
+using ESP.Cloud.BE.Email;
 
 namespace ESP.Cloud.BE.Host
 {
@@ -55,25 +49,11 @@ namespace ESP.Cloud.BE.Host
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
             });
             //builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            builder.Services.AddScoped<IRedisCache, RedisCache>();
-            builder.Services.AddScoped<IGarageDL, GarageDL>();
-            builder.Services.AddScoped<IGarageService, GarageService>();
-            builder.Services.AddScoped<IBookingDL, BookingDL>();
-            builder.Services.AddScoped<IBookingService, BookingService>();
-            builder.Services.AddScoped<ICarService, CarService>();
-            builder.Services.AddScoped<ICarDL, CarDL>();
-            builder.Services.AddScoped<IAuthService, AuthSerivice>();
-            builder.Services.AddScoped<IUserDL, UserDL>();
-            builder.Services.AddScoped<IMapper, Mapper>();
-            var connectionString = builder.Configuration.GetConnectionString("ESP");
-            builder.Services.AddScoped<IUnitOfWork>((provider => new UnitOfWork(connectionString)));
-            builder.Services.AddStackExchangeRedisCache(
-                options =>
-                {
-                    options.Configuration = builder.Configuration.GetConnectionString("Redis");
-                    options.InstanceName = "CacheESP_";
-                });
+            builder.Services.AddApplication();
+            builder.Services.AddJobs();
+            builder.Services.AddCache(builder.Configuration);
+            builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddEmail();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

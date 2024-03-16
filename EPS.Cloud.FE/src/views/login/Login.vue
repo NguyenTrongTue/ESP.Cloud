@@ -109,7 +109,7 @@ export default {
           this.showLoading = true;
           const res = await AuthAPI.login(this.user);
           if (res && res.user_id) {
-            console.log(res);
+            this.$common.cache.setCache("user", res);
             this.$router.push({
               path: "/",
             });

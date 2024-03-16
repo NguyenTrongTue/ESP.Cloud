@@ -11,6 +11,6 @@ namespace ESP.Cloud.BE.Application.Interface
 
         Task<List<object>> GetCarsAsync();
 
-        Task<object> GetGarageByIdAsync(Guid garage_id);
+        Task<object?> GetGarageByIdAsync(Guid garage_id);
     }
 }

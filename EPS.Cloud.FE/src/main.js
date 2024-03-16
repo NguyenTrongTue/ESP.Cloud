@@ -2,12 +2,12 @@ import "@/styles/main.scss";
 import i18n from "@/i18n";
 import { createApp } from "vue";
 import App from "./App.vue";
-import { router } from "@/router";
+import router from "@/router";
 import { clickOutsideDirective } from "@/utils/clickOutsideDirective.js";
 import MyEmitter from "tiny-emitter/instance";
 import MResources from "@/helper/resources";
 import store from "@/store";
-
+import { moudle } from "@/utils/index";
 import VueTippy from "vue-tippy";
 import { Tippy } from "vue-tippy";
 import "tippy.js/dist/tippy.css";
@@ -23,20 +23,12 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import MDatePicker from "@/components/date-picker/MDatePicker.vue";
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
-    document.title = to.meta.title;
-  } else {
-    document.title = "Hệ thống";
-  }
-
-  next(); // Chuyển tiếp để thực hiện điều hướng
-});
 const app = createApp(App);
 
 // config
 app.config.globalProperties.$emitter = MyEmitter;
 app.config.globalProperties.$route = router;
+app.config.globalProperties.$common = moudle;
 app.config.globalProperties.$MResources = MResources;
 // conponents
 app.component("minput", MInputPri);

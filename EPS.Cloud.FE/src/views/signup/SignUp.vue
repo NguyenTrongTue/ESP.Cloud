@@ -191,7 +191,7 @@ export default {
           });
 
           this.$router.push({
-            path: "/",
+            path: "/login",
           });
         }
       } catch (e) {

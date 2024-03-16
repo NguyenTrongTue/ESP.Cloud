@@ -8,5 +8,7 @@ namespace ESP.Cloud.BE.Core.DL
         Task<List<object>> GetMakeByGarageId(Guid garageId);
         Task<List<object>> GetYearByGarageId(Guid garageId, string make);
         Task<List<object>> GetModelByGarageId(Guid garageId, string make, int year);
+
+        Task<List<BookingHistoryEntity>> CheckBooking();
     }
 }
