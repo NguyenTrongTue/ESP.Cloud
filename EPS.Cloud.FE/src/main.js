@@ -22,6 +22,10 @@ import Icon from "@/components/icons/Icon.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import MDatePicker from "@/components/date-picker/MDatePicker.vue";
+import MSearch from "./components/search/MSearch.vue";
+import MCardSelect from "./components/cardselect/MCardSelect.vue";
+import InputRadio from "./components/radio/MRadio.vue";
+import MRating from "./components/rating/MRating.vue";
 
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
@@ -48,6 +52,10 @@ app.component("micon", Icon);
 app.component("mdate-picker", VueDatePicker);
 app.component("date-picker", MDatePicker);
 app.component("mcombobox", MCombobox);
+app.component("msearch", MSearch);
+app.component("mcardselect", MCardSelect);
+app.component("mradio", InputRadio);
+app.component("mrating", MRating);
 app.directive("click-outside", clickOutsideDirective);
 
 app.use(i18n).use(router).use(store).mount("#app");

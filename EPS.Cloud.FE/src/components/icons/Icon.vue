@@ -18,6 +18,17 @@
   <Next v-if="type == 'Next'" />
   <ArrowRight v-if="type == 'ArrowRight'" />
   <Stars v-if="type == 'Stars'" />
+  <Location v-if="type == 'Location'" />
+  <Info v-if="type == 'Info'" />
+  <Tag v-if="type == 'Tag'" />
+  <PricePlus v-if="type == 'PricePlus'" />
+  <ShareUp v-if="type == 'ShareUp'" />
+  <Repair v-if="type == 'Repair'" />
+  <Price v-if="type == 'Price'" />
+  <Certify v-if="type == 'Certify'" />
+  <Yes v-if="type == 'Yes'" />
+  <No v-if="type == 'No'" />
+  <Question v-if="type == 'Question'" />
 </template>
 
 <script>
@@ -39,6 +50,18 @@ import Logo from "./Logo.vue";
 import Previous from "./Previous.vue";
 import Next from "./Next.vue";
 import Stars from "./Stars.vue";
+import Location from "./Location.vue";
+import Info from "./Info.vue";
+import Tag from "./Tag.vue";
+import PricePlus from "./PricePlus.vue";
+import ShareUp from "./ShareUp.vue";
+import Repair from "./Repair.vue";
+import Price from "./Price.vue";
+import Certify from "./Certify.vue";
+import Yes from "./Yes.vue";
+import No from "./No.vue";
+import Question from "./Question.vue";
+
 export default {
   name: "Icon",
   props: {
@@ -67,7 +90,18 @@ export default {
     ArrowRight,
     ChevronTop,
     Stars,
+    Location,
+    Info,
+    Tag,
+    PricePlus,
+    ShareUp,
+    Repair,
+    Price,
+    Certify,
+    Yes,
+    No,
+    Question,
   },
 };
 </script>
-./ArrowLeft.vue./ChevronLeft.vue
+
