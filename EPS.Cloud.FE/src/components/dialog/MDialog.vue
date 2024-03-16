@@ -2,6 +2,9 @@
   <div class="modal" style="z-index: 9999" v-if="isShowMessage">
     <div class="dialog modal-container">
       <div class="dialog-container">
+        <div class="ds-body-regular ng-font-neutral-80 ds-medium">
+          {{ title }}
+        </div>
         <div class="dialog-content flex-start">
           <div class="dialog-icon flex-center">
             <div class="icon-success-medium"></div>
@@ -27,12 +30,17 @@ export default {
   methods: {
     //hàm đóng dialog
     onClose() {
-      this.$store.commit("dialog/hideErrorMessage");
+      this.$store.commit("dialog/hideMessage");
+      if (this.callback) {
+        this.callback();
+      }
     },
   },
   // sử dụng map state để lấy ra các state của dialog.
   computed: mapState({
-    content: (state) => state.dialog.errorMessage,
+    content: (state) => state.dialog.content,
+    title: (state) => state.dialog.title,
+    callback: (state) => state.dialog.callback,
     isShowMessage: (state) => state.dialog.isShowMessage,
   }),
 };

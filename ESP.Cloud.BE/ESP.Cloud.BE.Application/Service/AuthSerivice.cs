@@ -7,9 +7,9 @@ using ESP.Cloud.BE.Core.DL.UserDL;
 using ESP.Cloud.BE.Core.ESPException;
 using ESP.Cloud.BE.Core.Model;
 using ESP.Cloud.BE.Core.Resource;
+using ESP.Cloud.BE.Email;
+using ESP.Cloud.BE.Email.Interface;
 using Microsoft.Extensions.Configuration;
-using MimeKit;
-using MimeKit.Text;
 
 namespace ESP.Cloud.BE.Application.Service
 {
@@ -18,11 +18,13 @@ namespace ESP.Cloud.BE.Application.Service
         private readonly IUserDL _userDL;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
-        public AuthSerivice(IUserDL userDL, IMapper mapper, IConfiguration config)
+        private readonly IEmail _email;
+        public AuthSerivice(IUserDL userDL, IMapper mapper, IConfiguration config, IEmail email)
         {
             _userDL = userDL;
             _mapper = mapper;
             _config = config;
+            _email = email;
         }
 
         public async Task GetNewPasswordAsync(string emailReset)
@@ -33,6 +35,7 @@ namespace ESP.Cloud.BE.Application.Service
                 throw new ConflictException(Resource.UserNotExists);
             }
             var password = AuthHelper.GenerateRandomPassword();
+
             var request = new EmailDto()
             {
                 Subject = "ESP: Lấy lại mật khẩu",
@@ -40,17 +43,7 @@ namespace ESP.Cloud.BE.Application.Service
                 Body = password
             };
 
-            var email = new MimeMessage();
-            email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
-            email.To.Add(MailboxAddress.Parse(request.To));
-            email.Subject = request.Subject;
-            email.Body = new TextPart(TextFormat.Html) { Text = request.Body };
-
-            using var smtp = new MailKit.Net.Smtp.SmtpClient();
-            smtp.Connect(_config.GetSection("EmailHost").Value, 465, true);
-            smtp.Authenticate(_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
-            smtp.Send(email);
-            smtp.Disconnect(true);
+            _email.SendMail(request);
 
             AuthHelper.CreatePassword(password, out byte[] passwordHash, out byte[] passwordSalt);
 

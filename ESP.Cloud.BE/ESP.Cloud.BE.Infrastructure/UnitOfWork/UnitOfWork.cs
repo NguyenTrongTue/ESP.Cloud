@@ -4,7 +4,7 @@ using ESP.Cloud.BE.Core.BaseDL;
 using Npgsql;
 using Dapper;
 
-namespace ESP.Cloud.BE.Infrastructure.UnitOfWork
+namespace ESP.Cloud.BE.Infrastructure
 {
     public sealed class UnitOfWork : IUnitOfWork
     {

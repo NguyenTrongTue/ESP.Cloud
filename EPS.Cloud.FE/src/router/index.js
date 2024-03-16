@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-
+import { cache } from "@/utils/cache";
 import Home from "@/views/home/Home.vue";
 import Booking from "@/views/booking/Booking.vue";
 import Promo from "@/views/promo/Promo.vue";
@@ -18,7 +18,7 @@ const routes = [
     name: "booking",
     component: Booking,
     path: "/booking/:id",
-    meta: { requiresAuth: false, title: "Đặt lịch", showHeader: false },
+    meta: { requiresAuth: true, title: "Đặt lịch", showHeader: false },
   },
   {
     name: "estimator",
@@ -52,7 +52,36 @@ const routes = [
   },
 ];
 
-export const router = createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  let value = cache.getCache("user");
+
+  function changeTitle(to) {
+    if (to.meta.title) {
+      document.title = to.meta.title;
+    } else {
+      document.title = "Hệ thống";
+    }
+  }
+  let auth = false;
+  if (value && value.user_id) {
+    auth = true;
+  }
+  if (to.meta.requiresAuth) {
+    if (auth) {
+      changeTitle(to);
+    } else {
+      next({ name: "login" });
+    }
+  } else {
+    changeTitle(to);
+  }
+
+  next(); // Chuyển tiếp để thực hiện điều hướng
+});
+
+export default router;

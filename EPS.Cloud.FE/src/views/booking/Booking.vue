@@ -2,7 +2,7 @@
   <NavigationTop>
     <template v-slot:container>
       <div class="flex-between">
-        <div class="top__left flex-center pointer">
+        <div class="top__left flex-center pointer" @click="handleBack">
           <micon type="ChevronLeft" />
           <span>{{ $t("i18nBooking.Back") }}</span>
         </div>
@@ -53,14 +53,18 @@
       <!-- Bước nhập thông tin liên lạc -->
       <div class="steps" v-else-if="currentStep === 3">
         <BookingStep3
-          @nextStep="currentStep = 4"
+          @nextStep="handleNextStep4"
           :garageProps="garage"
           :bookingInfo="BookingInfo"
         />
       </div>
       <!-- Bước tổng kết -->
       <div class="steps" v-else>
-        <BookingStep4 @nextStep="handleSubmit" :garageProps="garage" />
+        <BookingStep4
+          @nextStep="handleSubmit"
+          :garageProps="garage"
+          :bookingInfo="BookingInfo"
+        />
       </div>
     </div>
   </div>
@@ -73,6 +77,7 @@ import BookingStep3 from "./BookingStep3.vue";
 import BookingStep4 from "./BookingStep4.vue";
 import NavigationTop from "@/components/navigation-top/NavigationTop.vue";
 import GarageAPI from "@/apis/GarageAPI";
+import BookingAPI from "@/apis/BookingAPI";
 export default {
   name: "Booking",
   components: {
@@ -82,6 +87,12 @@ export default {
     BookingStep4,
     NavigationTop,
   },
+  /**
+   * A method to initialize the data properties for the component.
+   *
+   * @return {object} The initialized data properties
+   * @author nttue 12.03.2024
+   */
   data() {
     return {
       // Your data properties here
@@ -109,7 +120,46 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {},
+    handleBack() {
+      this.$router.push({
+        path: "/",
+      });
+    },
+    /**
+     * Handles the submission process, including showing loading state, posting data to BookingAPI,
+     * and displaying success or error messages.
+     *
+     * @param {void} None
+     * @return {Promise<void>} A promise that resolves when the submission process is complete
+     */
+    async handleSubmit() {
+      try {
+        this.$store.commit("showLoading");
+        const value = this.$common.cache.getCache("user");
+        this.BookingInfo.user_id = value.user_id;
+        await BookingAPI.post(this.BookingInfo);
+        this.$store.commit("hideLoading");
+
+        this.$store.commit("dialog/showMessage", {
+          title: "Yêu cầu cuộc hẹn đã được gửi",
+          content: "Vui lòng kiểm tra email để xác nhận chi tiết về cuộc hẹn!",
+          callback: () => {
+            this.$router.push({
+              path: "/",
+            });
+          },
+        });
+      } catch (e) {
+        this.$store.commit("hideLoading");
+        console.log(e);
+      }
+    },
+    /**
+     * Handle choosing a step based on the item.
+     *
+     * @param {type} item - the item to determine the step from
+     * @author nttue 12.03.2024
+     */
     handleChooseStep(item) {
       if (item.step > this.currentStep) {
         return;
@@ -117,18 +167,51 @@ export default {
         this.currentStep = item.step;
       }
     },
+    /**
+     * Sets the current step to 2 and updates the booking date in BookingInfo.
+     *
+     * @param {type} timeInfo - the time information to set as the booking date
+     * @return {type}
+     * @author nttue 12.03.2024
+     */
     handleNextStep2(timeInfo) {
       this.currentStep = 2;
       this.BookingInfo.booking_date = timeInfo;
     },
+    /**
+     * Set the current step to 3 and update booking information with the provided details.
+     *
+     * @param {Object} bookingInfo - Object containing car details to update the booking information
+     * @author nttue 12.03.2024
+     */
     handleNextStep3(bookingInfo) {
       this.currentStep = 3;
       this.BookingInfo.cars_id = bookingInfo.cars_id;
       this.BookingInfo.make = bookingInfo.make;
       this.BookingInfo.year = bookingInfo.year;
       this.BookingInfo.model = bookingInfo.model;
+      this.BookingInfo.comment = bookingInfo.comment;
+    },
+    /**
+     * Updates the current step to 4 and copies the last name, first name, email, and phone from bookingInfo.
+     *
+     * @param {Object} bookingInfo - The object containing booking information
+     * @author nttue 12.03.2024
+     */
+    handleNextStep4(bookingInfo) {
+      this.currentStep = 4;
+      this.BookingInfo.last_name = bookingInfo.last_name;
+      this.BookingInfo.first_name = bookingInfo.first_name;
+      this.BookingInfo.email = bookingInfo.email;
+      this.BookingInfo.phone = bookingInfo.phone;
     },
   },
+  /**
+   * Set the garage_id in BookingInfo from route params and fetch garage data.
+   *
+   * @return {Promise<void>}
+   * @author nttue 12.03.2024
+   */
   async mounted() {
     this.BookingInfo.garage_id = this.$route.params.id;
 

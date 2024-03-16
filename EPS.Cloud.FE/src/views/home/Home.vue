@@ -19,7 +19,6 @@ import SideBar from "@/components/sidebar/SideBar.vue";
 import Test from "@/components/Test.vue";
 import { useGeolocation } from "@vueuse/core";
 import GarageAPI from "@/apis/GarageAPI";
-import { setCache, getCache } from "@/utils/cache";
 
 const { coords } = useGeolocation();
 export default {
@@ -56,11 +55,11 @@ export default {
     });
   },
   async mounted() {
-    let value = getCache("coords");
+    let value = this.$common.cache.getCache("coords");
     if (value) {
       this.center = {
-        lat: value.lat,
-        lng: value.lng,
+        lat: value.latitude,
+        lng: value.longitude,
       };
       this.asignCenter();
     }
@@ -71,7 +70,7 @@ export default {
       if (newValue) {
         this.center.lat = +newValue;
         if (newValue && this.center.lng) {
-          setCache("coords", {
+          this.$common.cache.setCache("coords", {
             latitude: this.center.lat,
             longitude: this.center.lng,
           });
@@ -84,7 +83,7 @@ export default {
       if (newValue) {
         this.center.lng = +newValue;
         me.asignCenter();
-        setCache("coords", {
+        this.$common.cache.setCache("coords", {
           latitude: this.center.lat,
           longitude: this.center.lng,
         });
