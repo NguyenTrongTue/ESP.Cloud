@@ -1,5 +1,5 @@
 
-ALTER TABLE public.garage ADD column if not exits image text NULL;
+ALTER TABLE public.garage ADD column if not exists image text NULL;
 
 drop table if exists tmp_estimate;
 CREATE TABLE public.tmp_estimate (
