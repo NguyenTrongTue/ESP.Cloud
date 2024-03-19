@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div class="sidebar__top">
       <div class="sidebar__top-title">Gara gần tôi</div>
-      <div class="filter__wrapper">
+      <div class="filter__wrapper" v-if="!noneFilter">
         <div
           class="filter__item"
           v-for="(item, index) in listFilter"
@@ -52,6 +52,10 @@ export default {
     locationProps: {
       type: Array,
       default: [],
+    },
+    noneFilter: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

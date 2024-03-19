@@ -4,7 +4,7 @@
       <div class="logo"><Logo /></div>
       <div class="header__left-category">
         <router-link to="/"> <span>Tìm gara</span></router-link>
-        <router-link to="/booking"> <span>Đặt lịch</span></router-link>
+        <router-link to="/estimator"> <span>Ưóc tính</span></router-link>
         <router-link to="/promo"> <span>Khuyến mãi</span></router-link>
         <router-link to="/history-booking">
           <span>Lịch sử sửa chữa</span></router-link

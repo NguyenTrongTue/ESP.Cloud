@@ -1,15 +1,15 @@
 <template>
   <div class="sidebar-item">
     <div class="sidebar-item__left">
-      <img :src="image" alt="Ảnh của gara" />
+      <img :src="location.image" alt="Ảnh của gara" />
     </div>
     <div class="sidebar-item__right">
       <div class="gara-name__wrapper">
         <div class="gara-name">{{ location.garage_name }}</div>
         <div class="rating">
           <Stars />
-          <div>{{ location.total_rating }}</div>
-          <span>({{ 40 }})</span>
+          <div>{{ location.avg_rating.toFixed(2) }}</div>
+          <span>({{ location.total_rating }})</span>
         </div>
       </div>
       <div class="address">

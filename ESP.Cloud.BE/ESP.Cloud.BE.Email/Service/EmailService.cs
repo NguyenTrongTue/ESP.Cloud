@@ -18,8 +18,7 @@ namespace ESP.Cloud.BE.Email
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(emailDto.To));
             email.Subject = emailDto.Subject;
-            var buttonUrl = "https://www.facebook.com/";
-            var buttonHtml = $@"<button type='button'><a href='{buttonUrl}'>Click here</a></button>";
+    
 
             var bodyBuilder = new BodyBuilder();
             bodyBuilder.HtmlBody = $@"<html>
@@ -29,21 +28,21 @@ namespace ESP.Cloud.BE.Email
                                         </style>
                                     </head>
                                     <body>
-                                        <h1>Xin chào!</h1>
+                                        <h1>Title</h1>
                                         <p>{emailDto.Body}</p>
-                                        <p>{buttonHtml}</p>
                                     </body>
                                 </html>";
 
-            // Thêm phần body vào email
             email.Body = bodyBuilder.ToMessageBody();
 
             using var smtp = new MailKit.Net.Smtp.SmtpClient();
 
-
             smtp.Connect(_config.GetSection("EmailHost").Value, 465, true);
+
             smtp.Authenticate(_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
+
             smtp.Send(email);
+
             smtp.Disconnect(true);
         }
     }

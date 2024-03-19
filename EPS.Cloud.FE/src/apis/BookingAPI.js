@@ -11,6 +11,7 @@ class GarageAPI extends BaseAPI {
    *
    * @param {type} garageId - description of parameter
    * @return {type} description of return value
+   * @author nttue 17.03.2024
    */
   getMakeByGarageId(garageId) {
     return request.get(
@@ -19,12 +20,23 @@ class GarageAPI extends BaseAPI {
   }
 
   /**
+   * Get the make by garage ID.
+   *
+   * @param {type} garageId - description of parameter
+   * @return {type} description of return value
+   * @author nttue 17.03.2024
+   */
+  getGarageServices(carId) {
+    return request.get(this.url + `/get_garage_services?carId=${carId}`);
+  }
+  /**
    * Retrieves models by garage ID, make, and year of manufacture.
    *
    * @param {string} garageId - The ID of the garage
    * @param {string} make - The make of the car
    * @param {number} yearOfManufacture - The year of manufacture
    * @return {Promise} A Promise that resolves to the requested models
+   * @author nttue 17.03.2024
    */
   getModelsByGarageId(garageId, make, yearOfManufacture) {
     return request.get(
@@ -38,11 +50,27 @@ class GarageAPI extends BaseAPI {
    * @param {type} garageId - description of parameter
    * @param {type} make - description of parameter
    * @return {type} description of return value
+   * @author nttue 17.03.2024
    */
   getYearsByGarageIdAndMake(garageId, make) {
     return request.get(
       `${this.url}/get_year_by_garage_id?garageId=${garageId}&make=${make}`
     );
+  }
+
+  /**
+   * getEstimateService - A function to get an estimate service.
+   *
+   * @param {Object} payload - The payload for the request
+   * @return {Promise} The promise of the request
+   * @author nttue 17.03.2024
+   */
+  getEstimateService(payload) {
+    return request.post(`${this.url}/get_estimate_service`, payload);
+  }
+
+  getGarageByEstimate(payload) {
+    return request.post(`${this.url}/get_garage_by_estimate`, payload);
   }
 }
 
