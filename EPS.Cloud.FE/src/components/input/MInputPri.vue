@@ -35,8 +35,6 @@
 </template>
 
 <script>
-const ALLOWED_KEYS = ["Tab", "Backspace", "Delete"];
-
 import { upperCaseName } from "@/utils/common.js";
 import { validate } from "@/utils/validate.js";
 export default {

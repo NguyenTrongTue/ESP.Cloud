@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       loader: new Loader({
-        apiKey: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+        apiKey: window.__congfigGoogleMapAPI,
         version: "weekly",
         libraries: ["places"],
       }),
@@ -113,29 +113,16 @@ export default {
         console.log(e);
       }
     },
-    calculateAndDisplayRoute(dest) {
-      this.directionsService
-        .route({
-          origin: { lat: this.center.lat, lng: this.center.lng },
-          destination: { lat: dest.latitude, lng: dest.longitude },
-          travelMode: google.maps.TravelMode.DRIVING,
-          avoidTolls: true,
-        })
-        .then((response) => {
-          this.directionsRenderer.setDirections(response);
-        })
-        .catch((e) =>
-          console.log("Directions request failed due to " + e.status)
-        );
-    },
+
     generateInfoWindowContent() {
+      //https://www.google.com/maps?q&layer=c&cbll=21.030776,105.7579325
       return `<div ref="info-window">
         <div class="info-window">
           <div class="info-window__top">
             <img
               style="width: 300px; height: 180px"
               class="info-window__top-img"
-              src="https://storage.googleapis.com/rp-production-public-content/3z624a2usqnwc07nb8ni93deixc7""
+              src="${this.location.image}"
               alt="Ảnh của gara"
             />
           </div>
@@ -158,8 +145,8 @@ export default {
                     d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"
                   ></path>
                 </svg>
-                <span>${this.location.total_rating}</span>
-                <span>(40)</span>
+                <span>${this.location.avg_rating.toFixed(2)}</span>
+                <span>(${this.location.total_rating.toFixed(2)})</span>
               </div>
             </div>
             <div class="address">

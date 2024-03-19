@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { cache } from "@/utils/cache";
 import Home from "@/views/home/Home.vue";
+import Estimate from "@/views/estimate/Estimate.vue";
 import Booking from "@/views/booking/Booking.vue";
 import Promo from "@/views/promo/Promo.vue";
 import HistoryBooking from "@/views/history-booking/HistoryBooking.vue";
@@ -15,6 +16,12 @@ const routes = [
     meta: { requiresAuth: false, title: "Tìm kiếm" },
   },
   {
+    name: "estimate",
+    component: Estimate,
+    path: "/estimate/:id",
+    meta: { requiresAuth: true, title: "Ước tính gara" },
+  },
+  {
     name: "booking",
     component: Booking,
     path: "/booking/:id",
@@ -24,7 +31,7 @@ const routes = [
     name: "estimator",
     component: Estimator,
     path: "/estimator",
-    meta: { requiresAuth: false, title: "Ước tính", showHeader: true },
+    meta: { requiresAuth: false, title: "Ước tính", showHeader: false },
   },
   {
     name: "promo",

@@ -72,8 +72,9 @@ input {
 }
 
 .input:focus {
-  border-color: var(--primary-btn--active-bc);
-  outline: 1px solid transparent;
+  border: 1px solid #b2e8ff;
+  outline: 2px solid transparent;
+  box-shadow: 0 0 1px #b2e8ff;
 }
 .input.error:focus {
   border-color: red;

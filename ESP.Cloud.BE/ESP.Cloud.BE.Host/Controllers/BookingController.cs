@@ -1,5 +1,6 @@
 ﻿using ESP.Cloud.BE.Application.Dto;
 using ESP.Cloud.BE.Application.Interface;
+using ESP.Cloud.BE.Application.Param;
 using ESP.Cloud.BE.Application.Service;
 using ESP.Cloud.BE.Core.Model;
 using ESP.Cloud.BE.Host.Controllers.Base;
@@ -15,6 +16,27 @@ namespace ESP.Cloud.BE.Host.Controllers
         public Booking(IBookingService bookingService) : base(bookingService)
         {
             _bookingService = bookingService;
+        }
+
+        /// <summary>
+        /// Hảm lấy dịch vụ của gara
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        [HttpGet("get_garage_services")]
+        public async Task<IActionResult> GetGarageServices(Guid carId)
+        {
+            try
+            {
+                var results = await _bookingService.GetGarageServicesAsync(carId);
+
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         /// <summary>
@@ -69,6 +91,49 @@ namespace ESP.Cloud.BE.Host.Controllers
             try
             {
                 var results = await _bookingService.GetYearByGarageId(garageId, make);
+
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Hảm lấy dịch vụ của gara
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("get_estimate_service")]
+        public async Task<IActionResult> GetEstimateService(EstimateParam estimateParam)
+        {
+            try
+            {
+                var results = await _bookingService.GetEstimateServiceAsync(estimateParam.carId, estimateParam.serviceCodes);
+
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        /// <summary>
+        /// Hảm lấy dịch vụ của gara
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("get_garage_by_estimate")]
+        public async Task<IActionResult> GetGarageByEstimate(GetGarageByEstimateParam estimateParam)
+        {
+            try
+            {
+                var results = await _bookingService.GetGarageByEstimateAsync(estimateParam.latitude, estimateParam.longitude, estimateParam.p_estimate_id);
 
                 return Ok(results);
             }

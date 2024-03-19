@@ -77,3 +77,14 @@ export function buildOpenTimeText(timeOpen, timeClose) {
   }
   return "";
 }
+
+export function formatAmount(amount) {
+  if (amount) {
+    let formattedAmount = amount
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return formattedAmount;
+  } else {
+    return "";
+  }
+}
