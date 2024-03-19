@@ -25,11 +25,13 @@ namespace ESP.Cloud.BE.Email
             bodyBuilder.HtmlBody = $@"<html>
                                     <head>
                                         <style>
-                                           
+                                           .title{{
+                                                color: red;
+                                            }}
                                         </style>
                                     </head>
                                     <body>
-                                        <h1>Xin chào!</h1>
+                                        <h1 class='title'>Xin chào!</h1>
                                         <p>{emailDto.Body}</p>
                                         <p>{buttonHtml}</p>
                                     </body>
