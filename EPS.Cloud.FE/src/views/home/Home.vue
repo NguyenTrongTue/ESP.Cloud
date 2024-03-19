@@ -17,9 +17,8 @@
 import GoogleMap from "@/components/map/GoogleMap.vue";
 import SideBar from "@/components/sidebar/SideBar.vue";
 import Test from "@/components/Test.vue";
-import { useGeolocation } from "@vueuse/core";
 import GarageAPI from "@/apis/GarageAPI";
-
+import { useGeolocation } from "@vueuse/core";
 const { coords } = useGeolocation();
 export default {
   components: {
@@ -41,11 +40,12 @@ export default {
         ListServiceNames: [],
         CarType: "",
         TimeOpen: 1,
-        take: 20,
+        take: 70,
         skip: 0,
       },
     };
   },
+
   beforeMount() {
     /**
      * Đăng ký sự kiện đóng form
@@ -120,6 +120,21 @@ export default {
         latitude: +this.center.lat,
         longitude: +this.center.lng,
       };
+
+      fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${+this.center
+          .lat},${+this.center.lng}&key=${window.__congfigGoogleMapAPI}`
+      )
+        // https://maps.googleapis.com/maps/api/streetview?size=600x300&location=21.0434405,105.7974636&heading=151.78&pitch=-0.76&key=AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+
+          this.$common.cache.setCache("currentAddress", data);
+        })
+        .catch((error) => {
+          console.error("Lỗi:", error);
+        });
     },
     async searchData(newObject) {
       const me = this;
@@ -139,7 +154,10 @@ export default {
 
       if (googleMapRef) {
         let location = this.locations[index];
-        googleMapRef.calculateAndDisplayRoute(location);
+        window.open(
+          `https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}`,
+          "_blank"
+        );
       }
     },
   },

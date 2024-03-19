@@ -108,6 +108,7 @@ main-content {
 
 .vehicle-describe {
   font-size: 36px;
+  text-align: left;
 }
 
 .next-steps {
@@ -204,7 +205,7 @@ main-content {
 }
 
 .estimate-info-wrapper {
-  width: 60%;
+  width: 80%;
 
   background: #fff;
   border-radius: 4px;
@@ -213,7 +214,7 @@ main-content {
   display: flex;
   flex-direction: row;
   position: relative;
-  left: 20%;
+  margin: auto;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
@@ -257,7 +258,7 @@ main-content {
 }
 .estimate-total-range {
   color: #0098d3;
-  font-size: 48px;
+  font-size: 28px;
   font-weight: 700;
   line-height: 52px;
   margin-top: 8px;
@@ -709,3 +710,32 @@ main-content {
 .view-all-wrapper button:hover {
   background-color: #e6f8ff;
 }
+.progress-bar {
+  position: relative;
+}
+.progress-bar__step {
+  background: #0098d3;
+  border-radius: 0 6px 6px 0;
+  height: 6px;
+  transition: width 1s ease-in;
+  z-index: 1;
+  width: 100%;
+  position: absolute;
+  top: -6px;
+}
+.top__center {
+  gap: 50px;
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #8795a1;
+  }
+  .active {
+    color: #0098d3;
+  }
+}
+.carousel__icon {
+  display: none;
+}
+
+// https://maps.googleapis.com/maps/api/geocode/json?latlng=21.0351383,105.7864871&key=AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50`)

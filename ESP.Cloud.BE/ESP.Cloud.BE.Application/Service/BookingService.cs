@@ -29,6 +29,13 @@ namespace ESP.Cloud.BE.Application.Service
             return result;
         }
 
+        public async Task<List<object>> GetGarageServicesAsync(Guid carId)
+        {
+            var result = await _bookingDL.GetGarageServicesAsync(carId);
+
+            return result;
+        }
+
         public async Task<List<object>> GetYearByGarageId(Guid garageId, string make)
         {
             var result = await _bookingDL.GetYearByGarageId(garageId, make);
@@ -48,5 +55,20 @@ namespace ESP.Cloud.BE.Application.Service
         {
             throw new NotImplementedException();
         }
+
+        public async Task<List<object>> GetEstimateServiceAsync(Guid carId, List<ServiceCode> serviceCodes)
+        {
+            var result = await _bookingDL.GetEstimateServiceAsync(carId, serviceCodes);
+
+            return result;
+        }
+        public async Task<List<object>> GetGarageByEstimateAsync(double? latitude, double? longitude, Guid p_estimate_id)
+        {
+            var result = await _bookingDL.GetGarageByEstimateAsync(latitude, longitude, p_estimate_id);
+
+            return result;
+        }
+
+       
     }
 }

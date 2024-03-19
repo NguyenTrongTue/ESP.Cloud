@@ -11,7 +11,8 @@
             <h1 class="title-text">Nhận ước tính của bạn</h1>
           </div>
           <div class="estimate-info-big-text">
-            50 điểm sửa chữa chứng nhận RepairPal gần bạn
+            {{ resultEstimate.total_locations }} điểm sửa chữa chứng nhận gần
+            bạn
           </div>
           <div class="estimate-info-wrapper">
             <div class="serrated-top"></div>
@@ -19,9 +20,11 @@
               <div class="estimate-info-card-content">
                 <div class="estimate-info-header">
                   <div class="estimate-info-header-repairname">
-                    Chẩn đoán và kiểm tra đèn động cơ
+                    Ước tính chi phí
                   </div>
-                  <div class="estimate-total-range">$344 to $439</div>
+                  <div class="estimate-total-range">
+                    {{ estimateAmount }}
+                  </div>
                 </div>
                 <div class="labor-parts">
                   <div class="cost-breakdown">
@@ -57,7 +60,10 @@
                   </div>
                   <div class="estimate-info-bottom-actions">
                     <div class="button-bottom-wrapper">
-                      <mbutton buttonText="Xem 50 Địa điểm" />
+                      <mbutton
+                        @click="handleGetResult"
+                        :buttonText="`Xem ${resultEstimate.total_locations} Địa điểm`"
+                      />
                     </div>
                     <div class="estimate-info-actions">
                       <div class="actions-wrapper">
@@ -76,9 +82,12 @@
             <div class="estimate-info-summary">
               <div class="estimate-info-summary-title">Tổng kết dịch vụ</div>
               <div class="estimate-info-summary-vehicle">
-                2023 Alfa Romeo Giulia
+                {{ estimateInfo.make }} {{ estimateInfo.model }}
+                {{ estimateInfo.year }}
               </div>
-              <div class="estimate-info-summary-location">42000 - Nam Định</div>
+              <div class="estimate-info-summary-location">
+                {{ this.currentAddress?.formatted_address }}
+              </div>
               <div class="dotted-separator"></div>
               <div class="estimate-info-summary-service">
                 Thay dầu nhớ &amp; Kiểm tra tổng quá
@@ -136,104 +145,63 @@
           </div>
         </div>
       </div>
-      <div class="testimonials">
-        <mrating v-for="i in 3" :key="i" />
-      </div>
-      <div class="why-choose-section">
-        <div class="why-choose-section-content">
-          <div class="why-choose-header">
-            <div class="why-choose-header-title">
-              <div class="why-choose-h1">Tại sao bạn chọn chúng tôi?</div>
-              <div class="let-see">Hãy xem so sánh sau nhé!</div>
-            </div>
-            <div class="why-choose-versus">
-              <div class="logo-us">
-                <img
-                  class="rp-certified-logo"
-                  src="https://files.repairpal.com/packs/ba2289af5140b752.png"
-                  alt="RepairPal Certified"
-                />
-              </div>
-              <div class="logo-versus">vs</div>
-              <div class="logo-competitor">
-                <div class="repair-icon">
-                  <micon type="Repair" />
-                </div>
-                <div class="repair-text">Các cửa hàng truyền thống</div>
-              </div>
-            </div>
-          </div>
-          <div class="why-comparison" v-for="i in 4" :key="i">
-            <div class="comparison-content">
-              <div class="why-reason">
-                Dịch vụ sửa chữa được trải qua quá trình chứng nhận nghiêm ngặt
-              </div>
-              <div class="oui-non">
-                <div class="com-first">
-                  <div class="com-icon-wrapper">
-                    <micon type="Yes" />
-                  </div>
-                </div>
-                <div class="com-second">
-                  <div class="com-icon-wrapper">
-                    <micon type="No" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="why-choose-bottom">
-            <div class="view-location-btn-wrapper">
-              <mbutton buttonText="Xem 50 Địa điểm" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="shop-result">
-      <div class="custom-locations">
-        <div class="custom-location-header">Thay dầu nhớt ở Hà Nội</div>
-        <div class="let-see">
-          Chúng tôi tìm thấy 50 địa điểm chứng nhận A gần bạn
-        </div>
-      </div>
-      <div class="gara-list">
-        <div class="gara-item" v-for="i in 3" :key="i">
-          <SideBarItem :location="location" />
-        </div>
-      </div>
-      <div class="view-all-wrapper">
-        <button>Xem tất cả</button>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-import SideBarItem from "@/components/sidebar-item/SideBarItem.vue";
+import BookingAPI from "@/apis/BookingAPI";
+import { formatAmount } from "@/utils/common";
 export default {
   name: "Estimator4",
-  components: {
-    SideBarItem,
+  emits: ["nextStep"],
+  components: {},
+  props: {
+    estimateInfo: {
+      type: Object,
+      default: {},
+    },
   },
-  props: {},
   data() {
     return {
-      location: {
-        garage_name: "Gara 1",
-        total_rating: 4.5,
-        address: "1234, Đường 1, Quận 1, TP.HCM",
-        distance: 1.2,
-        garage_website: "https://www.facebook.com",
-        phone: "0123456789",
-        open_time: "08:00",
-        close_time: "17:00",
-      },
+      resultEstimate: [],
+      carId: this.estimateInfo.cars_id,
+      currentAddress: null,
     };
   },
   watch: {},
-
-  methods: {},
+  computed: {
+    estimateAmount() {
+      if (this.resultEstimate.min_price == this.resultEstimate.max_price) {
+        return `${this.format(this.resultEstimate.min_price)}`;
+      } else {
+        return `${this.format(this.resultEstimate.min_price)} đến
+                    ${this.format(this.resultEstimate.max_price)}`;
+      }
+    },
+  },
+  mounted() {
+    this.getEstimateForServices();
+    let value = this.$common.cache.getCache("currentAddress");
+    this.currentAddress = value.results[0];
+  },
+  methods: {
+    async getEstimateForServices() {
+      const result = await BookingAPI.getEstimateService({
+        carId: this.carId,
+        serviceCodes: this.estimateInfo.selectedServices,
+      });
+      this.resultEstimate = result[0];
+    },
+    format(amount) {
+      return formatAmount(amount) + " VNĐ";
+    },
+    handleGetResult() {
+      this.$router.push({
+        path: `/estimate/${this.resultEstimate.estimate_id}`,
+      });
+    },
+  },
 };
 </script>
 
