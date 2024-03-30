@@ -1,15 +1,8 @@
 <template>
   <div class="home">
-    <SideBar
-      :locationProps="locations"
-      @sortBy="handleSortBy"
-      @typeCars="handleTypeCars"
-      @openTime="handleOpenTime"
-      @services="handleServices"
-      @showPostion="handleShowPostion"
-    />
+    <SideBar :locationProps="locations" @sortBy="handleSortBy" @typeCars="handleTypeCars" @openTime="handleOpenTime"
+      @services="handleServices" @showPostion="handleShowPostion" />
     <GoogleMap :center="center" :locations="locations" ref="google-map" />
-    <!-- <Test /> -->
   </div>
 </template>
 
@@ -19,6 +12,7 @@ import SideBar from "@/components/sidebar/SideBar.vue";
 import Test from "@/components/Test.vue";
 import GarageAPI from "@/apis/GarageAPI";
 import { useGeolocation } from "@vueuse/core";
+import SignalRService from "@/services/SignalRService";
 const { coords } = useGeolocation();
 export default {
   components: {
@@ -40,7 +34,7 @@ export default {
         ListServiceNames: [],
         CarType: "",
         TimeOpen: 1,
-        take: 70,
+        take: 20,
         skip: 0,
       },
     };
@@ -63,6 +57,16 @@ export default {
       };
       this.asignCenter();
     }
+    SignalRService.start()
+      .then(() => {
+        console.log("Connected to SignalR Hub");
+      })
+      .catch(error => {
+        console.error("Connection to SignalR Hub failed:", error);
+      });
+
+    SignalRService.on("ReceiveNotification", this.handleMessage);
+
   },
   watch: {
     "coords.latitude"(newValue) {
@@ -103,6 +107,10 @@ export default {
     },
   },
   methods: {
+
+    handleMessage(data) {
+      console.log(data);
+    },
     handleSortBy(value) {
       this.searchObject.SortBy = value;
     },
@@ -125,7 +133,7 @@ export default {
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${+this.center
           .lat},${+this.center.lng}&key=${window.__congfigGoogleMapAPI}`
       )
-        // https://maps.googleapis.com/maps/api/streetview?size=600x300&location=21.0434405,105.7974636&heading=151.78&pitch=-0.76&key=AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50
+
         .then((response) => response.json())
         .then((data) => {
           console.log(data);

@@ -76,11 +76,27 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
                     { $"@garage_id", garage_id }
                 };
 
-            var sql = $"with temp_result as (\r\n\t\tselect * \r\n\t\tfrom public.garage g\r\n\t\twhere garage_id = @garage_id \r\n) select tr.*,\r\n\t\t coalesce(gr2.total_reviews, 0) as total_reviews,\r\n\t\t coalesce(gr2.avg_rating, 0) as avg_rating\t\r\n\t\t from temp_result tr\r\n\t\t left join lateral(\r\n\t\t \tselect count(gr.*)as total_reviews,\r\n\t\t\tsum(gr.rating) as avg_rating,\r\n\t\t\tgr.garage_id\r\n\t\t\tfrom public.garage_reviews gr\r\n\t\t\twhere gr.garage_id = tr.garage_id\r\n\t\t\tgroup by garage_id\r\n\t\t ) gr2 on true\t\t \t\t\r\n\t\t limit 1;";
+            var sql = $"select \r\n       t.avg_rating, \r\n            t.total_rating, t1.total_sevices\r\n,g.* from public.garage g \r\nleft join lateral(\r\n\tselect  distinct garage_id, avg(gr.rating) over (partition by gr.garage_id) as avg_rating, \r\n            count(*) over (partition by gr.garage_id) as total_rating\r\n     from garage_reviews gr \r\n     where gr.garage_id = @garage_id \r\n) t on true\r\nleft join lateral(\r\n\tselect distinct garage_id, count(*) over (partition by garage_id, cars_id) as total_sevices\r\n\tfrom garage_services gs \r\n\twhere gs.garage_id = @garage_id\r\n) t1 on true\r\nwhere g.garage_id = @garage_id;";
 
             var entity = await _uow.QueryDefault<object>(sql, param);
 
             return entity;
+        }
+
+        public async Task<List<object>> GetGarageReviewsByIdAsync(Guid garageId, int take, int skip)
+        {
+            var param = new Dictionary<string, object>
+                {
+                    { $"@garage_id", garageId },
+                     { $"@take", take },
+                      { $"@skip",  take * skip }
+                };
+
+            var sql = $"select t.fullname, gr.* from garage_reviews gr \r\nleft join lateral (\r\n\tselect u.fullname from \"user\" u \r\n\twhere u.user_id = gr.user_id \r\n) t on true where garage_id = @garage_id limit @take offset @skip;";
+
+            var entity = await _unitOfWork.Connection.QueryAsync<object>(sql, param);
+
+            return entity.ToList();
         }
     }
 }

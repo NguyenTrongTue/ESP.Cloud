@@ -9,10 +9,7 @@
       <div class="main-info">
         <div class="main-info__center">
           <div class="sidebar-item__left">
-            <img
-              src="https://storage.googleapis.com/rp-production-public-content/puz5muru666yt3hfcbrs86b222f8"
-              alt="Ảnh của gara"
-            />
+            <img :src="garage?.image" alt="Ảnh của gara" />
           </div>
           <div class="sidebar-item__right">
             <div class="gara-name__wrapper">
@@ -20,12 +17,11 @@
               <div class="rating">
                 <micon type="Stars" />
                 <div>{{ garage?.avg_rating }}</div>
-                <span>({{ garage?.total_reviews }})</span>
+                <span>({{ garage?.total_rating }})</span>
               </div>
             </div>
             <div class="address">
-              <span class="address-text">{{ garage?.address }} </span
-              ><span class="fz-12">(2.8 km)</span>
+              <span class="address-text">{{ garage?.address }} </span><span class="fz-12">(2.8 km)</span>
             </div>
 
             <div class="facebook">
@@ -37,14 +33,10 @@
           </div>
         </div>
         <div class="time-open fz-14">
-          <span
-            :class="
-              computedbuildOpenTimeText.split('·')[0].includes('Đang mở')
+          <span :class="computedbuildOpenTimeText.split('·')[0].includes('Đang mở')
                 ? 'active'
                 : 'close'
-            "
-            >{{ computedbuildOpenTimeText.split("·")[0] }}</span
-          >
+              ">{{ computedbuildOpenTimeText.split("·")[0] }}</span>
           <span> · </span>
           <span>{{ computedbuildOpenTimeText.split("·")[1] }}</span>
         </div>

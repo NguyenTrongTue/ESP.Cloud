@@ -18,20 +18,10 @@ namespace ESP.Cloud.BE.Email
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(emailDto.To));
             email.Subject = emailDto.Subject;
-    
+
 
             var bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = $@"<html>
-                                    <head>
-                                        <style>
-                                           
-                                        </style>
-                                    </head>
-                                    <body>
-                                        <h1>Title</h1>
-                                        <p>{emailDto.Body}</p>
-                                    </body>
-                                </html>";
+            bodyBuilder.HtmlBody = emailDto.HTMLBody;
 
             email.Body = bodyBuilder.ToMessageBody();
 

@@ -19,6 +19,10 @@ class GarageAPI extends BaseAPI {
   getGarageById(garage_id) {
     return request.get(this.url + `/get_garage_by_id?garage_id=${garage_id}`);
   }
+
+  getGarageReviewsById(payload) {
+    return request.post(`${this.url}/get_garage_reviews_by_id`, payload);
+  }
 }
 
 const instance = new GarageAPI();

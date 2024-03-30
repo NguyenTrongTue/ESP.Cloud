@@ -17,7 +17,7 @@
   <Previous v-if="type == 'Previous'" />
   <Next v-if="type == 'Next'" />
   <ArrowRight v-if="type == 'ArrowRight'" />
-  <Stars v-if="type == 'Stars'" />
+  <Stars v-if="type == 'Stars'" :width="width" :height="height" />
   <Note v-if="type == 'Note'" />
   <Avatar v-if="type == 'Avatar'" />
   <Search v-if="type == 'Search'" />
@@ -32,6 +32,10 @@
   <Yes v-if="type == 'Yes'" />
   <No v-if="type == 'No'" />
   <Question v-if="type == 'Question'" />
+  <Certification v-if="type == 'Certification'" />
+  <CarLarge v-if="type == 'CarLarge'" />
+  <Calendar v-if="type == 'Calendar'" />
+  <Notify v-if="type == 'Notify'" />
 </template>
 
 <script>
@@ -67,6 +71,10 @@ import Certify from "./Certify.vue";
 import Yes from "./Yes.vue";
 import No from "./No.vue";
 import Question from "./Question.vue";
+import Certification from "./Certification.vue";
+import CarLarge from "./CarLarge.vue";
+import Calendar from "./Calendar.vue";
+import Notify from "./Notify.vue";
 
 export default {
   name: "Icon",
@@ -75,6 +83,14 @@ export default {
       type: String,
       default: "",
     },
+    height: {
+      type: Number,
+      default: 13
+    },
+    width: {
+      type: Number,
+      default: 13
+    }
   },
   components: {
     Clock,
@@ -110,7 +126,10 @@ export default {
     Yes,
     No,
     Question,
+    Certification,
+    CarLarge,
+    Calendar,
+    Notify
   },
 };
 </script>
-
