@@ -217,3 +217,19 @@ button:focus {
   font-weight: 500;
   line-height: 18px;
 }
+.ng-flex-row.ng-center-y {
+    align-items: center;
+}
+.ng-pb8 {
+    padding-bottom: 8px;
+}
+
+.ng-flex-row {
+    flex-direction: row;
+}
+.ng-flex {
+    display: flex;
+}
+.ng-clickable {
+    cursor: pointer;
+}

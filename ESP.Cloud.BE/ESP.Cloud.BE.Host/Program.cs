@@ -21,7 +21,10 @@ namespace ESP.Cloud.BE.Host
             // Handle Cors
             builder.Services.AddCors(p => p.AddPolicy("MyCors", build =>
             {
-                build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+                build.WithOrigins("http://localhost:5173") // chỉ định nguồn cụ thể
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials();
             }));
 
             // Add services to the container.
@@ -57,7 +60,7 @@ namespace ESP.Cloud.BE.Host
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddSignalR();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -73,7 +76,7 @@ namespace ESP.Cloud.BE.Host
             app.UseAuthorization();
             app.UseMiddleware<ExceptionMiddleware>();
             app.MapControllers();
-
+            app.MapHub<NotificationsHub>("/notifications");
             app.Run();
         }
     }

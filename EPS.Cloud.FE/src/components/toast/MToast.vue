@@ -1,11 +1,8 @@
 <template>
   <div id="toast" v-if="isShowToast">
     <div :class="content.type == 'error' ? 'toast error' : 'toast success'">
-      <div
-        :class="
-          content.type == 'error' ? 'icon-warning-red' : 'icon-success-medium'
-        "
-      ></div>
+      <div :class="content.type == 'error' ? 'icon-warning-red' : 'icon-success-medium'
+    "></div>
       <span class="toast-message"> {{ content.label }}</span>
     </div>
   </div>

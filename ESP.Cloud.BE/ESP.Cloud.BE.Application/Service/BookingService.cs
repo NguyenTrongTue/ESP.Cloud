@@ -69,6 +69,6 @@ namespace ESP.Cloud.BE.Application.Service
             return result;
         }
 
-       
+
     }
 }

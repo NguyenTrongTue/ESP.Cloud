@@ -87,7 +87,7 @@ export default {
       if (this.chooseType != "checkbox") {
         this.$emit("saveOptions", this.filterId, "", this.index);
       } else {
-        this.$emit("clearChecked", this.index);
+        this.$emit("M", this.index);
       }
     },
     saveOptions() {

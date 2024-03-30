@@ -12,5 +12,7 @@ namespace ESP.Cloud.BE.Core.DL.GarageDL
 
         Task<object?> GetGarageByIdAsync(Guid garage_id);
 
+        Task<List<object>> GetGarageReviewsByIdAsync(Guid garageId, int take, int skip);
+
     }
 }

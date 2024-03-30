@@ -13,65 +13,36 @@
         </div>
       </div>
       <div class="address">
-        <img
-          src="https://www.gstatic.com/images/icons/material/system_gm/1x/place_gm_blue_24dp.png"
-          alt="Ảnh của gara"
-        />
+        <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/place_gm_blue_24dp.png"
+          alt="Ảnh của gara" />
 
-        <mtooltip
-          :content="location.address"
-          class="address-text"
-          :arrow="false"
-          ><span>{{ location.address }} </span></mtooltip
-        ><span>({{ location.distance.toFixed(2) }} km)</span>
+        <mtooltip :content="location.address" class="address-text" :arrow="false"><span>{{ location.address }} </span>
+        </mtooltip><span>({{ location.distance.toFixed(2) }} km)</span>
       </div>
       <div class="time-open">
         <Clock style="color: rgb(0, 60, 255)" />
-        <span
-          :class="
-            buildOpenTimeText.split('·')[0].includes('Đang mở')
-              ? 'active'
-              : 'close'
-          "
-          >{{ buildOpenTimeText.split("·")[0] }}</span
-        >
+        <span :class="buildOpenTimeText.split('·')[0].includes('Đang mở')
+          ? 'active'
+          : 'close'
+        ">{{ buildOpenTimeText.split("·")[0] }}</span>
         <span> · </span>
         <span>{{ buildOpenTimeText.split("·")[1] }}</span>
       </div>
       <div class="facebook">
-        <img
-          src="https://www.gstatic.com/images/icons/material/system_gm/1x/public_gm_blue_24dp.png"
-          alt="Ảnh của gara"
-        />
+        <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/public_gm_blue_24dp.png"
+          alt="Ảnh của gara" />
         <a :href="location.garage_website" target="_blank">facebook</a>
       </div>
       <div class="phone">
-        <img
-          src="https://www.gstatic.com/images/icons/material/system_gm/1x/phone_gm_blue_24dp.png"
-          alt="Ảnh của gara"
-        />
+        <img src="https://www.gstatic.com/images/icons/material/system_gm/1x/phone_gm_blue_24dp.png"
+          alt="Ảnh của gara" />
 
         <span>{{ location.phone }}</span>
       </div>
       <div class="button-wrapper">
-        <mbutton
-          :button-text="$t('Booking')"
-          :icon="icon1"
-          type="icon"
-          @click="handleBooking(location)"
-        />
-        <mbutton
-          :button-text="$t('Direction')"
-          :icon="icon2"
-          type="icon"
-          @click="handleDirecting"
-        />
-        <mbutton
-          :button-text="$t('Share')"
-          :icon="icon3"
-          type="icon"
-          @click="handleSharing"
-        />
+        <mbutton :button-text="$t('Booking')" :icon="icon1" type="icon" @click="handleBooking($event, location)" />
+        <mbutton :button-text="$t('Direction')" :icon="icon2" type="icon" @click="handleDirecting($event)" />
+        <mbutton :button-text="$t('Share')" :icon="icon3" type="icon" @click="handleSharing" />
       </div>
     </div>
   </div>
@@ -147,13 +118,15 @@ export default {
   },
 
   methods: {
-    handleBooking(location) {
+    handleBooking(e, location) {
+      e.stopPropagation();
       this.$router.push({ path: `/booking/${location.garage_id}` });
     },
-    handleDirecting() {
+    handleDirecting(e) {
+      e.stopPropagation();
       this.$emitter.emit("directing", this.garaIndex);
     },
-    handleSharing() {},
+    handleSharing() { },
   },
 };
 </script>

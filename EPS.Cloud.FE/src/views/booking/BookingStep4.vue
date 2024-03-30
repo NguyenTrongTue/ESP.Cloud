@@ -7,10 +7,8 @@
         <div class="main-info">
           <div class="main-info__center">
             <div class="sidebar-item__left">
-              <img
-                src="https://storage.googleapis.com/rp-production-public-content/puz5muru666yt3hfcbrs86b222f8"
-                alt="Ảnh của gara"
-              />
+              <img src="https://storage.googleapis.com/rp-production-public-content/puz5muru666yt3hfcbrs86b222f8"
+                alt="Ảnh của gara" />
             </div>
             <div class="sidebar-item__right">
               <div class="gara-name__wrapper">
@@ -20,18 +18,15 @@
                 <div class="rating">
                   <micon type="Stars" />
                   <div>{{ garage?.avg_rating }}</div>
-                  <span>({{ garage?.total_reviews }})</span>
+                  <span>({{ garage?.total_rating }})</span>
                 </div>
               </div>
               <div class="address">
-                <span class="address-text">{{ garage?.address }} </span
-                ><span class="fz-12">(2.8 km)</span>
+                <span class="address-text">{{ garage?.address }} </span><span class="fz-12">(2.8 km)</span>
               </div>
 
               <div class="facebook">
-                <a :href="garage?.garage_website" target="_blank"
-                  >facebook.com</a
-                >
+                <a :href="garage?.garage_website" target="_blank">facebook.com</a>
               </div>
               <div class="phone">
                 <span>{{ garage?.phone }}</span>
@@ -45,21 +40,15 @@
           <micon type="Clock" />
         </div>
         <div class="time-text">
-          <span
-            class="ds-body-regular ds-medium ng-font-neutral-80 ml-1 mr-1"
-            >{{ computedDropOff }}</span
-          ><span class="ds-body-small ds-link ds-link--variant-regular pointer"
-            >Sửa</span
-          >
+          <span class="ds-body-regular ds-medium ng-font-neutral-80 ml-1 mr-1">{{ computedDropOff }}</span><span
+            class="ds-body-small ds-link ds-link--variant-regular pointer">Sửa</span>
         </div>
       </div>
     </div>
     <div class="summary-vehicle">
       <div class="sub-h1">
         NỘI DUNG SỬA CHỮA
-        <span class="ds-body-small ds-link ds-link--variant-regular pointer"
-          >Sửa</span
-        >
+        <span class="ds-body-small ds-link ds-link--variant-regular pointer">Sửa</span>
       </div>
       <div class="flex-start">
         <micon type="Car" />
@@ -82,9 +71,7 @@
     <div class="summary-contact">
       <div class="sub-h1">
         THÔNG TIN LIÊN LẠC
-        <span class="ds-body-small ds-link ds-link--variant-regular pointer"
-          >Sửa</span
-        >
+        <span class="ds-body-small ds-link ds-link--variant-regular pointer">Sửa</span>
       </div>
       <div class="custom-name">
         {{ BookingInfo.last_name }} {{ BookingInfo.first_name }}
@@ -98,9 +85,7 @@
         <micon type="ArrowRight" />
       </button>
     </div>
-    <p
-      class="flex-center ds-body-small ds-medium ng-center ng-full-width ng-font-neutral-60 mb-4"
-    >
+    <p class="flex-center ds-body-small ds-medium ng-center ng-full-width ng-font-neutral-60 mb-4">
       Bạn sẽ nhận được thống báo về thông tin đã chọn.
     </p>
   </div>

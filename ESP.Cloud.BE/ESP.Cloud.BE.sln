@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESP.Cloud.BE.Cache", "ESP.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESP.Cloud.BE.Application", "ESP.Cloud.BE.Application\ESP.Cloud.BE.Application.csproj", "{E261CF0E-CC1D-47DE-84AB-849CDB82F9D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESP.Cloud.BE.Jobs", "ESP.Cloud.BE.Jobs\ESP.Cloud.BE.Jobs.csproj", "{44BBF004-A25F-4690-BAF8-1AC5427CD123}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESP.Cloud.BE.Jobs", "ESP.Cloud.BE.Jobs\ESP.Cloud.BE.Jobs.csproj", "{44BBF004-A25F-4690-BAF8-1AC5427CD123}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESP.Cloud.BE.Email", "ESP.Cloud.BE.Email\ESP.Cloud.BE.Email.csproj", "{81BEEC7A-6FB2-49AC-9397-F5FD60AED266}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESP.Cloud.BE.Email", "ESP.Cloud.BE.Email\ESP.Cloud.BE.Email.csproj", "{81BEEC7A-6FB2-49AC-9397-F5FD60AED266}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

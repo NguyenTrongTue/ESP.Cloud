@@ -75,5 +75,13 @@ namespace ESP.Cloud.BE.Application.Service
 
             return result;
         }
+
+        public async Task<List<object>> GetGarageReviewsByIdAsync(GarageReviewsParam param)
+        {
+
+            var result = await _garageDL.GetGarageReviewsByIdAsync(param.garageId, param.take, param.skip);
+
+            return result;
+        }
     }
 }
