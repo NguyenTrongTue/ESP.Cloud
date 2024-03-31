@@ -17,11 +17,11 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<BookingHistoryEntity>> CheckBooking()
+        public async Task<List<BookingDetail>> CheckBooking()
         {
-            var sql = "SELECT *\r\nFROM booking_history\r\nWHERE DATE(booking_date) = CURRENT_DATE + INTERVAL '1 day';";
+            var sql = "select c.make ,c.model ,c.\"year\",g.address,g.garage_name  ,bh.* FROM booking_history bh\r\nleft join cars c on c.cars_id  = bh.cars_id  \r\nleft join garage g on g.garage_id  = bh.garage_id \r\nWHERE DATE(booking_date) = CURRENT_DATE + INTERVAL '1 day';";
 
-            var bookings = await _uow.Connection.QueryAsync<BookingHistoryEntity>(sql);
+            var bookings = await _uow.Connection.QueryAsync<BookingDetail>(sql);
 
             return bookings.ToList();
         }

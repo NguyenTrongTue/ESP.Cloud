@@ -14,7 +14,7 @@ namespace ESP.Cloud.BE.Jobs
                     trigger
                         .ForJob(jobKey)
                         .WithSimpleSchedule(schedule =>
-                            schedule.WithIntervalInHours(12).RepeatForever()));
+                            schedule.WithIntervalInHours(24).RepeatForever()));
         }
     }
 }

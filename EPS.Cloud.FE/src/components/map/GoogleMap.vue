@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       loader: new Loader({
-        apiKey: window.__congfigGoogleMapAPI,
+        apiKey: 'AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg',
         version: "weekly",
         libraries: ["places"],
       }),
@@ -128,9 +128,8 @@ export default {
           </div>
           <div class="info-window__bottom">
             <div class="gara-name__wrapper">
-              <div class="gara-name" style="font-size: 14px;">${
-                this.location.garage_name
-              }</div>
+              <div class="gara-name" style="font-size: 14px;">${this.location.garage_name
+        }</div>
               <div class="rating">
                   <svg
                   style="margin-bottom:3px"
@@ -157,8 +156,8 @@ export default {
 
               <span class="address-text">${this.location.address}</span>
               <span class="address-distance"> (${this.location.distance.toFixed(
-                2
-              )} km)</span>
+          2
+        )} km)</span>
             </div>
             <div class="time-open">
 

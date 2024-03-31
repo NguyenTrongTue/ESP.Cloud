@@ -11,7 +11,7 @@ namespace ESP.Cloud.BE.Core.Model
     {
         [Key]
         /// <summary>
-        /// Id của g arage
+        /// Id của garage
         /// </summary>
         public Guid garage_id { get; set; }
         [Required]

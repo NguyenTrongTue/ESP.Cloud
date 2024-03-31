@@ -1,7 +1,5 @@
 ﻿using ESP.Cloud.BE.Application.Interface;
 using ESP.Cloud.BE.Application.Param;
-using ESP.Cloud.BE.Core.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ESP.Cloud.BE.Host.Controllers
@@ -99,6 +97,25 @@ namespace ESP.Cloud.BE.Host.Controllers
             }
         }
 
+        /// <summary>
+        /// Hảm lấy dịch vụ của gara
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("get_garage_reviews_by_id")]
+        public async Task<IActionResult> GetGarageReviewsById(GarageReviewsParam param)
+        {
+            try
+            {
+                var results = await _garageService.GetGarageReviewsByIdAsync(param);
 
+                return Ok(results);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

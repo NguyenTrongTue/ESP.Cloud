@@ -3,37 +3,22 @@
     <div class="sidebar__top">
       <div class="sidebar__top-title">Gara gần tôi</div>
       <div class="filter__wrapper" v-if="!noneFilter">
-        <div
-          class="filter__item"
-          v-for="(item, index) in listFilter"
-          :key="index"
-          @click="showFilter($event, index)"
-        >
+        <div class="filter__item" v-for="(item, index) in listFilter" :key="index" @click="showFilter($event, index)"
+          :id="filtering.includes(item.id) && 'active'">
           <span>
             {{ item.text }}
           </span>
-          <MFilter
-            :filterId="item.id"
-            :data="item.data"
-            :chooseType="item.choose"
-            :index="index"
-            :modelValue="item.modelValue"
-            v-if="currentIndexFilter == index"
-            @saveOptions="handleSaveOptions"
-            @clearChecked="handleClearChecked"
-          />
+          <MFilter :filterId="item.id" :data="item.data" :chooseType="item.choose" :index="index"
+            :modelValue="item.modelValue" v-if="currentIndexFilter == index" @saveOptions="handleSaveOptions"
+            @clearChecked="handleClearChecked" v-click-outside="$event => handleClickOutside($event)" />
         </div>
       </div>
     </div>
     <div class="sidebar-item__wrapper">
-      <SideBarItem
-        v-for="(location, index) in locations"
-        :key="location?.garage_id"
-        :location="location"
+      <SideBarItem v-for="(location, index) in locations" :key="location?.garage_id" :location="location"
         :garaIndex="index"
         image="https://storage.googleapis.com/rp-production-public-content/3z624a2usqnwc07nb8ni93deixc7"
-        @mouseenter="handleMouseMove(index, location)"
-      />
+        @mouseenter="handleMouseMove(index, location)" @click="handleClickItem(location)" />
     </div>
   </div>
 </template>
@@ -60,6 +45,7 @@ export default {
   },
   data() {
     return {
+      filtering: [],
       listFilter: [
         {
           text: "Loại xe",
@@ -80,7 +66,7 @@ export default {
             },
             {
               text: "Đánh giá cao nhất",
-              value: "total_rating",
+              value: "avg_rating",
               id: 2,
             },
           ],
@@ -135,45 +121,111 @@ export default {
     },
   },
   methods: {
+    /**
+     * Handle click outside event.
+     *
+     * @param {$event} $event - The event object
+     * @return {void} 
+     */
+    handleClickOutside() {
+      if (this.findParentElement(event.target, "filter__item")) {
+        return;
+      } else {
+        this.currentIndexFilter = -1;
+      }
+    },
+
+
+    findParentElement(currentTag, targetTag) {
+      var tag = currentTag,
+        result = false;
+      while (!result && tag && tag !== document) {
+        if (tag.className && tag.className.includes(targetTag)) {
+          result = true;
+        } else {
+          tag = tag.parentElement;
+        }
+      }
+
+      return result;
+    },
+
     handleClearChecked(index) {
-      this.listFilter[3].data = this.listFilter[3].data.map((item) => {
+      const me = this;
+      me.listFilter[3].data = me.listFilter[3].data.map((item) => {
         return {
           ...item,
           value: false,
         };
       });
-      this.$emit("services", []);
-      this.toggleFilter(index);
+      me.$emit("services", []);
+      me.toggleFilter(index);
+
+      me.handleFiltering('services', false);
     },
+    /**
+     * Handle filtering based on the given filterId and value.
+     *
+     * @param {String} filterId - The ID of the filter to be applied
+     * @param {String} value - The value used for filtering
+     */
+    handleFiltering(filterId, value) {
+      const me = this;
+      if (value) {
+
+        if (!me.filtering.includes(filterId)) {
+          me.filtering = [...me.filtering, filterId]
+        }
+      } else {
+        me.filtering = me.filtering.filter(item => item !== filterId)
+      }
+    },
+
+    /**
+     * Handles saving options based on the filterId, value, and index.
+     *
+     * @param {string} filterId - The ID of the filter.
+     * @param {any} value - The value to be saved.
+     * @param {number} index - The index of the filter.
+     * @return {void}
+     */
     handleSaveOptions(filterId, value, index) {
+      const me = this;
       switch (filterId) {
         case "typeCars":
-          this.listFilter[0].modelValue = value;
-          this.$emit("typeCars", value);
+          me.listFilter[0].modelValue = value;
+          me.$emit("typeCars", value);
+
+          me.handleFiltering(filterId, value);
           break;
         case "sortBy":
-          this.listFilter[1].modelValue = value;
+          me.listFilter[1].modelValue = value;
           if (value == "distance") {
-            this.$emit("sortBy", "distance asc");
-          } else if (value == "total_rating") {
-            this.$emit("sortBy", "total_rating desc");
+            me.$emit("sortBy", "distance asc");
+          } else if (value == "avg_rating") {
+            me.$emit("sortBy", "avg_rating desc");
           }
+          me.handleFiltering(filterId, value);
           break;
         case "openTime":
-          this.listFilter[2].modelValue = value;
-          this.$emit("openTime", value ? value : 0);
+          me.listFilter[2].modelValue = value;
+          me.$emit("openTime", value ? value : 0);
+          me.handleFiltering(filterId, value);
           break;
         case "services":
-          this.$emit(
+          me.$emit(
             "services",
-            this.listFilter[3].data
+            me.listFilter[3].data
               .filter((item) => item.value)
               .map((item) => item.text)
           );
+
+          me.handleFiltering(filterId, me.listFilter[3].data
+            .filter((item) => item.value).length > 0);
           break;
       }
 
-      this.toggleFilter(index);
+      me.toggleFilter(index);
     },
     toggleFilter(index) {
       if (this.currentIndexFilter != index) {
@@ -240,6 +292,10 @@ export default {
     handleMouseMove(index, location) {
       this.$emit("showPostion", index, location);
     },
+
+    handleClickItem(location) {
+      this.$router.push({ path: `/garage-detail/${location.garage_id}` });
+    }
   },
 };
 </script>

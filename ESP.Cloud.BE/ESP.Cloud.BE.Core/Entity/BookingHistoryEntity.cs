@@ -33,12 +33,12 @@ namespace ESP.Cloud.BE.Core.Model
         /// <summary>
         /// Bình luận về đặt chỗ
         /// </summary>
-        public string? comment { get; set; }  = string.Empty;
+        public string? comment { get; set; } = string.Empty;
 
         /// <summary>
         /// Ngày đặt chỗ
         /// </summary>
-        public DateTime? booking_date { get; set; }
+        public DateTime booking_date { get; set; }
         /// <summary>
         /// Bình luận về đặt chỗ
         /// </summary>
@@ -55,5 +55,10 @@ namespace ESP.Cloud.BE.Core.Model
         /// Bình luận về đặt chỗ
         /// </summary>
         public string? phone { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Thời gian đặt lịch
+        /// </summary>
+        public DateTime created_date { get; set; } = DateTime.Now;
     }
 }

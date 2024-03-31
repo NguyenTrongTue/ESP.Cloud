@@ -5,7 +5,7 @@
 export const clickOutsideDirective = {
   mounted(el, binding) {
     const onClickOutside = (event) => {
-      if (!(el === event.target || el.contains(event.target))) {
+      if (!(el === event.target || el.contains(event.target) )) {
         binding.value();
       }
     };
