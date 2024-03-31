@@ -1,5 +1,6 @@
 ﻿using ESP.Cloud.BE.Application.Param;
 using ESP.Cloud.BE.Core.Model;
+using System.Threading.Tasks;
 
 namespace ESP.Cloud.BE.Application.Interface
 {
@@ -12,5 +13,8 @@ namespace ESP.Cloud.BE.Application.Interface
         Task<List<object>> GetCarsAsync();
 
         Task<object?> GetGarageByIdAsync(Guid garage_id);
+
+
+        Task<List<object>> GetGarageReviewsByIdAsync(GarageReviewsParam param);
     }
 }

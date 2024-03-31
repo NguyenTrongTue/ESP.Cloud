@@ -34,6 +34,10 @@
     padding: 5px 14px;
     cursor: pointer;
     position: relative;
+    &#active {
+          border: 2px solid #515e68;
+          background-color: #eef2f6;
+    }
   }
 }
 .sidebar-item__wrapper {

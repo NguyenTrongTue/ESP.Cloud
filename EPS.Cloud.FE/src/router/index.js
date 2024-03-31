@@ -8,6 +8,7 @@ import HistoryBooking from "@/views/history-booking/HistoryBooking.vue";
 import Login from "@/views/login/Login.vue";
 import SignUp from "@/views/signup/SignUp.vue";
 import Estimator from "@/views/estimator/Estimator.vue";
+import GarageDetail from "@/views/garage-detail/GarageDetail.vue";
 const routes = [
   {
     name: "home",
@@ -20,6 +21,12 @@ const routes = [
     component: Estimate,
     path: "/estimate/:id",
     meta: { requiresAuth: true, title: "Ước tính gara" },
+  },
+  {
+    name: "garage-detail",
+    component: GarageDetail,
+    path: "/garage-detail/:id",
+    meta: { requiresAuth: true, title: "Chi tiết" },
   },
   {
     name: "booking",

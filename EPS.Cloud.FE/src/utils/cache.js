@@ -9,5 +9,11 @@ function setCache(key, value) {
 function getCache(key) {
   return JSON.parse(localStorage.getItem(key));
 }
-
-export const cache = { setCache, getCache };
+function deleteCache(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (e) {
+    console.log(e);
+  }
+}
+export const cache = { setCache, getCache, deleteCache };
