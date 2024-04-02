@@ -17,8 +17,14 @@
       <div class="header__right-user flex-center">
         <micon type="Search" />
       </div>
-      <div class="header__right-user flex-center">
-        <micon type="Notify" />
+      <div class="header__right-user flex-center" @click="showPopupNotification = !showPopupNotification">
+        <div class="icon-notification">
+          <micon type="Notify" />
+          <span className="badge flex-center">{{ notificationsUnread.length }}</span>
+        </div>
+
+        <PopupNotifications class="popup-notification" :notificationsProps="notifications"
+          v-click-outside="handleClickOutSidePopup" v-if="showPopupNotification" />
       </div>
       <div class="header__right-user flex-center" @click="showPopupAvatar = !showPopupAvatar">
         <div :style="user && { color: '#0098d3' }">
@@ -47,41 +53,43 @@
 import MSearch from "@/components/search/MSearch.vue";
 import Logo from "@/components/logo/Logo.vue";
 import { RouterLink } from "vue-router";
+import PopupNotifications from '@/components/popup/notifications/PopupNotifications.vue';
+import SignalRService from "@/services/SignalRService";
+import NotificationAPI from "@/apis/NotificationAPI";
 export default {
   name: "TheHeader",
-  components: { MSearch, Logo, RouterLink },
+  components: { MSearch, Logo, RouterLink, PopupNotifications },
   inheritAttrs: false,
   props: { ...RouterLink.props },
   data() {
-    return { showPopupAvatar: false, user: null };
+    return {
+      showPopupAvatar: false,
+      showPopupNotification: false,
+      user: null,
+      notifications: []
+    };
   },
   computed: {
     isExternalLink() {
       return typeof this.to === "string" && this.to.startsWith("http");
     },
+
+    notificationsUnread() {
+      return this.notifications.filter(item => item.unread);
+    }
   },
 
   methods: {
+    handleClickOutSidePopup() {
+      this.$ms.common.handleClickOutSide(event.target, "header__right-user", () => {
+        this.showPopupNotification = false
+      });
+    },
     handleClickOutSide() {
-
-      this.showPopupAvatar = false
+      this.$ms.common.handleClickOutSide(event.target, "header__right-user", () => {
+        this.showPopupAvatar = false
+      });
     },
-
-
-    findParent(currentTag, targetTag) {
-      var tag = currentTag,
-        result = false;
-      while (!result && tag.className != "filter__item") {
-        if (tag.className.includes(targetTag)) {
-          result = true;
-        } else {
-          tag = currentTag.parentElement;
-        }
-      }
-
-      return result;
-    },
-
     handleLogin() {
       this.$router.push({
         path: "/login",
@@ -94,27 +102,54 @@ export default {
     },
 
     handleLogout() {
-      this.$common.cache.deleteCache("user");
+      this.$ms.cache.deleteCache("user");
       this.user = null;
       this.showPopupAvatar = false;
       this.$router.push({
         path: "/",
       });
+    },
+    handleMessage(data) {
+      let filterData = JSON.parse(data).filter(item => item.user_id === '00000000-0000-0000-0000-000000000000'
+        || item.user_id === this.user.user_id
+      );
+      this.notifications = [...this.notifications, ...filterData];
+
+
+    },
+    /**
+     * Asynchronously fetches notifications and updates the notifications data.
+     *
+     * @return {Promise<void>} 
+     */
+    async fetchNotifications() {
+      const res = await NotificationAPI.get();
+      if (res && res.length > 0) {
+        this.notifications = res.filter(item => item.user_id === '00000000-0000-0000-0000-000000000000'
+          || item.user_id === this.user.user_id
+        );
+      }
     }
-
-
   },
 
   /**
    * Đăng ký sự kiện resize cho widow
    */
   mounted() {
-    const user = this.$common.cache.getCache("user");
-
+    const user = this.$ms.cache.getCache("user");
+    this.fetchNotifications();
     if (user) {
       this.user = user;
     }
+    SignalRService.start()
+      .then(() => {
+        console.log("Kết nối thành công tới thông báo hệ thống");
+      })
+      .catch(error => {
+        console.error("Kết nối thất bại:", error);
+      });
 
+    SignalRService.on("ReceiveNotification", this.handleMessage);
   },
 };
 </script>

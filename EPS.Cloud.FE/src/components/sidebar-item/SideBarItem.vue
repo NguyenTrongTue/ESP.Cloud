@@ -22,8 +22,8 @@
       <div class="time-open">
         <Clock style="color: rgb(0, 60, 255)" />
         <span :class="buildOpenTimeText.split('·')[0].includes('Đang mở')
-          ? 'active'
-          : 'close'
+        ? 'active'
+        : 'close'
         ">{{ buildOpenTimeText.split("·")[0] }}</span>
         <span> · </span>
         <span>{{ buildOpenTimeText.split("·")[1] }}</span>
@@ -54,8 +54,6 @@ import Clock from "@/components/icons/Clock.vue";
 import Books from "@/components/icons/Books.vue";
 import Direction from "@/components/icons/Direction.vue";
 import Share from "@/components/icons/Share.vue";
-
-import { convertDate } from "@/utils/common";
 
 export default {
   name: "SideBarItem",
@@ -110,7 +108,7 @@ export default {
         return `Đóng cửa · Mở cửa lúc ${house}h${minutes}`;
       } else {
         const [house, minutes] = timeOpen.split(":");
-        return `Đóng cửa · Mở cửa vào ${house}h${minutes} ${convertDate(
+        return `Đóng cửa · Mở cửa vào ${house}h${minutes} ${this.$ms.common.convertDate(
           current.getDay()
         )}`;
       }

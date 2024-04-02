@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import { buildOpenTimeText } from "@/utils/common";
 import BaseBooking from "./BaseBooking.vue";
 export default {
   extends: BaseBooking,

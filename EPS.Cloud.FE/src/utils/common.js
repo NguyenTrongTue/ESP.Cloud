@@ -1,15 +1,59 @@
+import { format, register } from 'timeago.js';
+
+/**
+ * Returns an array of strings based on the given number and index.
+ *
+ * @param {number} number - The number to be used in the array.
+ * @param {number} index - The index of the array to be returned.
+ * @return {array} An array of strings based on the given number and index.
+ * @author nttue 30.03.2024
+ */
+function localeFunc(number, index) {
+  return [
+    ['vừa xong', 'một lúc'],
+    ['%s giây trước', 'trong %s giây'],
+    ['1 phút trước', 'trong 1 phút'],
+    ['%s phút trước', 'trong %s phút'],
+    ['1 giờ trước', 'trong 1 giờ'],
+    ['%s giờ trước', 'trong %s giờ'],
+    ['1 ngày trước', 'trong 1 ngày'],
+    ['%s ngày trước', 'trong %s ngày'],
+    ['1 tuần trước', 'trong 1 tuần'],
+    ['%s tuần trước', 'trong %s tuần'],
+    ['1 tháng trước', 'trong 1 tháng'],
+    ['%s tháng trước', 'trong %s tháng'],
+    ['1 năm trước', 'trong 1 năm'],
+    ['%s năm trước', 'trong %s năm'],
+  ][index];
+}
+
+
+
+/**
+ * Formats the given time using the 'vi-custom' locale.
+ *
+ * @param {type} time - the time to be formatted
+ * @return {type} the formatted time in 'vi-custom' locale
+ * @author nttue 30.03.2024
+ */
+function formatTime(time) {
+  register('vi-custom', localeFunc);
+  return   format(time, 'vi-custom');
+}
+
 /**
  * Uppercase first letter of each word in a string
  * @param {string} value - String to modify
  * @returns {string} String with first letter of each word capitalized
+ * @author nttue 30.03.2024
  */
-export function upperCaseName(value = "") {
+function upperCaseName(value = "") {
   return value
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
-export function convertDate(day) {
+function convertDate(day) {
   let result = "";
   switch (day) {
     case 1:
@@ -38,13 +82,14 @@ export function convertDate(day) {
   return result;
 }
 /**
- * Builds and returns a text representation of the open time based on the current time and the provided open and close times.
+ * Builds and returns a text representation of the open time based on the current time and the provided open and close 
+ * @author nttue 30.03.2024times.
  *
  * @param {string} timeOpen - The opening time in HH:mm format
  * @param {string} timeClose - The closing time in HH:mm format
  * @return {string} The text representation of the open time
  */
-export function buildOpenTimeText(timeOpen, timeClose) {
+function buildOpenTimeText(timeOpen, timeClose) {
   if (timeOpen && timeClose) {
     const current = new Date();
     const open = new Date(
@@ -78,7 +123,7 @@ export function buildOpenTimeText(timeOpen, timeClose) {
   return "";
 }
 
-export function formatAmount(amount) {
+function formatAmount(amount) {
   if (amount) {
     let formattedAmount = amount
       .toString()
@@ -88,3 +133,37 @@ export function formatAmount(amount) {
     return "";
   }
 }
+
+/**
+ * Find the parent element of a given current tag that contains a specific target tag.
+ *
+ * @param {HTMLElement} currentTag - The current tag to start searching from.
+ * @param {string} targetTag - The target tag to search for within the parent elements.
+ * @return {boolean} Returns true if the target tag is found in the parent elements, otherwise false.
+ * @author nttue 30.03.2024
+ */
+function handleClickOutSide(currentTag, parentTag, callback) {
+      var tag = currentTag,
+        result = false;
+      while (!result && tag && tag !== document) {
+        if (tag.className && tag.className.includes(parentTag, callback)) {
+          result = true;
+        } else {
+          tag = tag.parentElement;
+        }
+      }
+  if (result) {
+    return;
+  } else {
+    callback();  
+      }
+  
+}
+export const common = {
+  upperCaseName,
+  convertDate,
+  buildOpenTimeText,
+  formatAmount,
+  handleClickOutSide,
+  formatTime
+};

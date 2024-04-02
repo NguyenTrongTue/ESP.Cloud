@@ -92,7 +92,6 @@
 </template>
 
 <script>
-import { convertDate } from "@/utils/common";
 export default {
   name: "BookingStep4",
   emits: ["nextStep"],
@@ -131,7 +130,7 @@ export default {
      */
     computedDropOff() {
       if (this.bookingInfo) {
-        let day = convertDate(new Date(this.bookingInfo.booking_date).getDay()),
+        let day = this.$ms.common.convertDate(new Date(this.bookingInfo.booking_date).getDay()),
           date = new Date(this.bookingInfo.booking_date).getDate(),
           month = new Date(this.bookingInfo.booking_date).getMonth(),
           hours = new Date(this.bookingInfo.booking_date).getHours(),

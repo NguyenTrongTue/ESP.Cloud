@@ -3,39 +3,22 @@
     <div class="input-label-wrapper" v-if="label">
       <span class="input-label">{{ label }}</span>
       <span class="input-required">{{
-        rules?.includes("required") ? " *" : ""
-      }}</span>
+    rules?.includes("required") ? " *" : ""
+  }}</span>
     </div>
 
     <div class="input-wrapper">
-      <component
-        :is="typeComponent"
-        class="input"
-        ref="minput"
-        :type="typeInput ? typeInput : 'text'"
-        :rules="rules"
-        :name="name"
-        :error="error"
-        :value="dataValue"
-        :style="{ 'text-align': textAlign }"
-        :placeholder="placeholderInput"
-        :tabindex="tabIndex"
-        @input="onInput"
-        @focus="$event.target.select()"
-        @blur="onBlur(name)"
-      />
-      <component
-        :is="showIcon2 ? icon2 : icon1"
-        class="input__icon"
-        @click="clickIcon"
-      ></component>
+      <component :is="typeComponent" class="input" ref="minput" :type="typeInput ? typeInput : 'text'" :rules="rules"
+        :name="name" :error="error" :value="dataValue" :style="{ 'text-align': textAlign }"
+        :placeholder="placeholderInput" :tabindex="tabIndex" @input="onInput" @focus="$event.target.select()"
+        @blur="onBlur(name)" />
+      <component :is="showIcon2 ? icon2 : icon1" class="input__icon" @click="clickIcon"></component>
     </div>
     <div v-show="error" class="input-error">{{ error }}</div>
   </div>
 </template>
 
 <script>
-import { upperCaseName } from "@/utils/common.js";
 import { validate } from "@/utils/validate.js";
 export default {
   name: "InputPri",
@@ -197,7 +180,7 @@ export default {
      */
     onBlur(name) {
       if (this.type && this.dataValue) {
-        this.dataValue = upperCaseName(this.dataValue);
+        this.dataValue = this.$ms.common.upperCaseName(this.dataValue);
       }
       if (
         this.rules?.includes("required") ||
