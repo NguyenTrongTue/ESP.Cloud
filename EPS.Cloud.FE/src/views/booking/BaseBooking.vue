@@ -53,7 +53,6 @@
   </div>
 </template>
 <script>
-import { buildOpenTimeText } from "@/utils/common";
 import validateMixin from "@/mixins/validateMixin.vue";
 export default {
   emits: ["nextStep"],
@@ -91,7 +90,7 @@ export default {
     computedbuildOpenTimeText() {
       let timeOpen = this.garage?.open_time,
         timeClose = this.garage?.close_time;
-      return buildOpenTimeText(timeOpen, timeClose);
+      return this.$ms.common.buildOpenTimeText(timeOpen, timeClose);
     },
   },
   methods: {

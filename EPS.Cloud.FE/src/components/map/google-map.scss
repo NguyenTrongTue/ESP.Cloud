@@ -1,3 +1,4 @@
+@import "@/styles/mixin.scss";
 .info-window {
   width: 300px;
 }
@@ -54,10 +55,7 @@
   display: flex;
   .address-text {
     flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    @include textOverflowEllipsis;
   }
   .address-distance {
     font-size: 12px;

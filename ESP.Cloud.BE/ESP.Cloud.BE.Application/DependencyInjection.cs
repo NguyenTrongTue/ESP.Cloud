@@ -15,6 +15,7 @@ namespace ESP.Cloud.BE.Application
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<ICarService, CarService>();
             services.AddScoped<IAuthService, AuthSerivice>();
+            services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IMapper, Mapper>();
         }
     }

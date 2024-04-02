@@ -1,3 +1,4 @@
+@import "@/styles/mixin.scss";
 .sidebar-item {
   display: flex;
 
@@ -60,10 +61,7 @@ a {
   display: flex;
   .address-text {
     flex: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    @include textOverflowEllipsis;
     margin-left: 4px;
     color: #606f7b;
   }

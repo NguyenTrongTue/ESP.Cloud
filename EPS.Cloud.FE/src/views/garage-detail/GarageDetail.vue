@@ -258,7 +258,7 @@ export default {
           return `Đóng cửa · Mở cửa lúc ${house}h${minutes}`;
         } else {
           const [house, minutes] = timeOpen.split(":");
-          return `Đóng cửa · Mở cửa vào ${house}h${minutes} ${convertDate(
+          return `Đóng cửa · Mở cửa vào ${house}h${minutes} ${this.$ms.common.convertDate(
             current.getDay()
           )}`;
         }

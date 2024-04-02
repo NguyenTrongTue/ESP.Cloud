@@ -3,9 +3,11 @@
     <template v-slot:container>
       <div class="flex-between navigation-top-signup">
         <div class="navigation-top__left flex-center">
-          <a href="/"
-            ><div class="logo"><Logo /></div
-          ></a>
+          <a href="/">
+            <div class="logo">
+              <Logo />
+            </div>
+          </a>
         </div>
         <div class="navigation-top__right">
           <mbutton button-text="Đăng ký" @click="hanldeNavigateToSignup" />
@@ -15,32 +17,15 @@
   </NavigationTop>
   <div class="signup">
     <div class="large-text mb-3">Đăng nhập vào Repair</div>
-    <div class="logo__center"><Logo /></div>
+    <div class="logo__center">
+      <Logo />
+    </div>
     <div class="signup__container">
-      <minput
-        formName="User"
-        label="Email"
-        name="Email"
-        v-model="user.email"
-        ref="Email"
-        placeholder-input="Email"
-        rules="required|email"
-        class="mb-2"
-      />
-      <minput
-        formName="User"
-        label="Mật khẩu"
-        name="Password"
-        v-model="user.password"
-        ref="Password"
-        placeholder-input="Mật khẩu"
-        rules="required"
-        class="mb-2"
-        :icon1="icon1"
-        :icon2="icon2"
-        type-input="password"
-        :click-icon="handleSwitchVisibility"
-      />
+      <minput formName="User" label="Email" name="Email" v-model="user.email" ref="Email" placeholder-input="Email"
+        rules="required|email" class="mb-2" />
+      <minput formName="User" label="Mật khẩu" name="Password" v-model="user.password" ref="Password"
+        placeholder-input="Mật khẩu" rules="required" class="mb-2" :icon1="icon1" :icon2="icon2" type-input="password"
+        :click-icon="handleSwitchVisibility" />
       <div class="forgot-password pointer" @click="handleResetPassword">
         Bạn quên mật khẩu?
       </div>
@@ -109,7 +94,7 @@ export default {
           this.showLoading = true;
           const res = await AuthAPI.login(this.user);
           if (res && res.user_id) {
-            this.$common.cache.setCache("user", res);
+            this.$ms.cache.setCache("user", res);
             this.$router.push({
               path: "/",
             });

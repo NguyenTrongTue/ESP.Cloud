@@ -17,13 +17,30 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<BookingDetail>> CheckBooking()
+        public async Task<NotificationsResult> CheckBooking()
         {
-            var sql = "select c.make ,c.model ,c.\"year\",g.address,g.garage_name  ,bh.* FROM booking_history bh\r\nleft join cars c on c.cars_id  = bh.cars_id  \r\nleft join garage g on g.garage_id  = bh.garage_id \r\nWHERE DATE(booking_date) = CURRENT_DATE + INTERVAL '1 day';";
+            var result = new NotificationsResult();
+            var sql = @"select c.make, c.model, c.""year"", g.address, g.garage_name, bh.*
+                FROM booking_history bh
+                LEFT JOIN cars c ON c.cars_id = bh.cars_id
+                LEFT JOIN garage g ON g.garage_id = bh.garage_id
+                WHERE DATE(booking_date) = CURRENT_DATE + INTERVAL '1 day';
 
-            var bookings = await _uow.Connection.QueryAsync<BookingDetail>(sql);
+                select g.garage_name, count(*) OVER (PARTITION BY g.garage_id) AS discount_total
+                FROM public.promo_garages pg
+                LEFT JOIN garage g ON g.garage_id = pg.garage_id
+                WHERE current_date >= DATE(start_date) AND current_date <= DATE(end_date);";
 
-            return bookings.ToList();
+            using (var multi = await _uow.Connection.QueryMultipleAsync(sql))
+            {
+                var bookings = await multi.ReadAsync<BookingDetail>();
+
+                var promos = await multi.ReadAsync<PromoNofications>();
+                result.bookingDetails = bookings.ToList();
+                result.promoNofications = promos.ToList();
+            }
+
+            return result;
         }
 
         public async Task<List<object>> GetMakeByGarageId(Guid garageId)
@@ -153,7 +170,7 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
             {
                 {"lat" , latitude == null ? 0 : latitude },
                 {"lng" , longitude == null ? 0 : longitude },
-                {"p_estimate_id", p_estimate_id}               
+                {"p_estimate_id", p_estimate_id}
             };
             var param = new DynamicParameters(paramDictionary);
 

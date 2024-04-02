@@ -11,7 +11,7 @@ namespace ESP.Cloud.BE.Core.DL
 
         Task<List<object>> GetGarageServicesAsync(Guid carId);
 
-        Task<List<BookingDetail>> CheckBooking();
+        Task<NotificationsResult> CheckBooking();
 
         Task<List<object>> GetEstimateServiceAsync(Guid carId, List<ServiceCode> serviceCodes);
 

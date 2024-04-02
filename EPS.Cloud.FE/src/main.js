@@ -32,7 +32,7 @@ const app = createApp(App);
 // config
 app.config.globalProperties.$emitter = MyEmitter;
 app.config.globalProperties.$route = router;
-app.config.globalProperties.$common = moudle;
+app.config.globalProperties.$ms = moudle;
 app.config.globalProperties.$MResources = MResources;
 // conponents
 app.component("minput", MInputPri);

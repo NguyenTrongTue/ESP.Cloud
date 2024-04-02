@@ -21,7 +21,7 @@ namespace ESP.Cloud.BE.Host
             // Handle Cors
             builder.Services.AddCors(p => p.AddPolicy("MyCors", build =>
             {
-                build.WithOrigins("http://localhost:5173") // chỉ định nguồn cụ thể
+                build.WithOrigins("http://localhost:5173")
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials();
