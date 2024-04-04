@@ -4,7 +4,6 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-
 COPY ["ESP.Cloud.BE.Cache/ESP.Cloud.BE.Cache.csproj", "ESP.Cloud.BE.Cache/"]
 COPY ["ESP.Cloud.BE.Jobs/ESP.Cloud.BE.Jobs.csproj", "ESP.Cloud.BE.Jobs/"]
 COPY ["ESP.Cloud.BE.Email/ESP.Cloud.BE.Email.csproj", "ESP.Cloud.BE.Email/"]
@@ -24,6 +23,9 @@ RUN dotnet publish "./ESP.Cloud.BE.Host.csproj" -c %BUILD_CONFIGURATION% -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+ENV ASPNETCORE_URLS http://*:5000
+ENV ASPNETCORE_ENVIRONMENT docker
 
 EXPOSE 5000
 ENTRYPOINT ["dotnet", "ESP.Cloud.BE.Host.dll"]
