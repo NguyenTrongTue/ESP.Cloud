@@ -36,6 +36,8 @@
   <CarLarge v-if="type == 'CarLarge'" />
   <Calendar v-if="type == 'Calendar'" />
   <Notify v-if="type == 'Notify'" />
+  <Check v-if="type == 'Check'" />
+  <Popular v-if="type == 'Popular'" />
 </template>
 
 <script>
@@ -75,6 +77,8 @@ import Certification from "./Certification.vue";
 import CarLarge from "./CarLarge.vue";
 import Calendar from "./Calendar.vue";
 import Notify from "./Notify.vue";
+import Check from "./Check.vue";
+import Popular from "./Popular.vue";
 
 export default {
   name: "Icon",
@@ -129,7 +133,9 @@ export default {
     Certification,
     CarLarge,
     Calendar,
-    Notify
+    Notify,
+    Check,
+    Popular
   },
 };
 </script>

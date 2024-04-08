@@ -26,6 +26,7 @@ import MSearch from "./components/search/MSearch.vue";
 import MCardSelect from "./components/cardselect/MCardSelect.vue";
 import InputRadio from "./components/radio/MRadio.vue";
 import MRating from "./components/rating/MRating.vue";
+import StarRating from "@/components/star-rating/StarRating.vue";
 
 const app = createApp(App);
 
@@ -48,6 +49,7 @@ app.component("msearch", MSearch);
 app.component("mcardselect", MCardSelect);
 app.component("mradio", InputRadio);
 app.component("mrating", MRating);
+app.component("starrating", StarRating);
 app.directive("click-outside", clickOutsideDirective);
 
 app.use(i18n).use(router).use(store).mount("#app");

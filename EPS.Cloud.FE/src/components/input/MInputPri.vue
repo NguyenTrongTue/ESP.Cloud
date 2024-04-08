@@ -11,10 +11,16 @@
       <component :is="typeComponent" class="input" ref="minput" :type="typeInput ? typeInput : 'text'" :rules="rules"
         :name="name" :error="error" :value="dataValue" :style="{ 'text-align': textAlign }"
         :placeholder="placeholderInput" :tabindex="tabIndex" @input="onInput" @focus="$event.target.select()"
-        @blur="onBlur(name)" />
+        :maxlength="maxLength > 0 && maxLength" @blur="onBlur(name)" spellcheck="false" />
       <component :is="showIcon2 ? icon2 : icon1" class="input__icon" @click="clickIcon"></component>
     </div>
-    <div v-show="error" class="input-error">{{ error }}</div>
+    <div class="flex-between">
+      <div v-show="error" class="input-error">{{ error }}</div>
+      <div class="input_maxlength" v-if="typeComponent === 'textarea' && maxLength > 0">{{ computedModelValueLength
+        }}/{{ maxLength }} ký tự
+        được sử dụng
+      </div>
+    </div>
   </div>
 </template>
 
@@ -82,6 +88,10 @@ export default {
       type: Function,
       required: false,
     },
+    maxLength: {
+      type: Number,
+      default: 0,
+    }
   },
 
   data() {
@@ -99,7 +109,11 @@ export default {
       this.assignDataValue(newValue);
     },
   },
-
+  computed: {
+    computedModelValueLength() {
+      return this.modelValue ? this.modelValue.length : 0;
+    }
+  },
   methods: {
     /**
      * Format lại giá trị hiển thị trong input theo định dạng.
@@ -171,6 +185,16 @@ export default {
       this.$nextTick(() => {
         this.$refs.input.select();
         this.$refs.input.focus();
+      });
+    },
+    /**
+     * @description hàm thiết lập chiều cao của input theo chiều cao của nội dung trong input
+     * @author nttue 03.03.2024
+     */
+    setHeightInput(height) {
+      this.$nextTick(() => {
+        this.$refs.minput.style.height = height + 'px';
+        this.$refs.minput.style.minHeight = height + 'px';
       });
     },
 

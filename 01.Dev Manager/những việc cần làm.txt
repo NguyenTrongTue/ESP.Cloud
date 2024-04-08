@@ -1,0 +1,9 @@
+- sử dụng store để lưu thông tin car, make, year.
+- các đầu API cần viết:
+    - Tìm câu hỏi theo make, model, year.
+    - Search câu hỏi theo title
+    - Lưu thông tin câu hỏi
+    - Phản hồi thông tin cho người dùng
+    - Lưu thông tin câu trả lời
+    - Lấy danh sách câu hỏi theo make, model, year
+    - Lấy DS câu trả lời theo ID câu hỏi.
