@@ -10,7 +10,7 @@
         <router-link to="/promo"> <span>Khuyến mãi</span></router-link>
         <router-link to="/history-booking">
           <span>Lịch sử sửa chữa</span></router-link>
-        <router-link to="/notify"> <span>Thông báo</span></router-link>
+        <router-link to="/questions"> <span>Thảo luận</span></router-link>
       </div>
     </div>
     <div class="header__right">
@@ -47,6 +47,7 @@
       </div>
     </div>
   </div>
+  <div class="horizontal-separator"></div>
 </template>
 
 <script>

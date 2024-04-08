@@ -24,8 +24,11 @@ export default {
   width: 100%;
   height: calc(100vh);
 }
+
 .container.has-header {
   display: flex;
-  height: calc(100vh - var(--header-height));
+  height: calc(100vh - var(--header-height) - 1px);
+  overflow-y: auto;
+  
 }
 </style>

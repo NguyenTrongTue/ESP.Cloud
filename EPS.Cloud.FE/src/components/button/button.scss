@@ -15,6 +15,13 @@
   &:hover {
     background-color: #006890;
     border: 1px solid #006890;
+     transition: .2s linear all;
+  }
+  &.disabled {
+    background: #fff;
+    color:#8795a1;;
+    border: 1px solid#8795a1;;
+    cursor: not-allowed;
   }
 }
 .btn.none-background {
@@ -22,7 +29,9 @@
   color: #0098d3;
   &:hover {
     border: 2px solid #0098d3;
-    color: #0098d3;
+    background-color: #0098d3;
+    color: #fff;
+    transition: .2s linear all;
   }
 }
 

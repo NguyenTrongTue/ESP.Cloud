@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using ESP.Cloud.BE.Application.Interface;
 using ESP.Cloud.BE.Application.Service;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ESP.Cloud.BE.Application
@@ -16,6 +15,8 @@ namespace ESP.Cloud.BE.Application
             services.AddScoped<ICarService, CarService>();
             services.AddScoped<IAuthService, AuthSerivice>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IQuestionsService, QuestionsService>();
+            services.AddScoped<IAnswerService, AnswerService>();
             services.AddScoped<IMapper, Mapper>();
         }
     }
