@@ -12,6 +12,14 @@
         Task<TEntity> InsertAsync(TEntity entity);
 
         /// <summary>
+        /// Hàm chèn nhiều bản ghi của một bảng
+        /// </summary>
+        /// <param name="entity">dữ liệu bản ghi</param>
+        /// <returns>Trả về bản ghi được chèn</returns>
+        /// Created by: nttue(14/02/202)
+        Task InsertBatchAsync(List<TEntity> entity);
+
+        /// <summary>
         /// Hàm cập nhật 1 bản ghi của một bảng
         /// </summary>
         /// <param name="id"> id của bản ghi</param>

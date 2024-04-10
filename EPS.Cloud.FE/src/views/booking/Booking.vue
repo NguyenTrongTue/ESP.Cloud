@@ -10,9 +10,11 @@
           {{ $t("i18nBooking.Title") }} {{ garage?.garage_name }}
         </div>
         <div class="top__right">
-          <a href="/"
-            ><div class="logo"><micon type="Logo" /></div
-          ></a>
+          <a href="/">
+            <div class="logo">
+              <micon type="Logo" />
+            </div>
+          </a>
         </div>
       </div>
     </template>
@@ -21,14 +23,10 @@
   <div class="appointment">
     <!-- Subheader drop off > vehicle > contact > sumary-->
     <div class="sub-header flex-center">
-      <div
-        v-for="item in listSteps"
-        class="step flex-center"
-        :class="{
+      <div v-for="item in listSteps" class="step flex-center" :class="{
           'step-active': currentStep == item.step,
           'step-done': currentStep > item.step,
-        }"
-      >
+        }">
         <span class="step-name" @click="handleChooseStep(item)">{{
           item.text
         }}</span>
@@ -43,28 +41,16 @@
       </div>
       <!-- Bước chọn phương tiện -->
       <div class="steps" v-else-if="currentStep === 2">
-        <BookingStep2
-          :bookingInfo="BookingInfo"
-          :garage-id="BookingInfo.garage_id"
-          @nextStep="handleNextStep3"
-          :garageProps="garage"
-        />
+        <BookingStep2 :bookingInfo="BookingInfo" :garage-id="BookingInfo.garage_id" @nextStep="handleNextStep3"
+          :garageProps="garage" />
       </div>
       <!-- Bước nhập thông tin liên lạc -->
       <div class="steps" v-else-if="currentStep === 3">
-        <BookingStep3
-          @nextStep="handleNextStep4"
-          :garageProps="garage"
-          :bookingInfo="BookingInfo"
-        />
+        <BookingStep3 @nextStep="handleNextStep4" :garageProps="garage" :bookingInfo="BookingInfo" />
       </div>
       <!-- Bước tổng kết -->
       <div class="steps" v-else>
-        <BookingStep4
-          @nextStep="handleSubmit"
-          :garageProps="garage"
-          :bookingInfo="BookingInfo"
-        />
+        <BookingStep4 @nextStep="handleSubmit" :garageProps="garage" :bookingInfo="BookingInfo" />
       </div>
     </div>
   </div>
@@ -135,7 +121,7 @@ export default {
     async handleSubmit() {
       try {
         this.$store.commit("showLoading");
-        const value = this.$common.cache.getCache("user");
+        const value = this.$ms.cache.getCache("user");
         this.BookingInfo.user_id = value.user_id;
         await BookingAPI.post(this.BookingInfo);
         this.$store.commit("hideLoading");

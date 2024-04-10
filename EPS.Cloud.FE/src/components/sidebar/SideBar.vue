@@ -128,27 +128,11 @@ export default {
      * @return {void} 
      */
     handleClickOutside() {
-      if (this.findParentElement(event.target, "filter__item")) {
-        return;
-      } else {
+      this.$ms.common.handleClickOutSide(event.target, "filter__item", () => {
         this.currentIndexFilter = -1;
-      }
+      });
     },
 
-
-    findParentElement(currentTag, targetTag) {
-      var tag = currentTag,
-        result = false;
-      while (!result && tag && tag !== document) {
-        if (tag.className && tag.className.includes(targetTag)) {
-          result = true;
-        } else {
-          tag = tag.parentElement;
-        }
-      }
-
-      return result;
-    },
 
     handleClearChecked(index) {
       const me = this;
@@ -235,8 +219,8 @@ export default {
       }
     },
     async initialData() {
-      let carsList = this.$common.cache.getCache("cars");
-      let servicesList = this.$common.cache.getCache("services");
+      let carsList = this.$ms.cache.getCache("cars");
+      let servicesList = this.$ms.cache.getCache("services");
       if (carsList && carsList.length >= 0) {
         this.listFilter[0].data = [...carsList];
       } else {
@@ -249,7 +233,7 @@ export default {
           };
         });
         this.listFilter[0].data = [...dataConvert];
-        this.$common.cache.setCache("cars", dataConvert);
+        this.$ms.cache.setCache("cars", dataConvert);
       }
 
       if (servicesList && servicesList.length >= 0) {
@@ -264,7 +248,7 @@ export default {
           };
         });
         this.listFilter[3].data = [...dataConvert];
-        this.$common.cache.setCache("services", dataConvert);
+        this.$ms.cache.setCache("services", dataConvert);
       }
     },
     showFilter(event, index) {

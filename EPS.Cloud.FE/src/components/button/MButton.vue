@@ -3,7 +3,7 @@
     <component :is="icon" class="btn-icon"></component>
     {{ buttonText }}
   </button>
-  <button v-else class="btn">{{ buttonText }}</button>
+  <button v-else class="btn" :class="disabled ? 'disabled' : ''">{{ buttonText }}</button>
 </template>
 
 <script>
@@ -27,8 +27,12 @@ export default {
       type: Object,
       required: true,
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
   },
-  data() {},
+  data() { },
   watch: {},
 
   methods: {},

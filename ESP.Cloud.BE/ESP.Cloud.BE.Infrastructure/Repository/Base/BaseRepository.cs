@@ -1,4 +1,5 @@
-﻿using ESP.Cloud.BE.Core.BaseDL;
+﻿using Dapper;
+using ESP.Cloud.BE.Core.BaseDL;
 using ESP.Cloud.BE.Core.BaseDL.Repository;
 
 namespace ESP.Cloud.BE.Infrastructure.Repository.Base
@@ -47,6 +48,31 @@ namespace ESP.Cloud.BE.Infrastructure.Repository.Base
             await _uow.ExecuteDefault(sql, param);
 
             return entity;
+        }
+
+        public async Task InsertBatchAsync(List<TEntity> entity)
+        {
+            var entityProperties = typeof(TEntity).GetProperties();
+            var param = new Dictionary<string, object>();
+            var listParamNames = new List<string>();
+            var listPropertyNames = new List<string>();
+
+            foreach (var property in entityProperties)
+            {
+                var propertyName = property.Name;
+                var paramValue = property.GetValue(entity[0]);
+                if (paramValue != null)
+                {
+                    param.Add("@" + propertyName, paramValue);
+                    listParamNames.Add("@" + propertyName);
+                    listPropertyNames.Add(propertyName);
+                }
+            }
+
+            var sql = $"insert into public.{TableName}({string.Join(",", listPropertyNames)}) " +
+                      $"values ({string.Join(",", listParamNames)})";
+
+            await _uow.Connection.ExecuteAsync(sql, entity);
         }
 
         public async Task<TEntity> UpdateAsync(Guid id, TEntity entity)

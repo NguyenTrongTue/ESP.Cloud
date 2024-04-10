@@ -4,6 +4,8 @@ import Home from "@/views/home/Home.vue";
 import Estimate from "@/views/estimate/Estimate.vue";
 import Booking from "@/views/booking/Booking.vue";
 import Promo from "@/views/promo/Promo.vue";
+import Questions from "@/views/questions/Questions.vue";
+import Answer from "@/views/questions/Answer.vue";
 import HistoryBooking from "@/views/history-booking/HistoryBooking.vue";
 import Login from "@/views/login/Login.vue";
 import SignUp from "@/views/signup/SignUp.vue";
@@ -45,6 +47,20 @@ const routes = [
     component: Promo,
     path: "/promo",
     meta: { requiresAuth: false, title: "Chương trình khuyến mãi" },
+  },
+{
+    name: "answer",
+    path: "/answer/:id",
+    component: Answer,
+    meta: { requiresAuth: false, title: "Thảo luận" },
+   
+  },
+  {
+    name: "questions",
+    component: Questions,
+    path: "/questions",
+    meta: { requiresAuth: false, title: "Thảo luận" },
+   
   },
   {
     name: "history-booking",

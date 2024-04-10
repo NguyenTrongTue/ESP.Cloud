@@ -65,7 +65,6 @@
 
 <script>
 import BaseBooking from "./BaseBooking.vue";
-import { convertDate } from "@/utils/common";
 import BookingAPI from "@/apis/BookingAPI";
 export default {
   extends: BaseBooking,
@@ -133,7 +132,7 @@ export default {
      */
     computedDropOff() {
       if (this.booking_date) {
-        let day = convertDate(new Date(this.booking_date).getDay()),
+        let day = this.$ms.common.convertDate(new Date(this.booking_date).getDay()),
           date = new Date(this.booking_date).getDate(),
           month = new Date(this.booking_date).getMonth(),
           hours = new Date(this.booking_date).getHours(),
