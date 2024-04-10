@@ -26,13 +26,14 @@ import MSearch from "./components/search/MSearch.vue";
 import MCardSelect from "./components/cardselect/MCardSelect.vue";
 import InputRadio from "./components/radio/MRadio.vue";
 import MRating from "./components/rating/MRating.vue";
+import StarRating from "@/components/star-rating/StarRating.vue";
 
 const app = createApp(App);
 
 // config
 app.config.globalProperties.$emitter = MyEmitter;
 app.config.globalProperties.$route = router;
-app.config.globalProperties.$common = moudle;
+app.config.globalProperties.$ms = moudle;
 app.config.globalProperties.$MResources = MResources;
 // conponents
 app.component("minput", MInputPri);
@@ -48,6 +49,7 @@ app.component("msearch", MSearch);
 app.component("mcardselect", MCardSelect);
 app.component("mradio", InputRadio);
 app.component("mrating", MRating);
+app.component("starrating", StarRating);
 app.directive("click-outside", clickOutsideDirective);
 
 app.use(i18n).use(router).use(store).mount("#app");

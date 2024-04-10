@@ -49,7 +49,7 @@ export default {
     });
   },
   async mounted() {
-    let value = this.$common.cache.getCache("coords");
+    let value = this.$ms.cache.getCache("coords");
     if (value) {
       this.center = {
         lat: value.latitude,
@@ -74,7 +74,7 @@ export default {
       if (newValue) {
         this.center.lat = +newValue;
         if (newValue && this.center.lng) {
-          this.$common.cache.setCache("coords", {
+          this.$ms.cache.setCache("coords", {
             latitude: this.center.lat,
             longitude: this.center.lng,
           });
@@ -87,7 +87,7 @@ export default {
       if (newValue) {
         this.center.lng = +newValue;
         me.asignCenter();
-        this.$common.cache.setCache("coords", {
+        this.$ms.cache.setCache("coords", {
           latitude: this.center.lat,
           longitude: this.center.lng,
         });
@@ -138,7 +138,7 @@ export default {
         .then((data) => {
           console.log(data);
 
-          this.$common.cache.setCache("currentAddress", data);
+          this.$ms.cache.setCache("currentAddress", data);
         })
         .catch((error) => {
           console.error("Lỗi:", error);

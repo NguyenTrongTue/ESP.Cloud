@@ -13,9 +13,11 @@ namespace ESP.Cloud.BE.Infrastructure
         {
             services.AddScoped<IGarageDL, GarageDL>();
             services.AddScoped<IBookingDL, BookingDL>();
-
             services.AddScoped<ICarDL, CarDL>();
             services.AddScoped<IUserDL, UserDL>();
+            services.AddScoped<INotificationDL, NotificationDL>();
+            services.AddScoped<IQuestionsDL, QuestionsDL>();
+            services.AddScoped<IAnswerDL, AnswerDL>();
 
             var connectionString = configuation.GetConnectionString("ESP");
             services.AddScoped<IUnitOfWork>((provider => new UnitOfWork(connectionString)));

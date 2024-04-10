@@ -1,3 +1,4 @@
+@import "@/styles/mixin.scss";
 .appointment {
   width: 100%;
 }
@@ -146,10 +147,7 @@ a {
   gap: 8px;
   .address-text {
     flex: 1;
-    white-space: wrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    @include textOverflowEllipsis;
   }
 }
 

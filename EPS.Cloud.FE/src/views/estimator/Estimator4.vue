@@ -43,27 +43,21 @@
                     </div>
                   </div>
                   <div class="cost-range">
-                    <span
-                      class="labor-bar round-right"
-                      style="width: 100%"
-                    ></span>
+                    <span class="labor-bar round-right" style="width: 100%"></span>
                     <span class="parts-bar" style="width: 0%"></span>
                   </div>
                 </div>
                 <div class="estimate-details">
                   <div class="estimate-detail">
-                    <span class="estimate-detail-disclaimer-text"
-                      >Ước tính này không bao gồm thuế, phí chẩn đoán và các
+                    <span class="estimate-detail-disclaimer-text">Ước tính này không bao gồm thuế, phí chẩn đoán và các
                       loại phụ phí khác.
                       <button class="learn-more-btn">Tìm hiểu thêm</button>
                     </span>
                   </div>
                   <div class="estimate-info-bottom-actions">
                     <div class="button-bottom-wrapper">
-                      <mbutton
-                        @click="handleGetResult"
-                        :buttonText="`Xem ${resultEstimate.total_locations} Địa điểm`"
-                      />
+                      <mbutton @click="handleGetResult"
+                        :buttonText="`Xem ${resultEstimate.total_locations} Địa điểm`" />
                     </div>
                     <div class="estimate-info-actions">
                       <div class="actions-wrapper">
@@ -97,9 +91,7 @@
                 <a class="edit-link" href="/estimator/repair-services">Sửa</a>
               </div>
               <div class="estimate-info-repair-notes">
-                <a class="estimate-info-repair-notes-link"
-                  >Xem nhật ký sửa chữa</a
-                >
+                <a class="estimate-info-repair-notes-link">Xem nhật ký sửa chữa</a>
               </div>
               <div class="dotted-separator"></div>
             </div>
@@ -151,7 +143,6 @@
 
 <script>
 import BookingAPI from "@/apis/BookingAPI";
-import { formatAmount } from "@/utils/common";
 export default {
   name: "Estimator4",
   emits: ["nextStep"],
@@ -182,7 +173,7 @@ export default {
   },
   mounted() {
     this.getEstimateForServices();
-    let value = this.$common.cache.getCache("currentAddress");
+    let value = this.$ms.cache.getCache("currentAddress");
     this.currentAddress = value.results[0];
   },
   methods: {
@@ -194,7 +185,7 @@ export default {
       this.resultEstimate = result[0];
     },
     format(amount) {
-      return formatAmount(amount) + " VNĐ";
+      return this.$ms.common.formatAmount(amount) + " VNĐ";
     },
     handleGetResult() {
       this.$router.push({

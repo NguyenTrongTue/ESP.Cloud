@@ -1,17 +1,12 @@
 <template>
   <div class="select">
     <p class="combobox-label">{{ label }}</p>
-    <div
-      class="combobox flex-between"
-      v-click-outside="handleClickOutSide"
-      @click="handleShowDropdown"
-    >
-      <div
-        class="combobox-selected"
-        :class="{
-          'combobox-selected__empty': comboboxValue == '',
-        }"
-      >
+    <div class="combobox flex-between" v-click-outside="handleClickOutSide" :class="{
+      'has_border': hasBorder
+    }" @click="handleShowDropdown">
+      <div class="combobox-selected" :class="{
+      'combobox-selected__empty': comboboxValue == ''
+    }">
         {{ comboboxValue == "" ? defaultText : comboboxValue }}
       </div>
       <div class="arrow-down pointer">
@@ -20,15 +15,9 @@
       </div>
 
       <div class="combobox-dropdown" v-show="showDropDown">
-        <div
-          class="combobox-item d-flex"
-          :class="{
-            'item-selected': item == comboboxValue,
-          }"
-          @click="handleChooseValue(item)"
-          v-for="(item, index) in items"
-          :key="index"
-        >
+        <div class="combobox-item d-flex" :class="{
+      'item-selected': item == comboboxValue,
+    }" @click="handleChooseValue(item)" v-for="(item, index) in items" :key="index">
           {{ item }}
         </div>
       </div>
@@ -60,6 +49,10 @@ export default {
       type: Array,
       default: [],
     },
+    hasBorder: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

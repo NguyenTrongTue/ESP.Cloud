@@ -1,3 +1,4 @@
+@import "@/styles/mixin.scss";
 .header {
   width: 100%;
   height: var(--header-height);
@@ -42,7 +43,7 @@
     cursor: pointer;
     &:hover {
       color: #08a5ce;
-      text-decoration: none;
+      text-decoration: underline;
     }
   }
 }
@@ -54,8 +55,9 @@
   border-radius: 4px;
   transition: 0.2 all linear;
   &:hover {
-    background: #f2f8fa;
-    color: #08a5ce;
+    svg {
+      @include active;
+    }
   }
 }
 .popup-avatar {
@@ -79,5 +81,21 @@
     letter-spacing: -0.02em;
     color: #212121;
     text-align: center;
+  }
+}
+.icon-notification{
+  position: relative;
+
+    .badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: rgb(254, 44, 85);
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
   }
 }

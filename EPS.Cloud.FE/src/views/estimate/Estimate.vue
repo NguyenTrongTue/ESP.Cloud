@@ -1,14 +1,7 @@
 <template>
   <div class="home">
-    <SideBar
-      :locationProps="locations"
-      :none-filter="true"
-      @sortBy="handleSortBy"
-      @typeCars="handleTypeCars"
-      @openTime="handleOpenTime"
-      @services="handleServices"
-      @showPostion="handleShowPostion"
-    />
+    <SideBar :locationProps="locations" :none-filter="true" @sortBy="handleSortBy" @typeCars="handleTypeCars"
+      @openTime="handleOpenTime" @services="handleServices" @showPostion="handleShowPostion" />
     <GoogleMap :center="center" :locations="locations" ref="google-map" />
     <!-- <Test /> -->
   </div>
@@ -39,7 +32,7 @@ export default {
   async mounted() {
     try {
       let currentCoords =
-        this.$common.cache.getCache("currentAddress").results[0].geometry
+        this.$ms.cache.getCache("currentAddress").results[0].geometry
           .location;
       if (currentCoords) {
         this.center = {
@@ -52,7 +45,7 @@ export default {
 
         this.searchData();
       }
-    } catch (e) {}
+    } catch (e) { }
   },
   watch: {
     searchObject: {
