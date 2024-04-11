@@ -1,0 +1,56 @@
+.promo-page-wrapper {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+
+.promo-filter-left {
+  max-width: 300px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  height: 100%;
+}
+
+.promo-list-right {
+  flex: 1;
+  height: 100%;
+}
+
+.article-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Chia phần còn lại thành 3 cột */
+  grid-gap: 30px; /* Khoảng cách giữa các bài viết */
+}
+
+.article-large {
+  grid-column: 1 / span 2; /* Bài viết lớn chiếm 2 cột */
+}
+
+.article-small {
+  grid-column: 3; /* Các bài viết nhỏ nằm ở cột thứ 3 */
+  display: grid;
+  grid-row-gap: 30px;
+}
+
+.article-grid {
+  grid-column: 1 / span 3; /* Các dòng bài viết nằm ở cả 3 cột */
+  display: grid;
+  row-gap: 30px;
+}
+
+.article-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Mỗi dòng gồm 3 cột */
+  grid-gap: 30px;
+}
+
+.article-item {
+  /* Thêm các style cho từng bài viết */
+  border: 1px solid #e0e0e0;
+  height: 100%;
+  position: relative;
+}
