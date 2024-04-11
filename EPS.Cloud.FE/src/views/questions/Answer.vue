@@ -11,8 +11,6 @@
                 {{ question.make }} {{ question.model }} {{ question.year }}
 
             </div>
-
-
             <div class="author_questions mt-2 mb-1">
                 {{ question.user_name }} - {{ computedTime(question.created_date) }}
             </div>
@@ -27,7 +25,7 @@
             Trả lời
         </div>
         <AnswerPopup ref="AnswerPopup" :questionId="question.questions_id" @update="handleUpdateAnswer" />
-        <div class="popular_answer flex-start mb-2">
+        <div class="popular_answer flex-start mb-2" v-if="listAnswer.length > 0">
             <micon type="Popular" />
             <span class="ml-1"> Câu trả lời phổ biến</span>
 
@@ -40,10 +38,27 @@
                         <span class="time_answer">{{ computedTime(item.created_date) }}</span>
                     </div>
                     <div class="answer_description"> {{ item.answers_content }}</div>
-                    <div class="reply mt-2" @click="handleReply(item.id)">Phản hồi</div>
+                    <div class="reply mt-2" @click="handleReply(item.answers_id)">Phản hồi</div>
 
-                    <AnswerPopup :ref="`AnswerPopup_${item.id}`" :isReply="true" :replyToAnswerId="item.answers_id"
-                        :questionId="question.questions_id" @update="handleUpdateAnswer" />
+                    <AnswerPopup :ref="`AnswerPopup_${item.answers_id}`" :isReply="true"
+                        :replyToAnswerId="item.answers_id" :questionId="question.questions_id"
+                        @update="handleUpdateReply" />
+
+                    <div class="list_reply">
+                        <div v-if="item.list_reply" v-for="reply_item in (item.list_reply)" :key="reply_item.answers_id"
+                            class="reply_item">
+                            <div>
+                                <span class="author_name">{{ reply_item.user_name }}&nbsp - &nbsp</span>
+                                <span class="time_answer">{{ computedTime(reply_item.created_date) }}</span>
+                            </div>
+                            <div class="answer_description"> {{ reply_item.answers_content }}</div>
+                            <div class="reply mt-2" @click="handleReply(reply_item.answers_id)">Phản hồi</div>
+                            <AnswerPopup :ref="`AnswerPopup_${reply_item.answers_id}`" :isReply="true"
+                                :replyToAnswerId="item.answers_id" :questionId="question.questions_id"
+                                @update="handleUpdateReply" />
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,6 +94,20 @@ export default {
 
     methods: {
         /**
+         * Handle updating a reply in the list of answers.
+         *
+         * @param {object} objectMaster - The object containing reply information
+         * @return {void} 
+         */
+        handleUpdateReply(objectMaster) {
+            let index = this.listAnswer.findIndex((item) => item.answers_id === objectMaster.reply_to_answer_id);
+            if (!this.listAnswer[index].list_reply || !this.listAnswer[index].list_reply.length) {
+                this.listAnswer[index].list_reply = [objectMaster];
+            } else {
+                this.listAnswer[index].list_reply.push(objectMaster);
+            }
+        },
+        /**
          * Handle updating an answer object.
          *
          * @param {object} objectMaster - The object to be added to the listAnswer array.
@@ -110,7 +139,12 @@ export default {
             this.question_id = this.$route.params.id;
 
             const result = await AnswersAPI.getAnswerByQuestionId(this.question_id);
-            this.listAnswer = result.answers;
+            this.listAnswer = result.answers.map(item => {
+                return {
+                    ...item,
+                    list_reply: JSON.parse(item.list_reply)
+                }
+            });
             this.question = result.question[0];
 
         }
