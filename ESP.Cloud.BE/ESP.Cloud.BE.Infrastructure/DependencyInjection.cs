@@ -18,6 +18,7 @@ namespace ESP.Cloud.BE.Infrastructure
             services.AddScoped<INotificationDL, NotificationDL>();
             services.AddScoped<IQuestionsDL, QuestionsDL>();
             services.AddScoped<IAnswerDL, AnswerDL>();
+            services.AddScoped<IPromotionDL, PromotionDL>();
 
             var connectionString = configuation.GetConnectionString("ESP");
             services.AddScoped<IUnitOfWork>((provider => new UnitOfWork(connectionString)));
