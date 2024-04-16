@@ -57,7 +57,6 @@ import { RouterLink } from "vue-router";
 import PopupNotifications from '@/components/popup/notifications/PopupNotifications.vue';
 import SignalRService from "@/services/SignalRService";
 import NotificationAPI from "@/apis/NotificationAPI";
-import * as signalR from "@microsoft/signalr";
 export default {
   name: "TheHeader",
   components: { MSearch, Logo, RouterLink, PopupNotifications },
@@ -143,7 +142,6 @@ export default {
     if (user) {
       this.user = user;
     }
-    if (SignalRService.state === signalR.HubConnectionState.Disconnected) {
 
       SignalRService.start()
         .then(() => {
@@ -153,7 +151,7 @@ export default {
           console.error("Kết nối thất bại:", error);
         });
 
-    }
+    
     SignalRService.on("ReceiveNotification", this.handleMessage);
   },
   beforeUnmount() {
