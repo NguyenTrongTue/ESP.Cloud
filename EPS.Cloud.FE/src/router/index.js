@@ -11,6 +11,7 @@ import Login from "@/views/login/Login.vue";
 import SignUp from "@/views/signup/SignUp.vue";
 import Estimator from "@/views/estimator/Estimator.vue";
 import GarageDetail from "@/views/garage-detail/GarageDetail.vue";
+import PromoDetail from "@/views/promo-detail/PromoDetail.vue";
 const routes = [
   {
     name: "home",
@@ -79,6 +80,12 @@ const routes = [
     component: SignUp,
     path: "/signup",
     meta: { requiresAuth: false, title: "Đăng ký", showHeader: false },
+  },
+  {
+    name: "promo-detail",
+    component: PromoDetail,
+    path: "/promo-detail",
+    meta: { requiresAuth: false, title: "Đăng ký", showHeader: true },
   },
 ];
 

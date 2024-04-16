@@ -27,7 +27,9 @@ import MCardSelect from "./components/cardselect/MCardSelect.vue";
 import InputRadio from "./components/radio/MRadio.vue";
 import MRating from "./components/rating/MRating.vue";
 import StarRating from "@/components/star-rating/StarRating.vue";
-
+import PromoFilter from "@/components/promo-filter/PromoFilter.vue";
+import PromoItem from "./components/promo-item/PromoItem.vue";
+import Pagination from "./components/pagination/Pagination.vue";
 const app = createApp(App);
 
 // config
@@ -50,6 +52,9 @@ app.component("mcardselect", MCardSelect);
 app.component("mradio", InputRadio);
 app.component("mrating", MRating);
 app.component("starrating", StarRating);
+app.component("promofilter", PromoFilter);
+app.component("promoitem", PromoItem);
+app.component("pagination", Pagination);
 app.directive("click-outside", clickOutsideDirective);
 
 app.use(i18n).use(router).use(store).mount("#app");
