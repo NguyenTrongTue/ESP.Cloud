@@ -18,8 +18,5 @@ export default {
   invoke(methodName, ...args) {
     return connection.invoke(methodName, ...args);
   },
-  disconnect() {
-    return connection.stop();
-  },
-  state: connection.state
+
 };
