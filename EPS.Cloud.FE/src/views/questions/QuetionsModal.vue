@@ -22,10 +22,12 @@
                     <div class="questions_grid">
                         <mcombobox :hasBorder="true" default-text="Chọn hãng xe" class="combobox_item mb-1"
                             :items="makeList" v-model="objectMaster.make" :disabled="false" />
-                        <mcombobox :hasBorder="true" default-text="Chọn năm" v-model="objectMaster.year"
-                            class="combobox_item mb-1" :items="yearList" :disabled="!objectMaster.make" />
+
                         <mcombobox :hasBorder="true" default-text="Chọn mẫu xe" v-model="objectMaster.model"
-                            class="combobox_item mb-1" :items="modelList" :disabled="!objectMaster.year" />
+                            class="combobox_item mb-1" :items="modelList" :disabled="!objectMaster.make" />
+
+                        <mcombobox :hasBorder="true" default-text="Chọn năm" v-model="objectMaster.year"
+                            class="combobox_item mb-1" :items="yearList" :disabled="!objectMaster.model" />
                     </div>
                 </div>
                 <div class="question_group">

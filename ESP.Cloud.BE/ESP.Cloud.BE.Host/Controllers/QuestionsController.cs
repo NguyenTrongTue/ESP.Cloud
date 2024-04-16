@@ -100,41 +100,20 @@ namespace ESP.Cloud.BE.Host.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        /// <summary>
-        /// Hàm lấy thông tin câu hỏi theo year
-        /// </summary>
-        /// <param name="make"></param>
-        /// <param name="year"></param>
-        /// <returns></returns>
-        /// Created by: nttue 07/04/2024
-        [HttpGet("get_questions_by_year")]
-        public async Task<IActionResult> GetQuestionByYear(string make, int year)
-        {
-            try
-            {
-                var results = await _questionsService.GetQuestionByYearAsync(make, year);
-
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+        
         /// <summary>
         /// Hàm lấy thông tin câu hỏi theo model
         /// </summary>
         /// <param name="make"></param>
-        /// <param name="year"></param>
         /// <param name="model"></param>
         /// <returns></returns>
         /// Created by: nttue 07/04/2024
         [HttpGet("get_questions_by_model")]
-        public async Task<IActionResult> GetQuestionByModel(string make, int year, string model)
+        public async Task<IActionResult> GetQuestionByModel(string make, string model)
         {
             try
             {
-                var results = await _questionsService.GetQuestionByModelAsync(make, year, model);
+                var results = await _questionsService.GetQuestionByModelAsync(make, model);
 
                 return Ok(results);
             }

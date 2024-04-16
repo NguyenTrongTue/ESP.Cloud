@@ -43,11 +43,30 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
             return result;
         }
 
-        public async Task<List<object>> GetAnswerRecently()
+        public async Task<List<object>> GetAnswerRecently(string make, string model, int year)
         {
+            var filterBy = "1 = 1";
+            var paramDicnary = new Dictionary<string, object>();
 
-            var sql = "select distinct q.questions_id, q.questions_title,q.make, q.year, q.model, coalesce(a.answer_total, 0) as answer_total, q.created_date \r\nfrom questions q \r\nleft join lateral\r\n(select count(*) over(partition by a1.questions_id) as answer_total, \r\na1.created_date from  public.answers a1\r\nwhere a1.questions_id = q.questions_id) as a on true\r\norder by q.created_date desc;";
-            var answers = await _uow.Connection.QueryAsync<object>(sql);
+            if (!String.IsNullOrEmpty(make))
+            {
+                filterBy += " AND make ilike @make";
+                paramDicnary.Add("@make", make);
+            }
+            if (!String.IsNullOrEmpty(model))
+            {
+                filterBy += " AND model ilike @model";
+                paramDicnary.Add("@model", model);
+            }
+            if (year > 0)
+            {
+                filterBy += " AND year = @year";
+                paramDicnary.Add("@year", year);
+            }
+
+            var param = new DynamicParameters(paramDicnary);
+            var sql = "SELECT DISTINCT q.questions_id, q.questions_title, q.make, q.year, q.model, COALESCE(a.answer_total, 0) AS answer_total, q.created_date FROM questions q LEFT JOIN LATERAL (SELECT COUNT(DISTINCT user_id) AS answer_total FROM public.answers a1 WHERE a1.questions_id = q.questions_id) AS a ON TRUE WHERE " + filterBy + " ORDER BY q.created_date DESC";
+            var answers = await _uow.Connection.QueryAsync<object>(sql, param);
 
             return answers.ToList();
         }

@@ -8,26 +8,27 @@
 
       </div>
 
-      <div class="questions__card_right pointer">
-        <div class="flex-start mb-4 mt-1">
+      <a class="questions__card_right pointer" :href="computedLinkByTilte(questionCardProps)">
+        <div class=" mb-4 mt-1">
 
-          <div class="question__card_title"> Câu hỏi {{ questionCardProps.car_name }}</div>
-          <div class="questions__total">({{ questionCardProps.total_question }})</div>
+          <span class="question__card_title"> Câu hỏi {{ questionCardProps.car_name }}</span>
+          <span class="questions__total">({{ questionCardProps.total_question }})</span>
         </div>
 
         <span class="view_all">Xem tất cả</span>
-      </div>
+      </a>
     </div>
 
-    <div class="questions_card__popular">
+    <div class="questions_card__popular"
+      v-if="questionCardProps.list_popular && questionCardProps.list_popular.length > 0">
       <div class="questions_card__popular_title">
         Mẫu xe phổ biến: <span>&nbsp;</span>
       </div>
       <div class="list_popular">
 
         <span v-for="(item, index) in JSON.parse(questionCardProps.list_popular)" :key="item">
-          <span class="popular_item">{{ item }}</span><span
-            v-if="index < JSON.parse(questionCardProps.list_popular).length - 1">,
+          <a class="popular_item" :href="computedLink(item)">{{ item }}</a>
+          <span v-if="index < JSON.parse(questionCardProps.list_popular).length - 1">,
           </span>
         </span>
 
@@ -53,8 +54,40 @@ export default {
     }
   },
   watch: {},
+  computed: {
+    computedLink() {
+      return (make) => {
+        const carName = this.questionCardProps.car_name.replace(/ /g, "-");
+        const formattedMake = make?.toString()?.replace(/ /g, "-") || "";
+        return `${window.__baseURLFE}/questions/${carName}/${formattedMake}`;
+      };
+    },
+    computedLinkByTilte() {
+      return questionCardProps => {
 
-  methods: {},
+        const { year, model, make } = questionCardProps;
+        const carName = make.replace(/ /g, "-");
+
+        if (year) {
+          const modelSlug = model?.replace(/ /g, "-") || "";
+          return `${window.__baseURLFE}/questions/${carName}/${modelSlug}/${year}`;
+        }
+        if (model) {
+          const modelSlug = model?.replace(/ /g, "-") || "";
+          return `${window.__baseURLFE}/questions/${carName}/${modelSlug}`;
+        }
+        if (make) {
+          return `${window.__baseURLFE}/questions/${carName}`;
+        }
+      }
+    }
+
+  },
+
+  methods: {
+
+
+  },
 };
 </script>
 

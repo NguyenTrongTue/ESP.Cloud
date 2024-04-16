@@ -15,12 +15,12 @@ class QuestionsAPI extends BaseAPI {
   /**
    * Retrieves a question using the car ID.
    *
-   * @param {type} carId - The ID of the car to get the question for
+   * @param {type} make - The make of the car to get the question for
    * @return {type} The result of the request
    */
-  getQuestionByCar(carId) {
+  getQuestionByCar(make) {
     return request.get(
-      this.url + `/get_questions_by_car?carId=${carId}`
+      this.url + `/get_questions_by_car?make=${make}`
     );
   }
 
@@ -40,15 +40,10 @@ GetQuestionByMake(make) {
       this.url + `/get_questions_by_make?make=${make}`
     );
   }
-  GetQuestionByYear(make, year) {
-    return request.get(
-      this.url + `/get_questions_by_year?make=${make}&year=${year}`
-    );
-  }
 
-  GetQuestionByModel(make, year, model) {
+  GetQuestionByModel(make, model) {
     return request.get(
-      this.url + `/get_questions_by_model?make=${make}&year=${year}&model=${model}`
+     this.url + `/get_questions_by_model?make=${make}&model=${model}`
     );
   }
 }

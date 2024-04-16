@@ -33,9 +33,7 @@
 }
 
 .search_input{
-    display: flex ;
-    align-items: center;
-    justify-content: space-between;
+    position: relative;
     gap: 12px;
     .quetions_input {
         flex: 1;
@@ -200,7 +198,7 @@ margin-bottom: 12px;
 }
 .answer_card{
     border-bottom: 1px solid #b8c2cc;
-    padding: 12px;
+    padding: 24px;
 }
 .list_answer{
     width: 100%;
@@ -265,4 +263,67 @@ font-weight: 500;
     font-size: 16px;
     font-weight: 500;
     color: #606f7b;
+}
+
+
+.no_answer {
+    background-color: rgba($color: #000000, $alpha: .05);
+     margin-top: 12px;
+        padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.no_answer__title {
+font-weight: 500;
+
+}
+
+.no_answer__button {
+    width: 200px;
+}
+
+.search_wrapper {
+    position: relative;
+        width: 100%;
+    }
+    
+    .list_search{
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        border-top: 1px solid rgba($color: #000000, $alpha: .12);
+        border-left: 1px solid rgba($color: #000000, $alpha: .12);
+        border-right: 1px solid rgba($color: #000000, $alpha: .12);
+
+         box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);
+        .search_item {
+            background-color: #fff;
+            border-bottom: 1px solid rgba($color: #000000, $alpha: .12);
+            padding: 8px;
+    color: #08a5ce;
+    cursor: pointer;
+    &:hover {
+        background-color: #08a5ce;
+        color: #fff;
+    }
+}
+}
+.question__navigator {
+    display: flex;
+}
+.question__navigator_item {
+color:  #424242;
+.question__navigator_text {
+    font-size: 14px;
+    &:hover {
+        text-decoration: underline;
+        color: #08a5ce;
+    }
+}
+.active {
+    color: #909090;
+}
 }

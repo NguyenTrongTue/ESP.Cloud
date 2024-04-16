@@ -37,7 +37,7 @@
     <div class="main-content">
       <!-- Bước chọn ngày, giờ -->
       <div class="steps" v-if="currentStep === 1">
-        <BookingStep1 @nextStep="handleNextStep2" :garageProps="garage" />
+        <BookingStep1 :bookingInfo="BookingInfo" @nextStep="handleNextStep2" :garageProps="garage" />
       </div>
       <!-- Bước chọn phương tiện -->
       <div class="steps" v-else-if="currentStep === 2">
@@ -46,11 +46,11 @@
       </div>
       <!-- Bước nhập thông tin liên lạc -->
       <div class="steps" v-else-if="currentStep === 3">
-        <BookingStep3 @nextStep="handleNextStep4" :garageProps="garage" :bookingInfo="BookingInfo" />
+        <BookingStep3 :bookingInfo="BookingInfo" @nextStep="handleNextStep4" :garageProps="garage" />
       </div>
       <!-- Bước tổng kết -->
       <div class="steps" v-else>
-        <BookingStep4 @nextStep="handleSubmit" :garageProps="garage" :bookingInfo="BookingInfo" />
+        <BookingStep4 :bookingInfo="BookingInfo" @nextStep="handleSubmit" :garageProps="garage" />
       </div>
     </div>
   </div>
@@ -160,9 +160,11 @@ export default {
      * @return {type}
      * @author nttue 12.03.2024
      */
-    handleNextStep2(timeInfo) {
+    handleNextStep2(timeObject) {
       this.currentStep = 2;
-      this.BookingInfo.booking_date = timeInfo;
+      this.BookingInfo.booking_date = timeObject.timeInfo;
+      this.BookingInfo.date = timeObject.date;
+      this.BookingInfo.timeSelected = timeObject.timeSelected;
     },
     /**
      * Set the current step to 3 and update booking information with the provided details.

@@ -19,7 +19,7 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
 
         public async Task<List<object>> GetQuestionPopular()
         {
-            var sql = "select make as car_name, count(*) as total_question, jsonb_agg(model) as list_popular from questions q group by make order by make asc;";
+            var sql = "select make as car_name, make, count(*) as total_question, jsonb_agg(model) as list_popular from questions q group by make order by make asc;";
             var questions = await _uow.Connection.QueryAsync<object>(sql);
 
             return questions.ToList();
@@ -42,55 +42,44 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
         {
             var paramDicnary = new Dictionary<string, object>
                 {
-                    { $"@title", title }
+                    { "@title", $"%{title}%" }
                 };
+
             var param = new DynamicParameters(paramDicnary);
-            var sql = "select * from questions q where questions_title  ilike '%@title%';";
+            var sql = "SELECT * FROM questions q WHERE questions_title ILIKE @title;";
             var questions = await _uow.Connection.QueryAsync<object>(sql, param);
 
             return questions.ToList();
         }
+
 
         public async Task<List<object>> GetQuestionByMakeAsync(string make)
         {
             var paramDicnary = new Dictionary<string, object>
                 {
-                    { $"@make", make }
+                    { $"@make", $"%{make}%" }
                 };
             var param = new DynamicParameters(paramDicnary);
-            var sql = "select * from questions q where make  ilike '%@make%';";
+            var sql = "select make || ' ' || model as car_name,make, model, count(*) as total_question, jsonb_agg(year) as list_popular from questions q where make  ilike  @make group by make, model order by make asc;";
             var questions = await _uow.Connection.QueryAsync<object>(sql, param);
 
             return questions.ToList();
         }
 
-        public async Task<List<object>> GetQuestionByYearAsync(string make, int year)
+        public async Task<List<object>> GetQuestionByModelAsync(string make, string model)
         {
             var paramDicnary = new Dictionary<string, object>
                 {
-                    { $"@make", make },
-                    { $"@year", year }
+                 { $"@make", $"%{make}%" },
+                { $"@model", $"%{model}%" }
                 };
             var param = new DynamicParameters(paramDicnary);
-            var sql = "select * from questions q where make  ilike '%@make%' and year  = @year;";
+            var sql = "select make || ' ' || model || ' ' || year as car_name,make, model, year, count(*) as total_question from questions q where make  ilike  @make and model ilike @model group by make, model, year order by make asc;";
             var questions = await _uow.Connection.QueryAsync<object>(sql, param);
 
             return questions.ToList();
         }
 
-        public async Task<List<object>> GetQuestionByModelAsync(string make, int year, string model)
-        {
-            var paramDicnary = new Dictionary<string, object>
-                {
-                    { $"@make", make },
-                    { $"@year", year },
-                    { $"@model", model }
-                };
-            var param = new DynamicParameters(paramDicnary);
-            var sql = "select * from questions q where make  ilike '%@make%' and year  = @year and model = @model ;";
-            var questions = await _uow.Connection.QueryAsync<object>(sql, param);
 
-            return questions.ToList();
-        }
     }
 }
