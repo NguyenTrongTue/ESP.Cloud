@@ -68,6 +68,7 @@ export default {
           await AnswersAPI.post(objectMaster);
           this.$emit("update", objectMaster);
           this.showPopup = false;
+          this.answer.answers_content = "";
         }
       } catch (e) {
         console.log(e);
