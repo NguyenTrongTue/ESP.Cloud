@@ -65,12 +65,12 @@ namespace ESP.Cloud.BE.Host.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        [HttpGet("get_model_by_garage_id")]
-        public async Task<IActionResult> GetModelByGarageId(Guid garageId, string make, int year)
+        [HttpGet("get_year_by_garage_id")]
+        public async Task<IActionResult> GetYearByGarageId(Guid garageId, string make, string model)
         {
             try
             {
-                var results = await _bookingService.GetModelByGarageId(garageId, make, year);
+                var results = await _bookingService.GetYearByGarageId(garageId, make, model);
 
                 return Ok(results);
             }
@@ -82,15 +82,16 @@ namespace ESP.Cloud.BE.Host.Controllers
         /// <summary>
         /// Hảm lấy dịch vụ của gara
         /// </summary>
-        /// <param name="param"></param>
+        /// <param name="garageId"></param>
+        ///  <param name="make"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        [HttpGet("get_year_by_garage_id")]
-        public async Task<IActionResult> GetYearByGarageId(Guid garageId, string make)
+        [HttpGet("get_model_by_garage_id")]
+        public async Task<IActionResult> GetModelByGarageId(Guid garageId, string make)
         {
             try
             {
-                var results = await _bookingService.GetYearByGarageId(garageId, make);
+                var results = await _bookingService.GetModelByGarageId(garageId, make);
 
                 return Ok(results);
             }

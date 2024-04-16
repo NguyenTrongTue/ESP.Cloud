@@ -5,29 +5,17 @@
         <h2>Khi nào bạn muốn sửa?</h2>
       </div>
       <div class="steps-left-body">
-        <date-picker
-          label=""
-          v-model="BookingInfo.date"
-          name="DateOfBirth"
-          ref="DateOfBirth"
-          rules="date"
-          tabIndex="3"
-          class="grid__column-4"
-        />
+        <date-picker label="" v-model="BookingInfo.date" name="DateOfBirth" ref="DateOfBirth" rules="date" tabIndex="3"
+          class="grid__column-4" />
       </div>
       <div class="steps-left-footer">
         <p class="ds-sub-heading-1 mt-3">{{ buildText }}</p>
 
         <div class="time-list">
-          <div
-            v-for="(item, index) in timeList"
-            :key="index"
-            class="time-slots"
-            @click="handleSelectedTime(item)"
+          <div v-for="(item, index) in timeList" :key="index" class="time-slots" @click="handleSelectedTime(item)"
             :class="{
-              'time-picker-selected': item.value == BookingInfo.timeSelected,
-            }"
-          >
+    'time-picker-selected': item.value == BookingInfo.timeSelected,
+  }">
             <span> {{ item.text }}</span>
           </div>
         </div>
@@ -46,7 +34,12 @@ export default {
     BaseBooking,
   },
 
-  props: {},
+  props: {
+    bookingInfo: {
+      type: Object,
+      default: {}
+    }
+  },
   data() {
     var currentDate = new Date();
     return {
@@ -56,10 +49,18 @@ export default {
         timeSelected: null,
       },
       timeList: [],
+      isFirstLoadPage: false
     };
   },
   mounted() {
     // this.calculationTimeList();
+    if (this.bookingInfo.booking_date) {
+      this.isFirstLoadPage = true;
+      this.calculationTimeList();
+
+      this.BookingInfo.date = this.bookingInfo.date;
+      this.BookingInfo.timeSelected = this.bookingInfo.timeSelected;
+    }
   },
   watch: {
     garageProps: {
@@ -72,7 +73,9 @@ export default {
       handler(newGarage) {
         if (newGarage) {
           this.garage = newGarage;
-          this.calculationTimeList();
+          if (!this.isFirstLoadPage) {
+            this.calculationTimeList();
+          }
         }
       },
       deep: true,
@@ -102,12 +105,19 @@ export default {
      * @return {void}
      */
     handleNextStep() {
+      if (!this.BookingInfo.timeSelected) {
+        this.BookingInfo.timeSelected = this.timeList[0];
+      }
       let timeInfo = this.adjustTime(
         new Date(this.BookingInfo.date),
         this.BookingInfo.timeSelected
       );
 
-      this.$emit("nextStep", timeInfo);
+      this.$emit("nextStep", {
+        timeInfo,
+        date: this.BookingInfo.date,
+        timeSelected: this.BookingInfo.timeSelected
+      });
     },
     /**
      * Adjusts the time of the original date by adding the specified number of hours.
@@ -143,9 +153,9 @@ export default {
       const { open_time, close_time } = this.garage;
 
       let startHour =
-          open_time.split(":")[1] == 30
-            ? +open_time.split(":")[0] + 0.5
-            : +open_time.split(":")[0],
+        open_time.split(":")[1] == 30
+          ? +open_time.split(":")[0] + 0.5
+          : +open_time.split(":")[0],
         endHour =
           close_time.split(":")[1] == 30
             ? +close_time.split(":")[0] + 0.5
@@ -177,15 +187,19 @@ export default {
 
 <style scoped>
 @import "./booking.scss";
+
 .steps-left-body {
   height: 430px;
 }
+
 .steps-left-footer {
   border-top: 1px solid #b8c2cc;
+
   p {
     text-align: center;
   }
 }
+
 .next-step {
   gap: 4px;
   font-weight: 500;

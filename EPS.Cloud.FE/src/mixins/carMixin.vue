@@ -14,28 +14,29 @@ export default {
                 make: null,
                 year: null,
                 model: null
-            }
+            },
+            isFirstLoadPage: false,
         }
     },
 
     watch: {
         "objectMaster.make"(newValue) {
-            if (newValue) {
-                this.fetchYears();
+            if (newValue && !this.isFirstLoadPage) {
+                this.fetchModel();
                 this.objectMaster.year = null;
                 this.objectMaster.model = null;
             }
         },
-        "objectMaster.year"(newValue) {
-            if (newValue) {
-                this.fetchModel();
-                this.objectMaster.model = null;
+        "objectMaster.model"(newValue) {
+            if (newValue && !this.isFirstLoadPage) {
+                this.fetchYears();
+                this.objectMaster.year = null;
             }
         },
-        "objectMaster.model"(newValue) {
-            if (newValue) {
+        "objectMaster.year"(newValue) {
+            if (newValue && !this.isFirstLoadPage) {
                 this.objectMaster.cars_id = this.modelAndIdCarList.find(
-                    (item) => item.model == newValue
+                    (item) => item.year == newValue
                 ).cars_id;
             }
         },
@@ -53,9 +54,11 @@ export default {
             try {
                 const result = await BookingAPI.getYearsByGarageIdAndMake(
                     this.garageId,
-                    this.objectMaster.make
+                    this.objectMaster.make,
+                    this.objectMaster.model
                 );
                 this.yearList = result.map((item) => item.year);
+                this.modelAndIdCarList = result;
             } catch {
             }
         },
@@ -63,11 +66,11 @@ export default {
             try {
                 const result = await BookingAPI.getModelsByGarageId(
                     this.garageId,
-                    this.objectMaster.make,
-                    this.objectMaster.year
+                    this.objectMaster.make
+
                 );
                 this.modelList = result.map((item) => item.model);
-                this.modelAndIdCarList = result;
+
             } catch {
             }
         },

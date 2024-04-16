@@ -6,7 +6,7 @@
       </div>
       <div class="header__left-category">
         <router-link to="/"> <span>Tìm gara</span></router-link>
-        <router-link to="/estimator"> <span>Ưóc tính</span></router-link>
+        <router-link to="/estimator"> <span>Ước tính</span></router-link>
         <router-link to="/promo"> <span>Khuyến mãi</span></router-link>
         <router-link to="/history-booking">
           <span>Lịch sử sửa chữa</span></router-link>
@@ -57,6 +57,7 @@ import { RouterLink } from "vue-router";
 import PopupNotifications from '@/components/popup/notifications/PopupNotifications.vue';
 import SignalRService from "@/services/SignalRService";
 import NotificationAPI from "@/apis/NotificationAPI";
+import * as signalR from "@microsoft/signalr";
 export default {
   name: "TheHeader",
   components: { MSearch, Logo, RouterLink, PopupNotifications },
@@ -142,16 +143,22 @@ export default {
     if (user) {
       this.user = user;
     }
-    SignalRService.start()
-      .then(() => {
-        console.log("Kết nối thành công tới thông báo hệ thống");
-      })
-      .catch(error => {
-        console.error("Kết nối thất bại:", error);
-      });
+    if (SignalRService.state === signalR.HubConnectionState.Disconnected) {
 
+      SignalRService.start()
+        .then(() => {
+          console.log("Kết nối thành công tới thông báo hệ thống");
+        })
+        .catch(error => {
+          console.error("Kết nối thất bại:", error);
+        });
+
+    }
     SignalRService.on("ReceiveNotification", this.handleMessage);
   },
+  beforeUnmount() {
+    SignalRService.disconnect();
+  }
 };
 </script>
 

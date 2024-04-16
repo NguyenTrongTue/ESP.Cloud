@@ -12,7 +12,6 @@ import SideBar from "@/components/sidebar/SideBar.vue";
 import Test from "@/components/Test.vue";
 import GarageAPI from "@/apis/GarageAPI";
 import { useGeolocation } from "@vueuse/core";
-import SignalRService from "@/services/SignalRService";
 const { coords } = useGeolocation();
 export default {
   components: {
@@ -57,15 +56,6 @@ export default {
       };
       this.asignCenter();
     }
-    SignalRService.start()
-      .then(() => {
-        console.log("Connected to SignalR Hub");
-      })
-      .catch(error => {
-        console.error("Connection to SignalR Hub failed:", error);
-      });
-
-    SignalRService.on("ReceiveNotification", this.handleMessage);
 
   },
   watch: {
