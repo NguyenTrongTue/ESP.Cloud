@@ -12,15 +12,15 @@
         <div class="horizontal-separator mt-1"></div>
         <div class="form-step3 mt-3">
           <div class="row-100 flex-center">
-            <minput label="Họ và tên đệm" name="FirstName" v-model="BookingInfo.last_name" ref="FirstName"
+            <minput label="Họ và tên đệm" name="FirstName" v-model="objectMaster.last_name" ref="FirstName"
               placeholder-input="Họ và tên đệm" rules="required|maxlength_100" formName="Booking"
               class="mb-2 row-50 mr-1" />
-            <minput label="Tên" name="LastName" v-model="BookingInfo.first_name" ref="LastName" placeholder-input="Tên"
+            <minput label="Tên" name="LastName" v-model="objectMaster.first_name" ref="LastName" placeholder-input="Tên"
               rules="required|maxlength_100" formName="Booking" class="mb-2 row-50" />
           </div>
-          <minput label="Email" name="Email" v-model="BookingInfo.email" ref="Email" placeholder-input="Email"
+          <minput label="Email" name="Email" v-model="objectMaster.email" ref="Email" placeholder-input="Email"
             rules="required|email" formName="Booking" class="mb-2 row-100" />
-          <minput label="Số điện thoại" name="Phone" v-model="BookingInfo.phone" ref="Phone"
+          <minput label="Số điện thoại" name="Phone" v-model="objectMaster.phone" ref="Phone"
             placeholder-input="Số điện thoại" rules="required|maxlength_10" formName="Booking" class="mb-2 row-100" />
         </div>
       </div>
@@ -78,7 +78,16 @@ export default {
     },
   },
   data() {
-    return { booking_date: this.bookingInfo.booking_date };
+    return {
+      booking_date: this.bookingInfo.booking_date,
+      objectMaster: {}
+    };
+  },
+  mounted() {
+
+    if (this.bookingInfo.last_name) {
+      this.objectMaster = { ...this.bookingInfo };
+    }
   },
   methods: {
     /**
@@ -87,7 +96,7 @@ export default {
      */
     handleNextStep() {
       if (!this.handleValidate()) {
-        this.$emit("nextStep", this.BookingInfo);
+        this.$emit("nextStep", this.objectMaster);
       }
     },
   },

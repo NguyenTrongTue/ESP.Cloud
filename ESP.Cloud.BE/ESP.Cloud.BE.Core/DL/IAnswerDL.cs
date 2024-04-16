@@ -13,7 +13,7 @@ namespace ESP.Cloud.BE.Core.DL
         /// Created by: nttue 07/04/2024
         Task<Dictionary<string, object>> GetAnswerByQuestionIdAsync(Guid questionId);
 
-         Task<List<object>> GetAnswerRecently();
+        Task<List<object>> GetAnswerRecently(string make, string model, int year);
 
     }
 }

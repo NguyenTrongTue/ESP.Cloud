@@ -36,19 +36,13 @@ namespace ESP.Cloud.BE.Application.Service
             return result;
         }
 
-        public async Task<List<object>> GetQuestionByModelAsync(string make, int year, string model)
+        public async Task<List<object>> GetQuestionByModelAsync(string make,  string model)
         {
-            var result = await _questionDL.GetQuestionByModelAsync(make, year, model);
+            var result = await _questionDL.GetQuestionByModelAsync(make, model);
 
             return result;
         }
 
-        public async Task<List<object>> GetQuestionByYearAsync(string make, int year)
-        {
-            var result = await _questionDL.GetQuestionByYearAsync(make, year);
-
-            return result;
-        }
 
         public override async Task<QuestionsEntity> MapCreateDtoToEntity(CreateQuestionsDto createBookingDto)
         {

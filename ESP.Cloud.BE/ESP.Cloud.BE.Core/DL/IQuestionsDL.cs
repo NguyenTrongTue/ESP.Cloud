@@ -37,19 +37,10 @@ namespace ESP.Cloud.BE.Core.DL
         /// Hàm lấy thông tin câu hỏi theo year
         /// </summary>
         /// <param name="make"></param>
-        /// <param name="year"></param>
-        /// <returns></returns>
-        /// Created by: nttue 07/04/2024
-        Task<List<object>> GetQuestionByYearAsync(string make, int year);
-        /// <summary>
-        /// Hàm lấy thông tin câu hỏi theo model
-        /// </summary>
-        /// <param name="make"></param>
-        /// <param name="year"></param>
         /// <param name="model"></param>
         /// <returns></returns>
         /// Created by: nttue 07/04/2024
-        Task<List<object>> GetQuestionByModelAsync(string make, int year, string model);
+        Task<List<object>> GetQuestionByModelAsync(string make, string model);
 
     }
 }

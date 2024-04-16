@@ -56,13 +56,33 @@ const routes = [
     meta: { requiresAuth: false, title: "Thảo luận" },
    
   },
-  {
-    name: "questions",
-    component: Questions,
-    path: "/questions",
-    meta: { requiresAuth: false, title: "Thảo luận" },
-   
-  },
+{
+  name: "questions",
+  component: Questions,
+  path: "/questions",
+  meta: { requiresAuth: false, title: "Thảo luận" },
+  children: [
+    {
+      name: "Make",
+      path: ':make', 
+      component: Questions,
+       
+    },
+    {
+      name: "Model",
+      path: ':make/:model', 
+      component: Questions,
+       
+    },
+    {
+      name: "Year",
+      path: ':make/:model/:year', 
+      component: Questions,
+       
+    }
+  ]
+}
+,
   {
     name: "history-booking",
     component: HistoryBooking,

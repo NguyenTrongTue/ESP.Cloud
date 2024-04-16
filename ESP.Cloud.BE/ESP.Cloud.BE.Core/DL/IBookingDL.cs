@@ -6,9 +6,8 @@ namespace ESP.Cloud.BE.Core.DL
     public interface IBookingDL : IBaseRepository<BookingHistoryEntity>
     {
         Task<List<object>> GetMakeByGarageId(Guid garageId);
-        Task<List<object>> GetYearByGarageId(Guid garageId, string make);
-        Task<List<object>> GetModelByGarageId(Guid garageId, string make, int year);
-
+        Task<List<object>> GetModelByGarageId(Guid garageId, string make);
+        Task<List<object>> GetYearByGarageId(Guid garageId, string make, string model);
         Task<List<object>> GetGarageServicesAsync(Guid carId);
 
         Task<NotificationsResult> CheckBooking();

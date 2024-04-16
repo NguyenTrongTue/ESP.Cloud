@@ -38,6 +38,7 @@
   <Notify v-if="type == 'Notify'" />
   <Check v-if="type == 'Check'" />
   <Popular v-if="type == 'Popular'" />
+  <Answer v-if="type == 'Answer'" />
 </template>
 
 <script>
@@ -79,6 +80,7 @@ import Calendar from "./Calendar.vue";
 import Notify from "./Notify.vue";
 import Check from "./Check.vue";
 import Popular from "./Popular.vue";
+import Answer from "./Answer.vue";
 
 export default {
   name: "Icon",
@@ -135,7 +137,8 @@ export default {
     Calendar,
     Notify,
     Check,
-    Popular
+    Popular,
+    Answer
   },
 };
 </script>

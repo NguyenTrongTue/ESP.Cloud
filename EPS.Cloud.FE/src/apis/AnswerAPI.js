@@ -20,12 +20,12 @@ class AnswersAPI extends BaseAPI {
   /**
    *  A description of the entire function.
    *
-   *  @param {type} paramName - description of parameter
+   *  @param {Object} payload - description of parameter
    *  @return {type} description of return value
    */
-  getAnswerRecently() {
-    return request.get(
-      this.url + `/get_answer_recently`
+  getAnswerRecently(payload) {
+    return request.post(
+      this.url + `/get_answer_recently`, payload
     );
   }
 }

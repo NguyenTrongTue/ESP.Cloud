@@ -3,7 +3,10 @@
     <component :is="icon" class="btn-icon"></component>
     {{ buttonText }}
   </button>
-  <button v-else class="btn" :class="disabled ? 'disabled' : ''">{{ buttonText }}</button>
+  <component :is="type === 'link' ? 'a' : 'button'" :href="href" v-else class="btn" :class="disabled ? 'disabled' : ''">
+
+    {{ buttonText }}
+  </component>
 </template>
 
 <script>
@@ -17,7 +20,7 @@ export default {
 
     type: {
       validator(value) {
-        return ["default", "icon"].includes(value);
+        return ["default", "icon", 'link'].includes(value);
       },
       type: String,
       default: "default",
@@ -30,7 +33,11 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    }
+    },
+    href: {
+      type: String,
+      default: "",
+    },
   },
   data() { },
   watch: {},

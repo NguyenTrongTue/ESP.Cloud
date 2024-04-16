@@ -25,44 +25,56 @@
             Trả lời
         </div>
         <AnswerPopup ref="AnswerPopup" :questionId="question.questions_id" @update="handleUpdateAnswer" />
-        <div class="popular_answer flex-start mb-2" v-if="listAnswer.length > 0">
-            <micon type="Popular" />
-            <span class="ml-1"> Câu trả lời phổ biến</span>
+        <div v-if="listAnswer.length > 0">
+            <div class="popular_answer flex-start mb-2">
+                <micon type="Popular" />
+                <span class="ml-1"> Câu trả lời phổ biến</span>
 
-        </div>
-        <div class="answer_list ">
-            <div v-for="(item) in listAnswer" :key="item.answers_id" class="answer_item mb-2">
-                <div class="author_answer">
-                    <div>
-                        <span class="author_name">{{ item.user_name }}&nbsp - &nbsp</span>
-                        <span class="time_answer">{{ computedTime(item.created_date) }}</span>
-                    </div>
-                    <div class="answer_description"> {{ item.answers_content }}</div>
-                    <div class="reply mt-2" @click="handleReply(item.answers_id)">Phản hồi</div>
+            </div>
+            <div class="answer_list ">
+                <div v-for="(item) in listAnswer" :key="item.answers_id" class="answer_item mb-2">
+                    <div class="author_answer">
+                        <div>
+                            <span class="author_name">{{ item.user_name }}&nbsp - &nbsp</span>
+                            <span class="time_answer">{{ computedTime(item.created_date) }}</span>
+                        </div>
+                        <div class="answer_description"> {{ item.answers_content }}</div>
+                        <div class="reply mt-2" @click="handleReply(item.answers_id)">Phản hồi</div>
 
-                    <AnswerPopup :ref="`AnswerPopup_${item.answers_id}`" :isReply="true"
-                        :replyToAnswerId="item.answers_id" :questionId="question.questions_id"
-                        @update="handleUpdateReply" />
+                        <AnswerPopup :ref="`AnswerPopup_${item.answers_id}`" :isReply="true"
+                            :replyToAnswerId="item.answers_id" :questionId="question.questions_id"
+                            @update="handleUpdateReply" />
 
-                    <div class="list_reply">
-                        <div v-if="item.list_reply" v-for="reply_item in (item.list_reply)" :key="reply_item.answers_id"
-                            class="reply_item">
-                            <div>
-                                <span class="author_name">{{ reply_item.user_name }}&nbsp - &nbsp</span>
-                                <span class="time_answer">{{ computedTime(reply_item.created_date) }}</span>
+                        <div class="list_reply">
+                            <div v-if="item.list_reply" v-for="reply_item in (item.list_reply)"
+                                :key="reply_item.answers_id" class="reply_item">
+                                <div>
+                                    <span class="author_name">{{ reply_item.user_name }}&nbsp - &nbsp</span>
+                                    <span class="time_answer">{{ computedTime(reply_item.created_date) }}</span>
+                                </div>
+                                <div class="answer_description"> {{ reply_item.answers_content }}</div>
+                                <div class="reply mt-2" @click="handleReply(reply_item.answers_id)">Phản hồi</div>
+                                <AnswerPopup :ref="`AnswerPopup_${reply_item.answers_id}`" :isReply="true"
+                                    :replyToAnswerId="item.answers_id" :questionId="question.questions_id"
+                                    @update="handleUpdateReply" />
+
                             </div>
-                            <div class="answer_description"> {{ reply_item.answers_content }}</div>
-                            <div class="reply mt-2" @click="handleReply(reply_item.answers_id)">Phản hồi</div>
-                            <AnswerPopup :ref="`AnswerPopup_${reply_item.answers_id}`" :isReply="true"
-                                :replyToAnswerId="item.answers_id" :questionId="question.questions_id"
-                                @update="handleUpdateReply" />
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div v-else class="no_answer">
+            <div class="no_answer__icon">
+                <micon type="Answer" />
+            </div>
 
+            <div class="no_answer__title">Hãy là người đầu tiên trả lời câu hỏi này</div>
+
+            <div class="no_answer__button" @click="handleOpenPopupAnswer">
+                <mbutton button-text="Trả lời" class="none-background" />
+            </div>
+        </div>
 
     </div>
 
