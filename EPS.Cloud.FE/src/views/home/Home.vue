@@ -56,9 +56,15 @@ export default {
       };
     } else {
       this.center = {
-        lat: window.__lat,
-        lng: window.__lng,
+        lat: 21.0350942,
+        lng: 105.7864565,
+
       };
+
+      this.$ms.cache.setCache("coords", {
+        latitude: this.center.lat,
+        longitude: this.center.lng,
+      });
     }
     this.asignCenter();
 
