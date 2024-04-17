@@ -12,7 +12,7 @@ import SideBar from "@/components/sidebar/SideBar.vue";
 import Test from "@/components/Test.vue";
 import GarageAPI from "@/apis/GarageAPI";
 import { useGeolocation } from "@vueuse/core";
-const { coords } = useGeolocation();
+// const { coords } = useGeolocation();
 export default {
   components: {
     GoogleMap,
@@ -23,7 +23,7 @@ export default {
     return {
       center: {},
       locations: [],
-      coords,
+      // coords,
       searchObject: {
         Coordinates: {
           latitude: 0,
@@ -54,8 +54,13 @@ export default {
         lat: value.latitude,
         lng: value.longitude,
       };
-      this.asignCenter();
+    } else {
+      this.center = {
+        lat: window.__lat,
+        lng: window.__lng,
+      };
     }
+    this.asignCenter();
 
   },
   watch: {

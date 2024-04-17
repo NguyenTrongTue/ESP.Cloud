@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       loader: new Loader({
-        apiKey: "AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50",
+        apiKey: 'AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
         version: "weekly",
         libraries: ["places"],
       }),
@@ -70,15 +70,15 @@ export default {
           "marker"
         );
 
-        // if (!this.center.lat || !this.center.lng) {
-        //   let value = this.$common.cache.getCache("coords");
-        //   if (value) {
-        //     this.center = {
-        //       lat: value.latitude,
-        //       lng: value.longitude,
-        //     };
-        //   }
-        // }
+        if (!this.center.lat || !this.center.lng) {
+          let value = this.$common.cache.getCache("coords");
+          if (value) {
+            this.center = {
+              lat: value.latitude,
+              lng: value.longitude,
+            };
+          }
+        }
         this.map = new google.maps.Map(this.$el, {
           center: { lat: this.center.lat, lng: this.center.lng },
           zoom: 12,
