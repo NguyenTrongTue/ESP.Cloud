@@ -1,20 +1,13 @@
 <template>
-  <div class="promo-item-wrapper">
+  <div class="promo-item-wrapper" @click="handleClick">
     <div class="promo-img">
-      <img
-        src="https://cdn.honda.com.vn/news-promotion/December2023/scv6Kuh9XN2HWZeNXHJQ.jpg"
-        alt=""
-      />
+      <img :src="src" alt="" />
     </div>
     <div class="promo-date">
-      <p>12/12/2023</p>
+      <p>{{ date }}</p>
     </div>
     <div class="promo-title">
-      <p>
-        Đến HEAD chăm xe, rinh thêm trăm quà” trao cơ hội trúng Xe máy Honda
-        Vision, Wave Alpha cùng hàng nghìn E-voucher vô cùng giá trị tới khách
-        hàng làm dịch vụ xe máy tại các HEAD.
-      </p>
+      <p>{{ title }}</p>
     </div>
     <div class="promo-more">
       <button>Xem thêm ></button>
@@ -25,11 +18,29 @@
 <script>
 export default {
   name: "PromoItem",
-  props: {},
-  data() {},
+  props: {
+    src: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {};
+  },
   watch: {},
-
-  methods: {},
+  methods: {
+    handleClick() {
+      this.$emit("click-item");
+    }
+  },
 };
 </script>
 
