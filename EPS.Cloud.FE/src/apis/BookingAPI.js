@@ -3,7 +3,7 @@ import BaseAPI from "./BaseAPI";
 
 class GarageAPI extends BaseAPI {
   constructor() {
-    super("Booking");
+    super("Booking"); 
   }
 
   /**
