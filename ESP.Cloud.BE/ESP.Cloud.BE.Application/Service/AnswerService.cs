@@ -23,10 +23,10 @@ namespace ESP.Cloud.BE.Application.Service
             return result;
         }
 
-        public async Task<List<object>> GetAnswerRecently()
+        public async Task<List<object>> GetAnswerRecently(string make, string model, int year)
         {
-
-            var result = await _answerDL.GetAnswerRecently();
+            
+            var result = await _answerDL.GetAnswerRecently(make, model, year);
 
             return result;
         }

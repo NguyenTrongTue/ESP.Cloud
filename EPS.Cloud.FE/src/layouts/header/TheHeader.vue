@@ -6,7 +6,7 @@
       </div>
       <div class="header__left-category">
         <router-link to="/"> <span>Tìm gara</span></router-link>
-        <router-link to="/estimator"> <span>Ưóc tính</span></router-link>
+        <router-link to="/estimator"> <span>Ước tính</span></router-link>
         <router-link to="/promo"> <span>Khuyến mãi</span></router-link>
         <router-link to="/history-booking">
           <span>Lịch sử sửa chữa</span></router-link>
@@ -142,16 +142,21 @@ export default {
     if (user) {
       this.user = user;
     }
-    SignalRService.start()
-      .then(() => {
-        console.log("Kết nối thành công tới thông báo hệ thống");
-      })
-      .catch(error => {
-        console.error("Kết nối thất bại:", error);
-      });
 
+      SignalRService.start()
+        .then(() => {
+          console.log("Kết nối thành công tới thông báo hệ thống");
+        })
+        .catch(error => {
+          console.error("Kết nối thất bại:", error);
+        });
+
+    
     SignalRService.on("ReceiveNotification", this.handleMessage);
   },
+  beforeUnmount() {
+    SignalRService.disconnect();
+  }
 };
 </script>
 

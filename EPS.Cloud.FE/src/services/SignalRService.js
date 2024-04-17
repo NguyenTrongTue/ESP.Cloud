@@ -4,9 +4,9 @@ const connection = new signalR.HubConnectionBuilder()
   .withAutomaticReconnect()
   .withUrl("https://localhost:7034/notifications")
   .build();
-
 export default {
   start() {
+
     return connection.start();
   },
   on(eventName, callback) {

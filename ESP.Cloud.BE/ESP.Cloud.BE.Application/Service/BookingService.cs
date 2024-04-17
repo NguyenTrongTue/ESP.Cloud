@@ -22,9 +22,9 @@ namespace ESP.Cloud.BE.Application.Service
             return result;
         }
 
-        public async Task<List<object>> GetModelByGarageId(Guid garageId, string make, int year)
+        public async Task<List<object>> GetYearByGarageId(Guid garageId, string make, string model)
         {
-            var result = await _bookingDL.GetModelByGarageId(garageId, make, year);
+            var result = await _bookingDL.GetYearByGarageId(garageId, make, model);
 
             return result;
         }
@@ -36,9 +36,9 @@ namespace ESP.Cloud.BE.Application.Service
             return result;
         }
 
-        public async Task<List<object>> GetYearByGarageId(Guid garageId, string make)
+        public async Task<List<object>> GetModelByGarageId(Guid garageId, string make)
         {
-            var result = await _bookingDL.GetYearByGarageId(garageId, make);
+            var result = await _bookingDL.GetModelByGarageId(garageId, make);
 
             return result;
         }

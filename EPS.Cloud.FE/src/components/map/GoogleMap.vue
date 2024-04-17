@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       loader: new Loader({
-        apiKey: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+        apiKey: 'AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
         version: "weekly",
         libraries: ["places"],
       }),

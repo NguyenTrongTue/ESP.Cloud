@@ -3,7 +3,7 @@ import BaseAPI from "./BaseAPI";
 
 class GarageAPI extends BaseAPI {
   constructor() {
-    super("Booking");
+    super("Booking"); 
   }
 
   /**
@@ -34,13 +34,13 @@ class GarageAPI extends BaseAPI {
    *
    * @param {string} garageId - The ID of the garage
    * @param {string} make - The make of the car
-   * @param {number} yearOfManufacture - The year of manufacture
+   * @param {string} model - The model of the car
    * @return {Promise} A Promise that resolves to the requested models
    * @author nttue 17.03.2024
    */
-  getModelsByGarageId(garageId, make, yearOfManufacture) {
+  getModelsByGarageId(garageId, make, model) {
     return request.get(
-      `${this.url}/get_model_by_garage_id?garageId=${garageId}&make=${make}&year=${yearOfManufacture}`
+      `${this.url}/get_model_by_garage_id?garageId=${garageId}&make=${make}&model=${model}`
     );
   }
 
@@ -52,9 +52,9 @@ class GarageAPI extends BaseAPI {
    * @return {type} description of return value
    * @author nttue 17.03.2024
    */
-  getYearsByGarageIdAndMake(garageId, make) {
+  getYearsByGarageIdAndMake(garageId, make, model, year) {
     return request.get(
-      `${this.url}/get_year_by_garage_id?garageId=${garageId}&make=${make}`
+      `${this.url}/get_year_by_garage_id?garageId=${garageId}&make=${make}&model=${model}&year=${year}`
     );
   }
 

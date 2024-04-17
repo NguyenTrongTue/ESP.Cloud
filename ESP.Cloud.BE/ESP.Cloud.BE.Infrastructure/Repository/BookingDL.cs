@@ -61,24 +61,24 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
                     { $"@garageId", garageId }
                 };
                 var param = new DynamicParameters(paramDicnary);
-                var sql = "select distinct c.make  from garage_services gs \r\nleft join cars c on c.cars_id = gs.cars_id \r\nwhere garage_id = @garageId\r\n;";
+                var sql = "select distinct c.make  from garage_services gs left join cars c on c.cars_id = gs.cars_id where garage_id = @garageId;";
                 var makes = await _uow.Connection.QueryAsync<object>(sql, param);
 
                 return makes.ToList();
             }
         }
 
-        public async Task<List<object>> GetModelByGarageId(Guid garageId, string make, int year)
+        public async Task<List<object>> GetYearByGarageId(Guid garageId, string make, string model)
         {
             if (garageId == Guid.Empty)
             {
                 var paramDicnary = new Dictionary<string, object>
                 {
                     { $"@make", make },
-                    { $"@year", year }
+                    { $"@model", model }
                 };
                 var param = new DynamicParameters(paramDicnary);
-                var sql = "select distinct c.model,c.cars_id from garage_services gs \r\nleft join cars c on c.cars_id = gs.cars_id where c.make = @make and c.\"year\" = @year \r\n;;";
+                var sql = "select distinct c.\"year\",c.cars_id from garage_services gs \r\nleft join cars c on c.cars_id = gs.cars_id where c.make = @make and c.model = @model \r\n;;";
                 var models = await _uow.Connection.QueryAsync<object>(sql, param);
 
                 return models.ToList();
@@ -91,17 +91,17 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
                 {
                     { $"@garageId", garageId },
                     { $"@make", make },
-                    { $"@year", year }
+                    { $"@model", model }
                 };
                 var param = new DynamicParameters(paramDicnary);
-                var sql = "select distinct c.model,c.cars_id from garage_services gs \r\nleft join cars c on c.cars_id = gs.cars_id \r\nwhere garage_id =  @garageId\r\nand c.make = @make and c.\"year\" = @year \r\n;";
+                var sql = "select distinct c.\"year\",c.cars_id from garage_services gs left join cars c on c.cars_id = gs.cars_id where garage_id =  @garageId and c.make = @make and c.model = @model;";
                 var models = await _uow.Connection.QueryAsync<object>(sql, param);
 
                 return models.ToList();
             }
         }
 
-        public async Task<List<object>> GetYearByGarageId(Guid garageId, string make)
+        public async Task<List<object>> GetModelByGarageId(Guid garageId, string make)
         {
             if (garageId == Guid.Empty)
             {
@@ -112,7 +112,7 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
                     { $"@make", make }
                 };
                 var param = new DynamicParameters(paramDicnary);
-                var sql = "select distinct c.\"year\"  from garage_services gs \r\nleft join cars c on c.cars_id = gs.cars_id where c.make = @make;";
+                var sql = "select distinct c.model  from garage_services gs left join cars c on c.cars_id = gs.cars_id where c.make = @make;";
                 var years = await _uow.Connection.QueryAsync<object>(sql, param);
 
                 return years.ToList();
@@ -125,7 +125,7 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
                     { $"@make", make }
                 };
                 var param = new DynamicParameters(paramDicnary);
-                var sql = "select distinct c.\"year\"  from garage_services gs \r\nleft join cars c on c.cars_id = gs.cars_id \r\nwhere garage_id = @garageId\r\nand c.make = @make \r\n;";
+                var sql = "select distinct c.model  from garage_services gs left join cars c on c.cars_id = gs.cars_id where garage_id = @garageId and c.make = @make ;";
                 var years = await _uow.Connection.QueryAsync<object>(sql, param);
 
                 return years.ToList();

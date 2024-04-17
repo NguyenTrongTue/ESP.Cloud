@@ -1,5 +1,6 @@
 ﻿using ESP.Cloud.BE.Application.Dto;
 using ESP.Cloud.BE.Application.Interface;
+using ESP.Cloud.BE.Application.Param;
 using ESP.Cloud.BE.Core.Model;
 using ESP.Cloud.BE.Host.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
@@ -36,12 +37,12 @@ namespace ESP.Cloud.BE.Host.Controllers
             }
         }
 
-        [HttpGet("get_answer_recently")]
-        public async Task<IActionResult> GetAnswerRecently( )
+        [HttpPost("get_answer_recently")]
+        public async Task<IActionResult> GetAnswerRecently(GetAnswerParam param)
         {
             try
             {
-                var results = await _answerService.GetAnswerRecently();
+                var results = await _answerService.GetAnswerRecently(param.make, param.model, param.year);
 
                 return Ok(results);
             }
@@ -50,6 +51,6 @@ namespace ESP.Cloud.BE.Host.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        
+
     }
 }
