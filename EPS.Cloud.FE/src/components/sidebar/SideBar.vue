@@ -116,6 +116,11 @@ export default {
     this.initialData();
   },
   watch: {
+    /**
+     * Sets the value of the locations property to the provided newLocations.
+     *
+     * @param {Array} newLocations - An array of new locations.
+     */
     locationProps(newLocations) {
       this.locations = newLocations;
     },
@@ -134,6 +139,13 @@ export default {
     },
 
 
+    /**
+     * Clears the checked status of all items in the listFilter[3].data array and emits an event to clear the services.
+     * Also toggles the filter at the specified index and updates the filtering state for the 'services' filter.
+     *
+     * @param {number} index - The index of the filter to toggle.
+     * @return {void}
+     */
     handleClearChecked(index) {
       const me = this;
       me.listFilter[3].data = me.listFilter[3].data.map((item) => {
@@ -211,6 +223,12 @@ export default {
 
       me.toggleFilter(index);
     },
+    /**
+     * Toggles the filter based on the provided index.
+     *
+     * @param {number} index - The index of the filter to toggle
+     * @return {void}
+     */
     toggleFilter(index) {
       if (this.currentIndexFilter != index) {
         this.currentIndexFilter = index;
@@ -218,6 +236,11 @@ export default {
         this.currentIndexFilter = -1;
       }
     },
+    /**
+     * Fetches initial data for cars and services, populates the listFilter accordingly.
+     *
+     * @return {void} 
+     */
     async initialData() {
       let carsList = this.$ms.cache.getCache("cars");
       let servicesList = this.$ms.cache.getCache("services");
@@ -251,6 +274,13 @@ export default {
         this.$ms.cache.setCache("services", dataConvert);
       }
     },
+    /**
+     * Toggles the filter based on the provided index if the event target is not a child of "filter-gara".
+     *
+     * @param {Event} event - The event object
+     * @param {number} index - The index of the filter to toggle
+     * @return {void}
+     */
     showFilter(event, index) {
       if (this.findParent(event.target, "filter-gara")) {
         return;
@@ -259,6 +289,13 @@ export default {
       }
     },
 
+    /**
+     * Finds the parent element of a given tag that contains a specific class name.
+     *
+     * @param {HTMLElement} currentTag - The current HTML element to start searching from.
+     * @param {string} targetTag - The class name to search for in the parent elements.
+     * @return {boolean} Returns true if the parent element with the specified class name is found, otherwise false.
+     */
     findParent(currentTag, targetTag) {
       var tag = currentTag,
         result = false;
@@ -273,10 +310,22 @@ export default {
       return result;
     },
 
+    /**
+     * Emits a "showPosition" event with the provided index and location.
+     *
+     * @param {number} index - The index associated with the location.
+     * @param {any} location - The location data to show.
+     */
     handleMouseMove(index, location) {
       this.$emit("showPostion", index, location);
     },
 
+    /**
+     * Navigates to the garage detail page for the given location.
+     *
+     * @param {Object} location - The location object containing the garage ID.
+     * @return {void}
+     */
     handleClickItem(location) {
       this.$router.push({ path: `/garage-detail/${location.garage_id}` });
     }

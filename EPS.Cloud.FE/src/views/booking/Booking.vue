@@ -126,14 +126,12 @@ export default {
         await BookingAPI.post(this.BookingInfo);
         this.$store.commit("hideLoading");
 
-        this.$store.commit("dialog/showMessage", {
-          title: "Yêu cầu cuộc hẹn đã được gửi",
-          content: "Vui lòng kiểm tra email để xác nhận chi tiết về cuộc hẹn!",
-          callback: () => {
-            this.$router.push({
-              path: "/",
-            });
-          },
+        this.$store.commit("showToast", {
+          label: "Cuộc hẹn đã được đặt thành công. Thông báo sẽ được gửi khi đến hẹn sửa xe!",
+          type: 'success'
+        });
+        this.$router.push({
+          path: "/",
         });
       } catch (e) {
         this.$store.commit("hideLoading");

@@ -1,19 +1,10 @@
 <template>
   <div class="filter-gara">
     <div class="filter-gara__body">
-      <div
-        class="filter-gara__item flex-start"
-        v-for="(item, index) in data"
-        :key="index"
-      >
+      <div class="filter-gara__item flex-start" v-for="(item, index) in data" :key="index">
         <div class="filter-gara__item-right flex-center">
-          <input
-            v-if="choose == 'radio'"
-            type="radio"
-            v-model="radioValue"
-            :value="item.value"
-            :checked="item.value === radioValue"
-          />
+          <input v-if="choose == 'radio'" type="radio" v-model="radioValue" :value="item.value"
+            :checked="item.value === radioValue" />
 
           <input v-else type="checkbox" v-model="item.value" />
         </div>
@@ -87,7 +78,7 @@ export default {
       if (this.chooseType != "checkbox") {
         this.$emit("saveOptions", this.filterId, "", this.index);
       } else {
-        this.$emit("M", this.index);
+        this.$emit("clearChecked", this.index);
       }
     },
     saveOptions() {
