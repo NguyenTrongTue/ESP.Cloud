@@ -3,11 +3,7 @@
         <div class="top flex-start">
             <div class="icon-summanry flex-center">
 
-                <micon type="Stars" :width="16" :height="16" />
-                <micon type="Stars" :width="16" :height="16" />
-                <micon type="Stars" :width="16" :height="16" />
-                <micon type="Stars" :width="16" :height="16" />
-                <micon type="Stars" :width="16" :height="16" />
+                <starrating :rating="review?.rating?.toFixed(2)" />
             </div>
 
             <div class="reviewer">

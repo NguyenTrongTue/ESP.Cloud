@@ -2,7 +2,7 @@
   <div class="home">
     <SideBar :locationProps="locations" @sortBy="handleSortBy" @typeCars="handleTypeCars" @openTime="handleOpenTime"
       @services="handleServices" @showPostion="handleShowPostion" />
-    <GoogleMap :center="center" :locations="locations" ref="google-map" />
+    <GoogleMap :centerProp="center" :locations="locations" ref="google-map" />
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
         SortBy: "",
         ListServiceNames: [],
         CarType: "",
-        TimeOpen: 0,
+        TimeOpen: 1,
         take: 20,
         skip: 0,
       },

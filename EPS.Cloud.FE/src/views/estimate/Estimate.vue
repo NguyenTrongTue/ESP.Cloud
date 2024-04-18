@@ -32,8 +32,8 @@ export default {
   async mounted() {
     try {
       let currentCoords =
-        this.$ms.cache.getCache("currentAddress").results[0].geometry
-          .location;
+        this.$ms.cache.getCache("currentAddress")?.results[0]?.geometry
+          ?.location;
       if (currentCoords) {
         this.center = {
           lat: currentCoords.lat,
@@ -43,8 +43,21 @@ export default {
         this.searchObject.latitude = +currentCoords.lat;
         this.searchObject.longitude = +currentCoords.lng;
 
-        this.searchData();
+      } else {
+        let value = this.$ms.cache.getCache("coords");
+        if (value) {
+          this.center = {
+            lat: value.latitude,
+            lng: value.longitude,
+          };
+          this.searchObject.latitude = +value.latitude;
+          this.searchObject.longitude = +value.longitude;
+
+        }
+
       }
+      this.searchData();
+
     } catch (e) { }
   },
   watch: {

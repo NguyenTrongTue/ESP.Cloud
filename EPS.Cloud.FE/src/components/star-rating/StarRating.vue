@@ -31,5 +31,10 @@ export default {
       myRating: this.rating,
     };
   },
+  watch: {
+    rating(newVaue) {
+      this.myRating = newVaue;
+    }
+  }
 };
 </script>
