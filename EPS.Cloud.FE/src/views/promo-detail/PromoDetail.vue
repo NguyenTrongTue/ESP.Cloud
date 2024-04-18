@@ -33,7 +33,7 @@
       
     </div>
     <div class="promo-footer">
-      <button>< Quay Lại</button>
+      <button @click="goBack">< Quay Lại</button>
     </div>
   </div>
 </template>
@@ -68,7 +68,13 @@ export default {
     const result = await PromoAPI.getPromoById(me.promoId);
     me.promodetail = result;
   },
-  methods: {},
+  
+  methods: {
+
+    goBack() {
+      this.$router.go(-1);
+    },
+  },
 };
 </script>
 <style lang="scss">
