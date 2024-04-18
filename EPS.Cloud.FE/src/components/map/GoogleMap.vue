@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       loader: new Loader({
-        apiKey: 'AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+        apiKey: 'AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
         version: "weekly",
         libraries: ["places"],
       }),
@@ -81,7 +81,7 @@ export default {
         }
         this.map = new google.maps.Map(this.$el, {
           center: { lat: this.center.lat, lng: this.center.lng },
-          zoom: 12,
+          zoom: 13,
         });
 
         this.directionsRenderer.setMap(this.map);

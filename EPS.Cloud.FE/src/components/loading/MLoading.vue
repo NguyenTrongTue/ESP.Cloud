@@ -15,13 +15,13 @@ import { mapState } from "vuex";
 export default {
   name: "MLoading",
   props: {},
-  data() {},
+  data() { },
   watch: {},
   /**
    * Sử dụng computed để lấy ra các state global
    */
   computed: mapState({
-    showLoading: (state) => state.toast.showLoading,
+    showLoading: (state) => state.loading.showLoading,
   }),
   methods: {},
 };

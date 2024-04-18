@@ -143,20 +143,20 @@ export default {
       this.user = user;
     }
 
-      SignalRService.start()
-        .then(() => {
-          console.log("Kết nối thành công tới thông báo hệ thống");
-        })
-        .catch(error => {
-          console.error("Kết nối thất bại:", error);
-        });
+    SignalRService.start()
+      .then(() => {
+        console.log("Kết nối thành công tới thông báo hệ thống");
+      })
+      .catch(error => {
+        console.error("Kết nối thất bại:", error);
+      });
 
-    
+
     SignalRService.on("ReceiveNotification", this.handleMessage);
   },
-  beforeUnmount() {
-    SignalRService.disconnect();
-  }
+  // beforeUnmount() {
+  //   SignalRService.disconnect();
+  // }
 };
 </script>
 

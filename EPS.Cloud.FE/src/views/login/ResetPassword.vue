@@ -11,20 +11,9 @@
             Nhập email bạn đã sử dụng để đăng ký và chúng tôi sẽ gửi cho bạn
             liên kết để đặt lại mật khẩu.
           </p>
-          <minput
-            formName="User"
-            label="Email"
-            name="Email"
-            v-model="user.email"
-            ref="Email"
-            placeholder-input="Email"
-            rules="required|email"
-            class="mb-4 mt-1"
-          />
-          <mbutton
-            button-text="Lấy lại mật khẩu"
-            @click="handleResetPassword"
-          />
+          <minput formName="User" label="Email" name="Email" v-model="user.email" ref="Email" placeholder-input="Email"
+            rules="required|email" class="mb-4 mt-1" />
+          <mbutton button-text="Lấy lại mật khẩu" @click="handleResetPassword" />
         </div>
       </div>
     </template>
@@ -53,14 +42,14 @@ export default {
     async handleResetPassword() {
       try {
         if (!this.handleValidate()) {
-          this.showLoading = true;
+          this.$store.commit("showLoading");
           await AuthAPI.getNewPassword(this.user.email);
           this.$store.commit(
             "dialog/setErrorMessage",
             "Vui lòng kiểm tra email để xác nhận mật khẩu!"
           );
           this.handleClose();
-          this.showLoading = false;
+          this.$store.commit("hideLoading")
         }
       } catch (e) {
         console.log(e);
@@ -68,7 +57,7 @@ export default {
           label: "Có lỗi xảy ra. Liên hệ quản trị viên để được hỗ trợ",
           type: "error",
         });
-        this.showLoading = false;
+        this.$store.commit("hideLoading")
       }
     },
     handleClose() {
