@@ -32,7 +32,7 @@ export default {
         SortBy: "",
         ListServiceNames: [],
         CarType: "",
-        TimeOpen: 1,
+        TimeOpen: 0,
         take: 20,
         skip: 0,
       },

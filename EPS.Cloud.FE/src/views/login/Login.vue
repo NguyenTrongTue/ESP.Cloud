@@ -91,7 +91,7 @@ export default {
     async handleLogin() {
       try {
         if (!this.handleValidate()) {
-          this.showLoading = true;
+          this.$store.commit("showLoading");
           const res = await AuthAPI.login(this.user);
           if (res && res.user_id) {
             this.$ms.cache.setCache("user", res);
@@ -105,7 +105,7 @@ export default {
               type: "error",
             });
           }
-          this.showLoading = false;
+          this.$store.commit("hideLoading")
         }
       } catch (e) {
         console.log(e);
@@ -113,7 +113,7 @@ export default {
           label: "Có lỗi xảy ra. Liên hệ quản trị viên để được hỗ trợ",
           type: "error",
         });
-        this.showLoading = false;
+        this.$store.commit("hideLoading")
       }
     },
   },
