@@ -104,8 +104,8 @@ const routes = [
   {
     name: "promo-detail",
     component: PromoDetail,
-    path: "/promo-detail",
-    meta: { requiresAuth: false, title: "Đăng ký", showHeader: true },
+    path: "/promo-detail/:id",
+    meta: { requiresAuth: false, title: "Chi tiết khuyến mãi", showHeader: true },
   },
 ];
 

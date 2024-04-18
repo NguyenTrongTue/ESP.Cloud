@@ -17,6 +17,7 @@ namespace ESP.Cloud.BE.Application
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IQuestionsService, QuestionsService>();
             services.AddScoped<IAnswerService, AnswerService>();
+            services.AddScoped<IPromotionService, PromotionService>();
             services.AddScoped<IMapper, Mapper>();
         }
     }
