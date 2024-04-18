@@ -11,6 +11,9 @@ import { moudle } from "@/utils/index";
 import VueTippy from "vue-tippy";
 import { Tippy } from "vue-tippy";
 import "tippy.js/dist/tippy.css";
+import VueSocialSharing from 'vue-social-sharing'
+
+
 
 // components
 import MInputPri from "@/components/input/MInputPri.vue";
@@ -56,5 +59,4 @@ app.component("promofilter", PromoFilter);
 app.component("promoitem", PromoItem);
 app.component("pagination", Pagination);
 app.directive("click-outside", clickOutsideDirective);
-
-app.use(i18n).use(router).use(store).mount("#app");
+app.use(VueSocialSharing).use(i18n).use(router).use(store).mount("#app");

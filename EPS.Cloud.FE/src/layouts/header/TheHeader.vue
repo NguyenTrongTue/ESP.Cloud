@@ -8,8 +8,6 @@
         <router-link to="/"> <span>Tìm gara</span></router-link>
         <router-link to="/estimator"> <span>Ước tính</span></router-link>
         <router-link to="/promo"> <span>Khuyến mãi</span></router-link>
-        <router-link to="/history-booking">
-          <span>Lịch sử sửa chữa</span></router-link>
         <router-link to="/questions"> <span>Thảo luận</span></router-link>
       </div>
     </div>
@@ -20,7 +18,7 @@
       <div class="header__right-user flex-center" @click="showPopupNotification = !showPopupNotification">
         <div class="icon-notification">
           <micon type="Notify" />
-          <span className="badge flex-center">{{ notificationsUnread.length }}</span>
+          <span className="badge flex-center" v-if="notificationsUnread.length > 0">{{ notificationsUnread.length }}</span>
         </div>
 
         <PopupNotifications class="popup-notification" :notificationsProps="notifications"

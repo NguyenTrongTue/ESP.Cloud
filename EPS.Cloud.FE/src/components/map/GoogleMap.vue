@@ -14,19 +14,20 @@ export default {
       type: Array,
       default: [],
     },
-    center: {
+    centerProp: {
       type: Object,
       default: {},
     },
-  },
+},
   data() {
     return {
       loader: new Loader({
-        apiKey: 'AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+        apiKey: 'AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
         version: "weekly",
         libraries: ["places"],
       }),
       map: null,
+      center: this.centerProp,
       markers: [],
       google: null,
       infowindow: null,
@@ -71,13 +72,14 @@ export default {
         );
 
         if (!this.center.lat || !this.center.lng) {
-          let value = this.$common.cache.getCache("coords");
+          let value = this.$ms.cache.getCache("coords");
           if (value) {
             this.center = {
               lat: value.latitude,
               lng: value.longitude,
             };
           }
+          console.log(this.center);
         }
         this.map = new google.maps.Map(this.$el, {
           center: { lat: this.center.lat, lng: this.center.lng },
