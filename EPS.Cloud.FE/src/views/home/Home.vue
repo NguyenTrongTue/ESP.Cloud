@@ -2,7 +2,7 @@
   <div class="home">
     <SideBar :locationProps="locations" @sortBy="handleSortBy" @typeCars="handleTypeCars" @openTime="handleOpenTime"
       @services="handleServices" @showPostion="handleShowPostion" />
-    <GoogleMap :centerProp="center" :locations="locations" ref="google-map" />
+    <GoogleMap :center="center" :locations="locations" ref="google-map" />
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
         SortBy: "",
         ListServiceNames: [],
         CarType: "",
-        TimeOpen: 1,
+        TimeOpen: 0,
         take: 20,
         skip: 0,
       },
@@ -49,7 +49,7 @@ export default {
   },
   async mounted() {
     let value = this.$ms.cache.getCache("coords");
-    if (value) {
+    if (value?.latitude && value?.longitude) {
       this.center = {
         lat: value.latitude,
         lng: value.longitude,
@@ -62,15 +62,17 @@ export default {
           lng: position.coords.longitude,
 
         };
+        this.$ms.cache.setCache("coords", {
+          latitude: this.center.lat,
+          longitude: this.center.lng,
+        });
+        this.asignCenter();
       });
 
 
-      this.$ms.cache.setCache("coords", {
-        latitude: this.center.lat,
-        longitude: this.center.lng,
-      });
+
     }
-    this.asignCenter();
+
 
   },
   watch: {
