@@ -55,11 +55,15 @@ export default {
         lng: value.longitude,
       };
     } else {
-      this.center = {
-        lat: 21.0350942,
-        lng: 105.7864565,
 
-      };
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+
+        };
+      });
+
 
       this.$ms.cache.setCache("coords", {
         latitude: this.center.lat,
