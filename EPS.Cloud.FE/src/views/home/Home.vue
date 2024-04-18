@@ -32,7 +32,7 @@ export default {
         SortBy: "",
         ListServiceNames: [],
         CarType: "",
-        TimeOpen: 0,
+        TimeOpen: 1,
         take: 20,
         skip: 0,
       },
@@ -54,6 +54,7 @@ export default {
         lat: value.latitude,
         lng: value.longitude,
       };
+      this.asignCenter();
     } else {
 
       navigator.geolocation.getCurrentPosition((position) => {
