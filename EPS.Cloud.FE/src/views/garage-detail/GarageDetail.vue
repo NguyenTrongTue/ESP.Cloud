@@ -2,9 +2,8 @@
   <div class="garage-detail">
 
     <div class="garage-detail__header">
-      <img :src="garage?.image">
-      <img :src="garage?.image">
-      <img :src="garage?.image">
+
+      <img v-for="(item, index) in garage?.image?.split(';')" :key="index" :src="item">
     </div>
 
     <div class="garage-detail__body">
@@ -181,12 +180,7 @@
         <div class="flex-between">
           <div class="summary">
             <div class="icon-summanry">
-
-              <micon type="Stars" :width="16" :height="16" />
-              <micon type="Stars" :width="16" :height="16" />
-              <micon type="Stars" :width="16" :height="16" />
-              <micon type="Stars" :width="16" :height="16" />
-              <micon type="Stars" :width="16" :height="16" />
+              <starrating :rating="garage?.avg_rating?.toFixed(2)" />
             </div>
             <div class="rating">
               <span class="rating_avg">{{ garage?.avg_rating?.toFixed(2) }}</span>
