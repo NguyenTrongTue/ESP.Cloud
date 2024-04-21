@@ -18,7 +18,7 @@ export default {
       type: Object,
       default: {},
     },
-},
+  },
   data() {
     return {
       loader: new Loader({

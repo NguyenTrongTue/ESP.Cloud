@@ -101,11 +101,24 @@ export default {
             this.showPopup = true;
         },
         async handleSubmitQuestion() {
-            let user = this.$ms.cache.getCache("user");
-            this.objectMaster.user_id = user.user_id;
-            this.objectMaster.user_name = user.fullname;
-            await QuestionAPI.post(this.objectMaster);
-            this.showPopup = false;
+            try {
+                this.$store.commit("showLoading");
+                let user = this.$ms.cache.getCache("user");
+                this.objectMaster.user_id = user.user_id;
+                this.objectMaster.user_name = user.fullname;
+
+                await QuestionAPI.post(this.objectMaster);
+
+                this.$store.commit("showToast", {
+                    label: "Câu hỏi được đăng thành công",
+                    type: 'success'
+                });
+                this.showPopup = false;
+                this.$store.commit("hideLoading")
+            } catch (e) {
+                console.log(e);
+                this.$store.commit("hideLoading")
+            }
         }
     },
 };
