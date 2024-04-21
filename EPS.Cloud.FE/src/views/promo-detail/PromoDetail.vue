@@ -1,41 +1,37 @@
 <template>
   <div class="detail-overlay-wrapper">
     <div class="detail-title">
-      <h1 class="title">Title</h1>
+      <h1 class="title">Chương trình khuyến mãi</h1>
     </div>
     <div class="detail-date">
-      <span class="date"><micon type="Calendar"> </micon>{{ promodetail.start_date }}</span>
-      <span class="date"><micon type="ShareUp"> </micon>Chia sẻ</span>
+      <span class="date">
+        <micon type="Calendar"> </micon>{{ promodetail.start_date }}
+      </span>
+      <span class="date">
+        <micon type="ShareUp"> </micon>Chia sẻ
+      </span>
     </div>
     <div class="detail-summary">
       <p>
         {{ promodetail.summary }}
       </p>
       <div class="detail-summary-img">
-        <img
-          class="alignnone size-full wp-image-30793 webpexpress-processed lazyloaded"
-          :src="promodetail.image_link"
+        <img class="alignnone size-full wp-image-30793 webpexpress-processed lazyloaded" :src="promodetail.image_link"
           data-src="https://yamaha-motor.com.vn/wp/wp-content/uploads/2023/10/BDCN-RinhNgayQuaTang-1200x900-1.jpg"
-          alt=""
-          width="1200"
-          height="900"
+          alt="" width="1200" height="900"
           data-srcset="https://yamaha-motor.com.vn/wp/wp-content/uploads/2023/10/BDCN-RinhNgayQuaTang-1200x900-1.jpg 1200w, https://yamaha-motor.com.vn/wp/wp-content/uploads/2023/10/BDCN-RinhNgayQuaTang-1200x900-1-300x225.jpg 300w, https://yamaha-motor.com.vn/wp/wp-content/uploads/2023/10/BDCN-RinhNgayQuaTang-1200x900-1-1024x768.jpg 1024w, https://yamaha-motor.com.vn/wp/wp-content/uploads/2023/10/BDCN-RinhNgayQuaTang-1200x900-1-150x113.jpg 150w, https://yamaha-motor.com.vn/wp/wp-content/uploads/2023/10/BDCN-RinhNgayQuaTang-1200x900-1-768x576.jpg 768w"
-          data-sizes="(max-width: 1200px) 100vw, 1200px"
-          sizes="(max-width: 1200px) 100vw, 1200px"
-          
-        />
+          data-sizes="(max-width: 1200px) 100vw, 1200px" sizes="(max-width: 1200px) 100vw, 1200px" />
       </div>
     </div>
-    <div class="detail-content" v-html="promodetail.description"
-      
+    <div class="detail-content" v-html="promodetail.description" </div>
+      <div class="detail-rule">
+
+      </div>
+      <div class="promo-footer">
+        <button @click="goBack">
+          < Quay Lại</button>
+      </div>
     </div>
-    <div class="detail-rule">
-      
-    </div>
-    <div class="promo-footer">
-      <button @click="goBack">< Quay Lại</button>
-    </div>
-  </div>
 </template>
 <script>
 import PromoAPI from "@/apis/PromoAPI";
@@ -68,7 +64,7 @@ export default {
     const result = await PromoAPI.getPromoById(me.promoId);
     me.promodetail = result;
   },
-  
+
   methods: {
 
     goBack() {

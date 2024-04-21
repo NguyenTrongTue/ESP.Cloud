@@ -132,9 +132,12 @@ export default {
       this.searchObject.ListServiceNames = values;
     },
     asignCenter() {
-      this.searchObject.Coordinates = {
-        latitude: +this.center.lat,
-        longitude: +this.center.lng,
+      if (this.center.lat && this.center.lng) {
+
+        this.searchObject.Coordinates = {
+          latitude: +this.center.lat,
+          longitude: +this.center.lng,
+        }
       };
 
       fetch(
