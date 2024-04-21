@@ -22,7 +22,7 @@
                 }" v-for="(item, index) in computedNotifications" :key="index">
                 <div class="notifications_item__right flex-center ">
 
-                    <img v-if="item.type == 1" src="@/assets/img/download.png" alt="icon" />
+                    <img v-if="item.type == 0" src="@/assets/img/download.png" alt="icon" />
 
                     <img v-else src="@/assets/img/promo.png" alt="icon" />
 
