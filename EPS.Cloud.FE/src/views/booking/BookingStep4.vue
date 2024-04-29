@@ -17,7 +17,7 @@
                 </div>
                 <div class="rating">
                   <micon type="Stars" />
-                  <div>{{ garage?.avg_rating }}</div>
+                  <div>{{ garage?.avg_rating.toFixed(2) }}</div>
                   <span>({{ garage?.total_rating }})</span>
                 </div>
               </div>
@@ -37,18 +37,20 @@
       </div>
       <div class="drop-off-time">
         <div class="time-icon">
-          <micon type="Clock" />
+          <div class="booking_icon__clock">
+            <micon type="Clock" />
+          </div>
         </div>
         <div class="time-text">
           <span class="ds-body-regular ds-medium ng-font-neutral-80 ml-1 mr-1">{{ computedDropOff }}</span><span
-            class="ds-body-small ds-link ds-link--variant-regular pointer">Sửa</span>
+            @click="handleBackToStep(1)" class="ds-body-small ds-link ds-link--variant-regular pointer">Sửa</span>
         </div>
       </div>
     </div>
     <div class="summary-vehicle">
       <div class="sub-h1">
         NỘI DUNG SỬA CHỮA
-        <span class="ds-body-small ds-link ds-link--variant-regular pointer">Sửa</span>
+        <span class="ds-body-small ds-link ds-link--variant-regular pointer" @click="handleBackToStep(2)">Sửa</span>
       </div>
       <div class="flex-start">
         <micon type="Car" />
@@ -71,7 +73,7 @@
     <div class="summary-contact">
       <div class="sub-h1">
         THÔNG TIN LIÊN LẠC
-        <span class="ds-body-small ds-link ds-link--variant-regular pointer">Sửa</span>
+        <span class="ds-body-small ds-link ds-link--variant-regular pointer" @click="handleBackToStep(3)">Sửa</span>
       </div>
       <div class="custom-name">
         {{ BookingInfo.last_name }} {{ BookingInfo.first_name }}
@@ -79,26 +81,33 @@
       <div class="custom-email">{{ BookingInfo.email }}</div>
       <div class="custom-phone">{{ BookingInfo.phone }}</div>
     </div>
-    <div class="next-steps-footer flex-center">
-      <button class="next-step pointer" @click="handleNextStep">
-        <span>Đặt lịch</span>
-        <micon type="ArrowRight" />
-      </button>
+    <div v-if="!modeView">
+      <div class="next-steps-footer flex-center">
+        <button class="next-step pointer" @click="handleNextStep">
+          <span>Đặt lịch</span>
+          <micon type="ArrowRight" />
+        </button>
+      </div>
+      <p class="flex-center ds-body-small ds-medium ng-center ng-full-width ng-font-neutral-60 mb-4">
+        Bạn sẽ nhận được thống báo về thông tin đã chọn.
+      </p>
     </div>
-    <p class="flex-center ds-body-small ds-medium ng-center ng-full-width ng-font-neutral-60 mb-4">
-      Bạn sẽ nhận được thống báo về thông tin đã chọn.
-    </p>
+    <div v-else class="mb-2"></div>
   </div>
 </template>
 
 <script>
 export default {
   name: "BookingStep4",
-  emits: ["nextStep"],
+  emits: ["nextStep", "backToStep"],
   props: {
     garageProps: {
       type: Object,
       default: null,
+    },
+    modeView: {
+      type: Boolean,
+      default: false,
     },
     bookingInfo: {
       type: Object,
@@ -135,9 +144,8 @@ export default {
           month = new Date(this.bookingInfo.booking_date).getMonth(),
           hours = new Date(this.bookingInfo.booking_date).getHours(),
           minutes = new Date(this.bookingInfo.booking_date).getMinutes();
-        return `${day}, ngày ${date}/${month} lúc ${hours} giờ ${
-          minutes > 0 ? minutes : ""
-        } sáng`;
+        return `${day}, ngày ${date}/${month} lúc ${hours} giờ ${minutes > 0 ? minutes : ""
+          } ${hours <= 12 ? "sáng" : "chiều"}`;
       } else {
         return "";
       }
@@ -160,6 +168,10 @@ export default {
     },
   },
   methods: {
+    handleBackToStep(step) {
+
+      this.$emit("backToStep", step);
+    },
     handleNextStep() {
       this.$emit("nextStep");
     },
@@ -169,8 +181,10 @@ export default {
 
 <style scoped>
 @import "./booking.scss";
+
 .next-steps-footer {
   padding: 12px 0px 0px;
+
   button {
     height: 48px;
   }

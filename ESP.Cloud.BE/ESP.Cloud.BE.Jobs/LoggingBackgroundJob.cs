@@ -45,6 +45,7 @@ public class LoggingBackgroundJob : IJob
                 var notification = new Notifications()
                 {
                     user_notifications_id = Guid.NewGuid(),
+                    refid = booking.booking_history_id,
                     user_id = booking.user_id,
                     unread = true,
                     description = $"Bạn có lịch sửa xe vào {bookingDate.Hour} giờ {(bookingDate.Minute > 0 ? bookingDate.Minute.ToString() : "")} chiều nay."

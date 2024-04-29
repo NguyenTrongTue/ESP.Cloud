@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-item">
     <div class="sidebar-item__left">
-      <img :src="location.image" alt="Ảnh của gara" />
+      <img :src="location?.image?.split(';')[0]" alt="Ảnh của gara" />
     </div>
     <div class="sidebar-item__right">
       <div class="gara-name__wrapper">

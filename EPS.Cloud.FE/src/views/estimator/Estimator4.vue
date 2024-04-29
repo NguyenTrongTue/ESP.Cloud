@@ -178,11 +178,19 @@ export default {
   },
   methods: {
     async getEstimateForServices() {
-      const result = await BookingAPI.getEstimateService({
-        carId: this.carId,
-        serviceCodes: this.estimateInfo.selectedServices,
-      });
-      this.resultEstimate = result[0];
+      try {
+        this.$store.commit("showLoading");
+        const result = await BookingAPI.getEstimateService({
+          carId: this.carId,
+          serviceCodes: this.estimateInfo.selectedServices,
+        });
+        this.resultEstimate = result[0];
+        this.$store.commit("hideLoading");
+      } catch (e) {
+        console.log(e);
+        this.$store.commit("hideLoading");
+
+      }
     },
     format(amount) {
       return this.$ms.common.formatAmount(amount) + " VNĐ";

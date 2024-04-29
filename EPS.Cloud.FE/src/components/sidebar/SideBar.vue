@@ -1,21 +1,32 @@
 <template>
   <div class="sidebar">
+
     <div class="sidebar__top">
-      <div class="sidebar__top-title">Gara gần tôi</div>
-      <div class="filter__wrapper" v-if="!noneFilter">
-        <div class="filter__item" v-for="(item, index) in listFilter" :key="index" @click="showFilter($event, index)"
-          :id="filtering.includes(item.id) && 'active'">
-          <span>
-            {{ item.text }}
-          </span>
-          <MFilter :filterId="item.id" :data="item.data" :chooseType="item.choose" :index="index"
-            :modelValue="item.modelValue" v-if="currentIndexFilter == index" @saveOptions="handleSaveOptions"
-            @clearChecked="handleClearChecked" v-click-outside="$event => handleClickOutside($event)" />
+      <div class="fake_loading_top " v-if="loading">
+        <skeleton />
+      </div>
+      <div v-else>
+        <div class="sidebar__top-title">Gara gần tôi</div>
+        <div class="filter__wrapper" v-if="!noneFilter">
+          <div class="filter__item" v-for="(item, index) in listFilter" :key="index" @click="showFilter($event, index)"
+            :id="filtering.includes(item.id) && 'active'">
+            <span>
+              {{ item.text }}
+            </span>
+            <MFilter :filterId="item.id" :data="item.data" :chooseType="item.choose" :index="index"
+              :modelValue="item.modelValue" v-if="currentIndexFilter == index" @saveOptions="handleSaveOptions"
+              @clearChecked="handleClearChecked" v-click-outside="$event => handleClickOutside($event)" />
+          </div>
         </div>
       </div>
     </div>
     <div class="sidebar-item__wrapper">
-      <SideBarItem v-for="(location, index) in locations" :key="location?.garage_id" :location="location"
+      <div v-if="loading">
+        <skeleton type="sidebar-item" />
+        <div class="horizontal-separator"></div>
+        <skeleton type="sidebar-item" />
+      </div>
+      <SideBarItem v-else v-for="(location, index) in locations" :key="location?.garage_id" :location="location"
         :garaIndex="index"
         image="https://storage.googleapis.com/rp-production-public-content/3z624a2usqnwc07nb8ni93deixc7"
         @mouseenter="handleMouseMove(index, location)" @click="handleClickItem(location)" />
@@ -115,6 +126,11 @@ export default {
   mounted() {
     this.initialData();
   },
+  computed: {
+    loading() {
+      return this.locationProps.length == 0;
+    }
+  },
   watch: {
     /**
      * Sets the value of the locations property to the provided newLocations.
@@ -199,7 +215,7 @@ export default {
           if (value == "distance") {
             me.$emit("sortBy", "distance asc");
           } else if (value == "avg_rating") {
-            me.$emit("sortBy", "avg_rating desc");
+            me.$emit("sortBy", "avg_rating desc, distance asc");
           }
           me.handleFiltering(filterId, value);
           break;
