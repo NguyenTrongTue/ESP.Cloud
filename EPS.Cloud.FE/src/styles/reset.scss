@@ -19,6 +19,10 @@ input {
 a {
   text-decoration: none;
 }
+a:focus-visible {
+    outline-offset: 0px;
+    outline: 0;
+}
 ::-webkit-scrollbar {
   width: 10px;
 }

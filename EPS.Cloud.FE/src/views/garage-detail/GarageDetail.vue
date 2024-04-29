@@ -179,37 +179,43 @@
 
         <div class="flex-between">
           <div class="summary">
-            <div class="icon-summanry">
-              <starrating :rating="garage?.avg_rating?.toFixed(2)" />
+            <div class="flex-start summary__left">
+              <div class="icon-summanry">
+                <starrating :rating="garage?.avg_rating?.toFixed(2)" />
+              </div>
+              <div class="rating">
+                <span class="rating_avg">{{ garage?.avg_rating?.toFixed(2) }}</span>
+                <span> &nbsp;·&nbsp;</span>
+                <a href="#reviews" class="total_rating">( {{ garage?.total_rating }} đánh giá )</a>
+              </div>
             </div>
-            <div class="rating">
-              <span class="rating_avg">{{ garage?.avg_rating?.toFixed(2) }}</span>
-              <span> &nbsp;·&nbsp;</span>
-              <a href="#reviews" class="total_rating">( {{ garage?.total_rating }} đánh giá )</a>
-            </div>
-
+            <mbutton button-text="Thêm đánh giá" @click="handleOpenPopupReview" />
           </div>
         </div>
         <div class="horizontal-separator mt-2" style="width: 60%"></div>
         <div>
-          <ReviewItem v-for="review in reviews" :key="review.garage_reviews_id" :review="review" />
+          <ReviewItem v-for="(review, index) in reviews" :key="index" :review="review" />
         </div>
 
         <Panigation :currentPage="currentPage" @handleChangePage="handleChangePage" :length="garage?.total_rating" />
       </div>
     </div>
+
+    <PopupReview :garageProps="garage" @updateReview="handleUpdateReview" ref="PopupReview" />
 </template>
 
 <script>
 import GarageAPI from '@/apis/GarageAPI';
 import ReviewItem from '@/views/garage-detail/ReviewItem.vue';
 import Panigation from '@/views/garage-detail/Panigation.vue';
+import PopupReview from './PopupReview.vue'
 export default {
   name: "GarageDetail",
   props: {},
   components: {
     ReviewItem,
-    Panigation
+    Panigation,
+    PopupReview
   },
   data() {
     return {
@@ -278,8 +284,13 @@ export default {
 
 
   methods: {
+    handleOpenPopupReview() {
+      this.$refs.PopupReview.show();
+    },
+    handleUpdateReview(review) {
 
-
+      this.reviews.unshift(review);
+    },
     handleBooking() {
       this.$router.push({ path: `/booking/${this.garage.garage_id}` });
     },

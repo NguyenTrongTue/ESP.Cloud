@@ -10,8 +10,8 @@
 <script>
 import GoogleMap from "@/components/map/GoogleMap.vue";
 import SideBar from "@/components/sidebar/SideBar.vue";
-import GarageAPI from "@/apis/GarageAPI";
 import BookingAPI from "@/apis/BookingAPI";
+
 export default {
   components: {
     GoogleMap,

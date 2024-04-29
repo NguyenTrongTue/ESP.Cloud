@@ -1,7 +1,7 @@
 <template>
   <NavigationTop>
     <template v-slot:container>
-      <div class="flex-between">
+      <div class="flex-between booking__top">
         <div class="top__left flex-center pointer" @click="handleBack">
           <micon type="ChevronLeft" />
           <span>{{ $t("i18nBooking.Back") }}</span>
@@ -22,7 +22,7 @@
   <!-- Your template code here -->
   <div class="appointment">
     <!-- Subheader drop off > vehicle > contact > sumary-->
-    <div class="sub-header flex-center">
+    <div class="sub-header flex-center" v-if="!modeView">
       <div v-for="item in listSteps" class="step flex-center" :class="{
           'step-active': currentStep == item.step,
           'step-done': currentStep > item.step,
@@ -32,6 +32,9 @@
         }}</span>
         <micon type="ChevronRight" v-if="item.step < listSteps.length" />
       </div>
+    </div>
+    <div v-else class="mb-2 mt-2 detail_booking">
+      Chi tiết thông tin đặt lịch
     </div>
     <!-- Nội dung điền form đặt lịch sửa chữa-->
     <div class="main-content">
@@ -50,7 +53,8 @@
       </div>
       <!-- Bước tổng kết -->
       <div class="steps" v-else>
-        <BookingStep4 :bookingInfo="BookingInfo" @nextStep="handleSubmit" :garageProps="garage" />
+        <BookingStep4 :bookingInfo="BookingInfo" @backToStep=handleBackToStep @nextStep="handleSubmit"
+          :garageProps="garage" :modeView="modeView" />
       </div>
     </div>
   </div>
@@ -103,13 +107,31 @@ export default {
       ],
       garage: null,
       BookingInfo: { garage_id: null },
+      modeView: false
     };
   },
   methods: {
+    /**
+     * Navigates back to the home page by pushing a new entry onto the router's history stack.
+     *
+     * @return {void} No return value.
+     */
     handleBack() {
       this.$router.push({
         path: "/",
       });
+    },
+    /**
+     * Updates the current step to the provided step if it is greater than 0 and less than the total number of steps.
+     *
+     * @param {number} step - The step to navigate back to.
+     * @return {void} No return value.
+     */
+    handleBackToStep(step) {
+      if (step > 0 && step < this.listSteps.length) {
+
+        this.currentStep = step;
+      }
     },
     /**
      * Handles the submission process, including showing loading state, posting data to BookingAPI,
@@ -130,6 +152,7 @@ export default {
           label: "Cuộc hẹn đã được đặt thành công. Thông báo sẽ được gửi khi đến hẹn sửa xe!",
           type: 'success'
         });
+        this.$ms.cache.deleteCache("booking")
         this.$router.push({
           path: "/",
         });
@@ -152,6 +175,43 @@ export default {
       }
     },
     /**
+     * Saves the current step and booking information to the cache.
+     *
+     * @return {void} 
+     * @author nttue 12.03.2024
+     */
+    saveStepBookingToCache() {
+      const objectBooking = {
+        currentStep: this.currentStep,
+        BookingInfo: this.BookingInfo,
+      }
+      this.$ms.cache.setCache("booking", objectBooking);
+    },
+    /**
+     * Retrieves the current step and booking information from the cache and updates the component's state.
+     *
+     * @return {void} 
+     * @author nttue 12.03.2024
+     */
+    getDataBookingFromCache() {
+      const objectCache = this.$ms.cache.getCache("booking");
+
+
+      if (objectCache) {
+
+        if (this.BookingInfo.garage_id === objectCache.BookingInfo.garage_id) {
+          this.currentStep = objectCache.currentStep;
+          this.BookingInfo = { ...objectCache.BookingInfo }
+          if (objectCache?.modeView) {
+
+            this.modeView = objectCache.modeView;
+          }
+        } else {
+          this.$ms.cache.deleteCache("booking");
+        }
+      }
+    },
+    /**
      * Sets the current step to 2 and updates the booking date in BookingInfo.
      *
      * @param {type} timeInfo - the time information to set as the booking date
@@ -163,6 +223,8 @@ export default {
       this.BookingInfo.booking_date = timeObject.timeInfo;
       this.BookingInfo.date = timeObject.date;
       this.BookingInfo.timeSelected = timeObject.timeSelected;
+
+      this.saveStepBookingToCache();
     },
     /**
      * Set the current step to 3 and update booking information with the provided details.
@@ -177,6 +239,7 @@ export default {
       this.BookingInfo.year = bookingInfo.year;
       this.BookingInfo.model = bookingInfo.model;
       this.BookingInfo.comment = bookingInfo.comment;
+      this.saveStepBookingToCache();
     },
     /**
      * Updates the current step to 4 and copies the last name, first name, email, and phone from bookingInfo.
@@ -190,6 +253,7 @@ export default {
       this.BookingInfo.first_name = bookingInfo.first_name;
       this.BookingInfo.email = bookingInfo.email;
       this.BookingInfo.phone = bookingInfo.phone;
+      this.saveStepBookingToCache();
     },
   },
   /**
@@ -203,6 +267,10 @@ export default {
 
     const result = await GarageAPI.getGarageById(this.BookingInfo.garage_id);
     this.garage = result;
+    if (this.BookingInfo.garage_id) {
+
+      this.getDataBookingFromCache();
+    }
   },
 };
 </script>

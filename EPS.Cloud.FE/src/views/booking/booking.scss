@@ -2,6 +2,7 @@
 .appointment {
   width: 100%;
 }
+
 .sub-header {
   width: 100%;
   box-sizing: border-box;
@@ -23,7 +24,17 @@
     color: #b8c2cc;
     font-size: 14px;
     font-weight: 500;
+    &:hover {
+       color: #0098d3;
+       text-decoration: underline;
+    }
   }
+}
+.detail_booking{
+  text-align: center;
+  font-size: 20px;
+  color: #3d4852;
+  font-weight: 500;
 }
 
 .main-content {
@@ -122,7 +133,7 @@ a {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   .gara-name {
     font-size: 16px;
     font-weight: 500;
@@ -250,9 +261,10 @@ ul {
 }
 
 .time-text {
+  flex: 1;
   display: flex;
   align-items: center;
-  justify-items: center;
+ justify-content: space-between;
   gap: 4px;
 }
 .time-text .date-time {
@@ -399,4 +411,11 @@ button.next-step span {
 .icon-clock {
   width: 20px;
   height: 20px;
+}
+
+.booking_icon__clock {
+  display: flex;
+  align-items: center;
+  width: 30px;
+  
 }

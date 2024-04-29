@@ -7,16 +7,18 @@
 
     <div class="anser_footer mt-2">
       <mbutton button-text="Bỏ qua" @click="hide" class="none-background" />
-      <mbutton button-text="Gửi câu trả lời" @click="handleSubmitAnser" />
+      <mbutton button-text="Gửi câu trả lời" @click="handleSubmit" />
     </div>
   </div>
 
 </template>
 
 <script>
-import AnswersAPI from '@/apis/AnswerAPI'
+import AnswersAPI from '@/apis/AnswerAPI';
+import enterFormMixin from "@/mixins/enterFormMixin.vue";
 export default {
   name: "AnswerPopup",
+  mixins: [enterFormMixin],
   props: {
     isReply: {
       type: Boolean,
@@ -49,7 +51,7 @@ export default {
     show() {
       this.showPopup = true;
     },
-    async handleSubmitAnser() {
+    async handleSubmit() {
       try {
 
         if (!this.answer.answers_content) {

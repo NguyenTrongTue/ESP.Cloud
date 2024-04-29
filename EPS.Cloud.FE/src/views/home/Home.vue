@@ -11,8 +11,6 @@ import GoogleMap from "@/components/map/GoogleMap.vue";
 import SideBar from "@/components/sidebar/SideBar.vue";
 import Test from "@/components/Test.vue";
 import GarageAPI from "@/apis/GarageAPI";
-import { useGeolocation } from "@vueuse/core";
-// const { coords } = useGeolocation();
 export default {
   components: {
     GoogleMap,
@@ -57,21 +55,17 @@ export default {
       this.asignCenter();
     } else {
 
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
 
-        };
-        this.$ms.cache.setCache("coords", {
-          latitude: this.center.lat,
-          longitude: this.center.lng,
-        });
-        this.asignCenter();
+      this.center = {
+        lat: 21.037776,
+        lng: 105.782996,
+
+      };
+      this.$ms.cache.setCache("coords", {
+        latitude: this.center.lat,
+        longitude: this.center.lng,
       });
-
-
-
+      this.asignCenter();
     }
 
 

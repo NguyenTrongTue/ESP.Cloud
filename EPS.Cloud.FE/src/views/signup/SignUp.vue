@@ -2,7 +2,7 @@
   <NavigationTop>
     <template v-slot:container>
       <div class="flex-between navigation-top-signup">
-        <div class="navigation-top__left flex-center" @="handleBack">
+        <div class="navigation-top__left flex-center" @click="handleBack">
           <micon type="ArrowLeft" />
           <span>Trở lại</span>
         </div>
@@ -49,7 +49,7 @@
         </div>
       </div>
 
-      <mbutton button-text="Đăng ký" class="mt-2" @click="handleSignup" />
+      <mbutton button-text="Đăng ký" class="mt-2" @click="handleSubmit" />
     </div>
   </div>
 </template>
@@ -60,10 +60,10 @@ import Logo from "@/components/logo/Logo.vue";
 import Eye from "@/components/icons/Eye.vue";
 import HideEye from "@/components/icons/HideEye.vue";
 import Done from "@/components/icons/Done.vue";
-import insertError from "@/utils/insertError.js";
 import { validate } from "@/utils/validate";
 import AuthAPI from "@/apis/AuthAPI.js";
 import validateMixin from "@/mixins/validateMixin.vue";
+import enterFormMixin from "@/mixins/enterFormMixin.vue";
 export default {
   name: "Signup",
   components: {
@@ -72,7 +72,7 @@ export default {
     Done,
   },
   props: {},
-  mixins: [validateMixin],
+  mixins: [validateMixin, enterFormMixin],
   data() {
     return {
       user: {},
@@ -139,7 +139,7 @@ export default {
      *
      * @return {boolean} true if there are errors, false otherwise
      */
-    async handleSignup() {
+    async handleSubmit() {
       try {
         if (!this.handleValidate()) {
           this.$store.commit("showLoading");

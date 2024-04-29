@@ -20,7 +20,7 @@
 
               <div class="rating">
                 <micon type="Stars" />
-                <div>{{ garage?.avg_rating }}</div>
+                <div>{{ garage?.avg_rating.toFixed(2) }}</div>
                 <span>({{ garage?.total_rating }})</span>
               </div>
             </div>
@@ -44,7 +44,7 @@
               ? 'active'
               : 'close'
               ">{{ computedbuildOpenTimeText.split("·")[0] }}</span>
-          <span> · </span>
+          <span>&nbsp;·&nbsp;</span>
           <span>{{ computedbuildOpenTimeText.split("·")[1] }}</span>
         </div>
         <slot name="main-info__1"></slot>
@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="next-steps-footer flex-center">
-      <button class="next-step pointer" @click="handleNextStep">
+      <button class="next-step pointer" @click="handleSubmit">
         <span>Tiếp tục</span>
         <micon type="ArrowRight" />
       </button>
@@ -61,6 +61,7 @@
 </template>
 <script>
 import validateMixin from "@/mixins/validateMixin.vue";
+import enterFormMixin from "@/mixins/enterFormMixin.vue";
 export default {
   emits: ["nextStep"],
   props: {
@@ -69,7 +70,7 @@ export default {
       default: null,
     },
   },
-  mixins: [validateMixin],
+  mixins: [validateMixin, enterFormMixin],
   data() {
     return {
       garage: this.garageProps,
@@ -101,7 +102,7 @@ export default {
     },
   },
   methods: {
-    handleNextStep() {
+    handleSubmit() {
       this.$emit("nextStep");
     },
   },

@@ -31,6 +31,7 @@ import InputRadio from "./components/radio/MRadio.vue";
 import MRating from "./components/rating/MRating.vue";
 import StarRating from "@/components/star-rating/StarRating.vue";
 import PromoFilter from "@/components/promo-filter/PromoFilter.vue";
+import MSkeleton from "@/components/skeleton/MSkeleton.vue";
 import PromoItem from "./components/promo-item/PromoItem.vue";
 import Pagination from "./components/pagination/Pagination.vue";
 const app = createApp(App);
@@ -58,5 +59,7 @@ app.component("starrating", StarRating);
 app.component("promofilter", PromoFilter);
 app.component("promoitem", PromoItem);
 app.component("pagination", Pagination);
+app.component("skeleton", MSkeleton);
+
 app.directive("click-outside", clickOutsideDirective);
 app.use(VueSocialSharing).use(i18n).use(router).use(store).mount("#app");

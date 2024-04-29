@@ -1,20 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ESP.Cloud.BE.Core.Model
+﻿namespace ESP.Cloud.BE.Application.Dto
 {
-    /// <summary>
-    /// Bảng lưu phản hồi của nguời dùng về garage
-    /// </summary>
-    [Table("garage_reviews")]
-    public class GarageReviewsEntity
+    public class CreateReviewDto
     {
-        /// <summary>
-        /// Khóa chính của bảng 'garage_reviews'
-        /// </summary>
-        [Key]
-        public Guid garage_reviews_id { get; set; }
-
         /// <summary>
         /// Khóa ngoại trỏ đến bảng 'garage'
         /// </summary>

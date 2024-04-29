@@ -19,7 +19,7 @@
           :disabled="!objectMaster.model" />
       </div>
     </div>
-    <div class="next-steps" @click="nextStep">
+    <div class="next-steps" @click="handleSubmit">
       <mbutton buttonText="Tiếp theo" :disabled="computedDisableBtn" />
     </div>
   </div>
@@ -28,9 +28,10 @@
 <script>
 
 import carMixin from "@/mixins/carMixin.vue";
+import enterFormMixin from "@/mixins/enterFormMixin.vue";
 export default {
   name: "Estimator2",
-  mixins: [carMixin],
+  mixins: [carMixin, enterFormMixin],
   props: {
     estimateInfo: {
       type: Object,
@@ -60,7 +61,7 @@ export default {
     }
   },
   methods: {
-    nextStep() {
+    handleSubmit() {
       if (!this.computedDisableBtn) {
 
         this.$emit("nextStep", this.objectMaster);

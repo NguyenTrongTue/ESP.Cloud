@@ -31,7 +31,10 @@
       </div>
       <div class="flex-start">
         <div class="icon-clock flex-center">
-          <micon type="Clock" />
+          <div class="booking_icon__clock">
+
+            <micon type="Clock" />
+          </div>
         </div>
         <div class="ds-body-regular ng-font-neutral-80 ml-1">
           {{ computedDropOff }}
@@ -122,7 +125,7 @@ export default {
           hours = new Date(this.booking_date).getHours(),
           minutes = new Date(this.booking_date).getMinutes();
         return `${day}, ngày ${date}/${month} lúc ${hours} giờ ${minutes > 0 ? minutes : ""
-          } sáng`;
+          } ${hours <= 12 ? "sáng" : "chiều"}`;
       } else {
         return "";
       }
