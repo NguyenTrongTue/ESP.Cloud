@@ -28,7 +28,9 @@
         Thời gian sửa
       </div>
       <div class="flex-start">
-        <micon type="Clock" />
+        <div class="booking_icon__clock">
+          <micon type="Clock" />
+        </div>
         <div class="ng-pl8 ds-body-regular ng-font-neutral-80">
           {{ computedDropOff }}
         </div>
@@ -40,6 +42,7 @@
 <script>
 import BaseBooking from "./BaseBooking.vue";
 import carMixin from "@/mixins/carMixin.vue";
+
 export default {
   extends: BaseBooking,
   mixins: [carMixin],
@@ -94,7 +97,7 @@ export default {
           hours = new Date(this.booking_date).getHours(),
           minutes = new Date(this.booking_date).getMinutes();
         return `${day}, ngày ${date}/${month} lúc ${hours} giờ ${minutes > 0 ? minutes : ""
-          } sáng`;
+          } ${hours <= 12 ? "sáng" : "chiều"}`;
       } else {
         return "";
       }

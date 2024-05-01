@@ -16,6 +16,11 @@ namespace ESP.Cloud.BE.Model
         public Guid user_notifications_id { get; set; }
 
         /// <summary>
+        /// Khóa ngoại trỏ bảng chứa thông báo
+        /// </summary>
+        public Guid? refid { get; set; } = Guid.Empty;
+
+        /// <summary>
         /// Khóa ngoại trỏ đến bảng 'user'
         /// </summary>
         public Guid? user_id { get; set; } = Guid.Empty;

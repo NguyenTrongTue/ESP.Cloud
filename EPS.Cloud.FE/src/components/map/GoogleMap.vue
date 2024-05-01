@@ -1,7 +1,3 @@
-<style>
-@import "./google-map.scss";
-</style>
-
 <template>
   <div class="map" id="map" style="width: 100%; height: 100%"></div>
 </template>
@@ -22,7 +18,8 @@ export default {
   data() {
     return {
       loader: new Loader({
-        apiKey: 'AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+        apiKey: 'AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg',
+        // 'AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
         version: "weekly",
         libraries: ["places"],
       }),
@@ -35,6 +32,7 @@ export default {
       locationsList: this.locations,
       directionsRenderer: null,
       directionsService: null,
+      pinElement: null
     };
   },
   mounted() {
@@ -67,10 +65,12 @@ export default {
         });
         this.directionsService = new google.maps.DirectionsService();
 
-        const { AdvancedMarkerElement } = await google.maps.importLibrary(
+        const { PinElement } = await google.maps.importLibrary(
           "marker"
         );
-
+        this.pinElement = new PinElement({
+          glyphColor: "#FBBC04",
+        });;
         if (!this.center.lat || !this.center.lng) {
           let value = this.$ms.cache.getCache("coords");
           if (value) {
@@ -100,17 +100,26 @@ export default {
      */
     handleViewLocations() {
       try {
-        this.locations.forEach((location) => {
-          let marker = new this.google.maps.Marker({
-            map: this.map,
-            position: { lat: location.latitude, lng: location.longitude },
-          });
+        if (this.google) {
 
-          marker.addListener("click", () =>
-            this.hanleShowInfoWindow(location, marker)
-          );
-          this.markers.push(marker);
-        });
+          this.locations.forEach((location) => {
+
+
+            const priceTag = document.createElement('div');
+            priceTag.className = 'price-tag';
+            priceTag.textContent = '$2.5M';
+            let marker = new this.google.maps.Marker({
+              map: this.map,
+              position: { lat: location.latitude, lng: location.longitude },
+              content: this.pinElement.element
+            });
+
+            marker.addListener("click", () =>
+              this.hanleShowInfoWindow(location, marker)
+            );
+            this.markers.push(marker);
+          });
+        }
       } catch (e) {
         console.log(e);
       }
@@ -135,9 +144,8 @@ export default {
         <div class="info-window">
           <div class="info-window__top">
             <img
-              style="width: 300px; height: 180px"
               class="info-window__top-img"
-              src="${this.location?.image}"
+              src="${this.location?.image?.split(';')[0]}"
               alt="Ảnh của gara"
             />
           </div>
@@ -159,15 +167,17 @@ export default {
                     d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"
                   ></path>
                 </svg>
-                <span>${this.location.total_rating}</span>
-                <span>(40)</span>
+                <span>${this.location.avg_rating.toFixed(2)}</span>
+                <span>(${this.location.total_rating})</span>
               </div>
             </div>
             <div class="address">
-              <img
-                src="https://www.gstatic.com/images/icons/material/system_gm/1x/place_gm_blue_24dp.png"
-                alt="Ảnh của gara"
-              />
+              <div class="window_info__icon">
+                <img
+                  src="https://www.gstatic.com/images/icons/material/system_gm/1x/place_gm_blue_24dp.png"
+                  alt="Ảnh của gara"
+                />
+              </div>
 
               <span class="address-text">${this.location.address}</span>
               <span class="address-distance"> (${this.location.distance.toFixed(
@@ -176,34 +186,40 @@ export default {
             </div>
             <div class="time-open">
 
-                <svg
-                style="color: rgb(0, 60, 255)"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="currentColor"
-            viewBox="0 0 256 256"
-          >
-            <path
-              d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"
-            ></path>
-          </svg>
+                <div class="window_info__icon">
+                  <svg
+                  style="color: rgb(0, 60, 255)"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="currentColor"
+              viewBox="0 0 256 256"
+            >
+              <path
+                d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"
+              ></path>
+            </svg>
+                </div>
               <span>${this.location.open_time}</span>
             </div>
             <div class="facebook">
-              <img
-                src="https://www.gstatic.com/images/icons/material/system_gm/1x/public_gm_blue_24dp.png"
-                alt="Ảnh của gara"
-              />
+             <div class="window_info__icon">
+                <img
+                  src="https://www.gstatic.com/images/icons/material/system_gm/1x/public_gm_blue_24dp.png"
+                  alt="Ảnh của gara"
+                />
+             </div>
               <a href="${this.location.garage_website}" target="_blank"
                 >facebook.com</a
               >
             </div>
             <div class="phone">
-              <img
-                src="https://www.gstatic.com/images/icons/material/system_gm/1x/phone_gm_blue_24dp.png"
-                alt="Ảnh của gara"
-              />
+             <div class="window_info__icon">
+                <img
+                  src="https://www.gstatic.com/images/icons/material/system_gm/1x/phone_gm_blue_24dp.png"
+                  alt="Ảnh của gara"
+                />
+             </div>
 
               <span>${this.location.phone}</span>
             </div>
@@ -240,3 +256,6 @@ export default {
   },
 };
 </script>
+<style>
+@import "./google-map.scss";
+</style>

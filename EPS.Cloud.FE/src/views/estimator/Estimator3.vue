@@ -16,7 +16,7 @@
     <div class="service-list">
       <mcardselect v-for="service in listServices" :key="service.sevice_code" :item="service" />
     </div>
-    <div class="next-steps-4 mb-4" @click="nextStep">
+    <div class="next-steps-4 mb-4" @click="handleSubmit">
       <mbutton buttonText="Nhận ước tính" :disabled="computedDisableBtn" />
     </div>
   </div>
@@ -24,9 +24,11 @@
 
 <script>
 import BookingAPI from "@/apis/BookingAPI";
+import enterFormMixin from "@/mixins/enterFormMixin.vue";
 export default {
   name: "Estimator3",
   emits: ["nextStep"],
+  mixins: [enterFormMixin],
   props: {
     estimateInfo: {
       type: Object,
@@ -65,7 +67,7 @@ export default {
 
   },
   methods: {
-    nextStep() {
+    handleSubmit() {
       if (!this.computedDisableBtn) {
         let servicesSelected = this.listServices.filter((item) => item.value);
         this.$emit("nextStep", servicesSelected);

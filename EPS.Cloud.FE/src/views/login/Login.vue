@@ -29,7 +29,7 @@
       <div class="forgot-password pointer" @click="handleResetPassword">
         Bạn quên mật khẩu?
       </div>
-      <mbutton button-text="Đăng nhập" @click="handleLogin" />
+      <mbutton button-text="Đăng nhập" @click="handleSubmit" />
     </div>
   </div>
   <ResetPassword ref="resetPassword" />
@@ -44,6 +44,7 @@ import Done from "@/components/icons/Done.vue";
 import ResetPassword from "./ResetPassword.vue";
 import AuthAPI from "@/apis/AuthAPI.js";
 import validateMixin from "@/mixins/validateMixin.vue";
+import enterFormMixin from "@/mixins/enterFormMixin.vue";
 export default {
   name: "Login",
   components: {
@@ -52,7 +53,7 @@ export default {
     Done,
     ResetPassword,
   },
-  mixins: [validateMixin],
+  mixins: [validateMixin, enterFormMixin],
   props: {},
   /**
    * Returns the initial data for the component.
@@ -88,7 +89,7 @@ export default {
      * @return {boolean} true if there are errors, false otherwise
      * @author nttue 03.03.2024
      */
-    async handleLogin() {
+    async handleSubmit() {
       try {
         if (!this.handleValidate()) {
           this.$store.commit("showLoading");

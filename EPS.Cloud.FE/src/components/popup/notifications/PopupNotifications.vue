@@ -19,7 +19,7 @@
         <div class="notifications__body">
             <div class="notifications_item flex-between" :class="{
                     'unread': item.unread
-                }" v-for="(item, index) in computedNotifications" :key="index">
+                }" v-for="(item, index) in computedNotifications" :key="index" @click="handleViewNotification(item)">
                 <div class="notifications_item__right flex-center ">
 
                     <img v-if="item.type == 0" src="@/assets/img/download.png" alt="icon" />
@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import BookingAPI from '@/apis/BookingAPI.js'
 export default {
     name: "PopupNotifications",
     props: {
@@ -95,7 +96,26 @@ export default {
         }
     },
 
-    methods: {},
+    methods: {
+
+        async handleViewNotification(item) {
+            if (item.refid) {
+                console.log(item.refid)
+                var booking = await BookingAPI.getById(item.refid);
+
+                const objectBooking = {
+                    currentStep: 4,
+                    BookingInfo: booking,
+                    modeView: true
+                }
+                this.$ms.cache.setCache("booking", objectBooking);
+
+
+                this.$router.push({ path: `/booking/${booking.garage_id}` });
+
+            }
+        }
+    },
 };
 </script>
 

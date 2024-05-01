@@ -60,5 +60,18 @@ namespace ESP.Cloud.BE.Core.Model
         /// Thời gian đặt lịch
         /// </summary>
         public DateTime created_date { get; set; } = DateTime.Now;
+
+        /// <summary>
+        /// Nhãn hiệu của xe (Ví dụ: Toyota, Honda, ...)
+        /// </summary>
+        public string make { get; set; } = string.Empty;
+        /// <summary>
+        /// Mô hình của xe (Ví dụ: Camry, Accord, ...)
+        /// </summary>
+        public string model { get; set; } = string.Empty;
+        /// <summary>
+        /// Năm sản xuất
+        /// </summary>
+        public int? year { get; set; }
     }
 }
