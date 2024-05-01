@@ -2,7 +2,7 @@
 
   <div class="answer_popup" v-if="showPopup">
 
-    <minput name="Content" v-model="answer.answers_content" ref="Content" type-component="textarea" :maxLength="1000"
+    <minput name="Conteent" v-model="answer.answers_content" ref="Conteent" type-component="textarea" :maxLength="1000"
       default-text="Thêm câu trả lời tại đây" />
 
     <div class="anser_footer mt-2">

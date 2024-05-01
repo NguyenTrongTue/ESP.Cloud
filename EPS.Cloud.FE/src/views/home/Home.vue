@@ -134,20 +134,20 @@ export default {
         }
       };
 
-      fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${+this.center
-          .lat},${+this.center.lng}&key=${window.__congfigGoogleMapAPI}`
-      )
+      // fetch(
+      //   `https://maps.googleapis.com/maps/api/geocode/json?latlng=${+this.center
+      //     .lat},${+this.center.lng}&key=${window.__congfigGoogleMapAPI}`
+      // )
 
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log(data);
 
-          this.$ms.cache.setCache("currentAddress", data);
-        })
-        .catch((error) => {
-          console.error("Lỗi:", error);
-        });
+      //     this.$ms.cache.setCache("currentAddress", data);
+      //   })
+      //   .catch((error) => {
+      //     console.error("Lỗi:", error);
+      //   });
     },
     async searchData(newObject) {
       const me = this;

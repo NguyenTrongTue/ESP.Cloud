@@ -1,9 +1,9 @@
-- sử dụng store để lưu thông tin car, make, year.
-- các đầu API cần viết:
-    - Tìm câu hỏi theo make, model, year.
-    - Search câu hỏi theo title
-    - Lưu thông tin câu hỏi
-    - Phản hồi thông tin cho người dùng
-    - Lưu thông tin câu trả lời
-    - Lấy danh sách câu hỏi theo make, model, year
-    - Lấy DS câu trả lời theo ID câu hỏi.
+- các đầu việc cần làm:
+	- tùy chỉnh lại giao diện - 0.5 ngày
+	- Rà soát lại toàn bộ chương trình xem có chỗ nào cần cải tiến không 0.5 ngày
+	- bổ sung chức năng tìm kiếm nhanh - 1 ngày
+	- bổ sung chức năng xem các bài review về xe - 2 ngày
+	+ API lấy ra xe được đánh giá cao nhất
+	+ Full luồng thêm đánh giá
+
+	- xem anh em trong team có việc gì cần hỗ trợ không thì hỗ trợ anh em 
