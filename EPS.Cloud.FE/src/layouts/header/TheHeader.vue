@@ -9,6 +9,7 @@
         <router-link to="/estimator"> <span>Ước tính</span></router-link>
         <router-link to="/promo"> <span>Khuyến mãi</span></router-link>
         <router-link to="/questions"> <span>Thảo luận</span></router-link>
+        <router-link to="/car_review"> <span>Review xe</span></router-link>
       </div>
     </div>
     <div class="header__right">

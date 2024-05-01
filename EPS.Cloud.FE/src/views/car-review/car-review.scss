@@ -1,0 +1,453 @@
+.questions {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    // margin-bottom: 20px;
+    max-width: 50rem;
+    height: fit-content;
+}
+.question__header__title {
+
+    font-size: 32px;
+    line-height: 1.5;
+    font-weight: bold;
+    color: #424242;
+    margin-bottom: 1rem;
+}
+.quetions__header_description{
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 24px;
+}
+.find_quetions__top{
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+    .combobox_item {
+        width: 24%;
+    }
+}
+
+.search_input{
+    position: relative;
+    gap: 12px;
+    .quetions_input {
+        flex: 1;
+    }
+    .search_button {
+        width: 20%;
+    }
+}
+.questions__list {
+    display: grid;
+        grid-column-gap: .625rem;
+    
+    grid-template-columns: repeat(2, 1fr);
+}
+.questions__card {
+    margin-top: .625rem;
+    width: 25rem;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);
+    .questions__card_body {
+        display: flex;
+        padding: 28px 20px;
+
+    }
+    .question__card_left{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img {
+            width: 6.25rem;
+            object-fit: cover;
+            
+        }
+        margin-right: 1rem;
+         .rating{
+            margin-top: -10px;
+        }
+    }
+    .questions__card_right{
+        width: 70%;
+        &:hover {
+         .question__card_title,.view_all {
+            text-decoration: underline;
+            color: #08a5ce;
+
+        }   
+       
+        .questions__total {
+             color: #08a5ce;
+
+         }
+        }
+        .question__card_title{
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+        .view_all {
+            color:  #08a5ce;
+            font-size: 14px;
+        }
+    }
+.questions_card__popular {
+    background-color: #f4f4f4;
+min-height: 48px;
+    padding: .625rem;
+display: flex;
+align-items: center;
+}
+.questions_card__popular_title {
+    font-size: 14px;
+}
+
+.popular_item {
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 14px;
+    &:hover {
+        color: #08a5ce;
+        text-decoration: underline;
+    }
+}
+}
+
+.questons_modal {
+    padding: 12px 0;
+    
+   
+width: 50rem;
+.question_modal__footer {
+    padding: 12px 12px 0;
+    border-top: 1px solid rgba(0,0,0,.12);
+}
+.questions_modal__top {
+    padding: 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .questions_modal__title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .question_modal__close {
+        font-size: 30px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+            background-color: rgba($color: #000000, $alpha: .12);
+        }
+    }
+}
+.question_modal__body {
+    height: calc(100vh - 12rem);
+        overflow-y: scroll;
+         padding: 0 20px;
+}
+
+
+
+.question_group__label {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.question_group_description {
+font-size: 13px;
+margin-bottom: 12px;
+}
+}
+
+.questons_modal_rating{
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    position: relative;
+    .title {
+        position: absolute;
+    }
+    .rating{
+        margin: auto;
+    }
+
+}
+.car_review_grid {
+    display: flex; 
+    justify-content: space-between; 
+    .combobox_item{
+        width: 32%;
+    }
+}
+.answer_card__tile {
+    color: #08a5ce;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.anser_card__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    .anser_card__item-icon{
+        width: 20px;
+    }
+    span {
+        font-size: 14px;
+        font-weight: 500;
+         color: #606f7b;;
+    }
+}
+.answer_card{
+    border-bottom: 1px solid #b8c2cc;
+    padding: 24px;
+}
+.list_answer{
+    width: 100%;
+        box-shadow: 0 0 9px #b8c2cc;
+        margin-bottom: 40px;
+        
+}
+
+.car_type {
+    font-size: 22px;
+    font-weight: 500;
+}
+.author_questions {
+    color: #606f7b;
+    font-size: 14px;
+    font-weight: 500;
+    
+}
+.answer_button {
+color: #08a5ce;
+cursor: pointer;
+font-weight: 500;
+&:hover {
+    text-decoration: underline;
+
+}
+}
+.popular_answer {
+    span {
+        font-size: 14px;
+        font-weight: 500;        
+        color: #f26829;
+    }
+}
+.answer_list{
+    padding-bottom: 20px;
+}
+.answer_item {
+    border-bottom: 1px solid rgba($color: #000000, $alpha: .12);
+    padding: 24px 12px ;
+}
+.reply{
+    font-size: 14px;
+    font-weight: 500;
+    color: #383f44;
+    cursor: pointer;
+    &:hover {
+        color: #08a5ce;
+        text-decoration: underline;
+    }
+}
+.list_reply {
+    margin-top: 12px;
+    .reply_item{
+        margin-top: 12px;
+        padding: 12px 24px;
+        background-color: rgba($color: #000000, $alpha: .05);
+    }
+}
+
+.author_name, .time_answer {
+    font-size: 16px;
+    font-weight: 500;
+    color: #606f7b;
+}
+
+
+.no_answer {
+    background-color: rgba($color: #000000, $alpha: .05);
+     margin-top: 12px;
+        padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.no_answer__title {
+font-weight: 500;
+
+}
+
+.no_answer__button {
+    width: 200px;
+}
+
+.search_wrapper {
+    position: relative;
+        width: 100%;
+    }
+    
+    .list_search{
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        border-top: 1px solid rgba($color: #000000, $alpha: .12);
+        border-left: 1px solid rgba($color: #000000, $alpha: .12);
+        border-right: 1px solid rgba($color: #000000, $alpha: .12);
+
+         box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);
+        .search_item {
+            background-color: #fff;
+            border-bottom: 1px solid rgba($color: #000000, $alpha: .12);
+            padding: 8px;
+    color: #08a5ce;
+    cursor: pointer;
+    &:hover {
+        background-color: #08a5ce;
+        color: #fff;
+    }
+}
+}
+.question__navigator {
+    display: flex;
+}
+.question__navigator_item {
+color:  #424242;
+.question__navigator_text {
+    font-size: 14px;
+    &:hover {
+        text-decoration: underline;
+        color: #08a5ce;
+    }
+}
+.active {
+    color: #909090;
+}
+}
+
+
+.car_review__card {
+    display: flex;
+    gap: 20px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);
+    padding: 24px;
+    
+}
+.car_review__card_left {
+    width: 30%;
+    img {
+        width: 180px;
+        object-fit: cover;
+
+    }
+
+
+}
+.car_review__card_right {
+flex: 1;
+}
+.title {
+            font-size: 16px;
+        font-weight: 500;
+         color: #383f44;
+
+}
+.rating_avg_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.rating_avg {
+padding: 2px 6px;
+border-radius: 2px;
+&.excellent {
+    background-color: #e7fadd;
+    color: #4daa1a;
+}
+&.everage {
+    background-color: #e2dfdf;
+    color: #909090;
+}
+&.low {
+    background-color: #f3bdbd;
+    color: #d72626;
+}
+
+span {
+    font-size: 18px;
+    font-weight: 600;
+}
+}
+.rating_avg_reliablity {
+    .rating {
+    font-size: 13px;
+    font-weight: 500;
+}
+.rating_text {
+    font-size: 13px;
+}
+}
+
+
+.car_review_card {
+    padding: 20px;
+    border-radius: 4px;
+        background-color: #f4f4f4;
+        margin-bottom: 20px;
+.car_review_card__top {
+    
+}
+.title {
+    
+}
+.rating {
+    
+}
+.author_wrapper {
+    font-size: 14px;
+}
+.car_review_card___center {
+    background-color: white;
+    padding: 12px;
+}
+.description {
+    
+}
+.react {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    
+    &.is_like, &:hover {
+        color: #4dc1df;
+    }
+}
+.total_like {
+    line-height: 20px;
+    transform: translateY(2px);
+}
+.like {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    
+    
+}
+}

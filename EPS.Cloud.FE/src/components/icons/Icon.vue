@@ -40,6 +40,7 @@
   <Check v-if="type == 'Check'" />
   <Popular v-if="type == 'Popular'" />
   <Answer v-if="type == 'Answer'" />
+  <Like v-if="type == 'Like'" />
 </template>
 
 <script>
@@ -83,6 +84,7 @@ import Check from "./Check.vue";
 import Popular from "./Popular.vue";
 import Answer from "./Answer.vue";
 import StarsV2 from "./StarsV2.vue";
+import Like from "./Like.vue";
 
 export default {
   name: "Icon",
@@ -141,7 +143,8 @@ export default {
     Check,
     Popular,
     Answer,
-    StarsV2
+    StarsV2,
+    Like
   },
 };
 </script>
