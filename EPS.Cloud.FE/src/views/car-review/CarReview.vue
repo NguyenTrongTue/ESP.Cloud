@@ -45,28 +45,20 @@
     <div class=" horizontal-separator mt-4">
     </div>
     <div class="mb-2 quetions__header_description mt-4 ">
-
       {{ topRatingTitle }}
-
       <div>
         <div class="top_rating_description mt-1 mb-2">
           <span v-if="currentStep === 0">
-
             Xe <a class="top_rating__link" :href="computedLinkToTopRating(objectOverviewMaster)">{{ objectOverviewMaster.make }} {{ objectOverviewMaster.model }} {{ objectOverviewMaster.year }}</a>
             đánh giá cao
             nhất
           </span>
           <span v-else>
-
-Tổng cộng có <span class="bold">{{objectOverviewMaster.total_rating}}</span> lượt đánh giá xe {{objectOverviewMaster.make}}. Xếp hạng trung bình <span class="bold">{{objectOverviewMaster.avg_rating}}</span> trên 5 sao.
-
-
-          </span>
-        
+            Tổng cộng có <span class="bold">{{objectOverviewMaster.total_rating}}</span> lượt đánh giá xe {{objectOverviewMaster.make}}. Xếp hạng trung bình <span class="bold">{{objectOverviewMaster.avg_rating}}</span> trên 5 sao.
+          </span>        
         </div>
         <div class="top_rating_view mt-1 mb-2">
-          <starrating :rating="objectOverviewMaster?.avg_rating?.toFixed(2)"size="20" @update="handleUpdateRating"/>
-
+          <starrating :rating="objectOverviewMaster?.avg_rating" size="20" @update="handleUpdateRating"/>
           <span class="top_rating_view_desc" >Tổng số {{objectOverviewMaster?.total_rating}} đáng giá</span>
         </div>
         <CarRating :objectOverviewMaster="objectOverviewMaster" />
@@ -168,6 +160,12 @@ export default {
   },
   methods: {
 
+    /**
+     * Generates a link to the top rating for a given car review.
+     *
+     * @param {Object} objectOverviewMaster - The object containing the car review details.
+     * @return {string} The generated link to the top rating for the car review.
+     */
  computedLinkToTopRating(objectOverviewMaster) {
              const { year, model, make } = objectOverviewMaster;
         const carName = make?.replace(/ /g, "-");
