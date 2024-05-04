@@ -81,7 +81,9 @@ export default {
         const objectMaster = {
           car_review_id: this.answer.car_review_id,
           user_id: user.user_id,
-          liked: !this.answer.is_liked
+          liked: !this.answer.is_liked,
+          fullname: user.fullname,
+          user_id_of_car_review: this.answerData.user_id
 
         }
         await CarReviewAPI.likeOrUnLikeAsync(objectMaster);

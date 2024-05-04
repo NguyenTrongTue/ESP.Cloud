@@ -24,7 +24,7 @@
         <div class="answer_button mb-2" @click="handleOpenPopupAnswer">
             Trả lời
         </div>
-        <AnswerPopup ref="AnswerPopup" :questionId="question.questions_id" @update="handleUpdateAnswer" />
+        <AnswerPopup ref="AnswerPopup" :question="question" @update="handleUpdateAnswer" />
         <div v-if="listAnswer.length > 0">
             <div class="popular_answer flex-start mb-2">
                 <micon type="Popular" />
@@ -42,8 +42,7 @@
                         <div class="reply mt-2" @click="handleReply(item.answers_id)">Phản hồi</div>
 
                         <AnswerPopup :ref="`AnswerPopup_${item.answers_id}`" :isReply="true"
-                            :replyToAnswerId="item.answers_id" :questionId="question.questions_id"
-                            @update="handleUpdateReply" />
+                            :replyToAnswerId="item.answers_id" :question="question" @update="handleUpdateReply" />
 
                         <div class="list_reply">
                             <div v-if="item.list_reply" v-for="reply_item in (item.list_reply)"
@@ -55,7 +54,7 @@
                                 <div class="answer_description"> {{ reply_item.answers_content }}</div>
                                 <div class="reply mt-2" @click="handleReply(reply_item.answers_id)">Phản hồi</div>
                                 <AnswerPopup :ref="`AnswerPopup_${reply_item.answers_id}`" :isReply="true"
-                                    :replyToAnswerId="item.answers_id" :questionId="question.questions_id"
+                                    :replyToAnswerId="item.answers_id" :question="question"
                                     @update="handleUpdateReply" />
 
                             </div>
@@ -148,16 +147,23 @@ export default {
 
         },
         async handleInitData() {
-            this.question_id = this.$route.params.id;
+            try {
+                this.$store.commit("showLoading");
+                this.question_id = this.$route.params.id;
 
-            const result = await AnswersAPI.getAnswerByQuestionId(this.question_id);
-            this.listAnswer = result.answers.map(item => {
-                return {
-                    ...item,
-                    list_reply: JSON.parse(item.list_reply)
-                }
-            });
-            this.question = result.question[0];
+                const result = await AnswersAPI.getAnswerByQuestionId(this.question_id);
+                this.listAnswer = result.answers.map(item => {
+                    return {
+                        ...item,
+                        list_reply: JSON.parse(item.list_reply)
+                    }
+                });
+                this.question = result.question[0];
+                this.$store.commit("hideLoading");
+            } catch (e) {
+                this.$store.commit("hideLoading");
+                console.log(e);
+            }
 
         }
     },

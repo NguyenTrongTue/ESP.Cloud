@@ -24,9 +24,9 @@ export default {
       type: Boolean,
       default: false,
     },
-    questionId: {
-      type: String,
-      default: "",
+    question: {
+      type: Object,
+      default: {},
       required: true
     },
     replyToAnswerId: {
@@ -60,12 +60,13 @@ export default {
         } else {
           let user = this.$ms.cache.getCache("user");
           const objectMaster = {
-            questions_id: this.questionId,
+            questions_id: this.question.questions_id,
             user_id: user.user_id,
             user_name: user.fullname,
             answers_content: this.answer.answers_content,
             is_reply: this.isReply,
-            reply_to_answer_id: this.replyToAnswerId
+            reply_to_answer_id: this.replyToAnswerId,
+            user_id_of_question: this.question.user_id,
           }
           await AnswersAPI.post(objectMaster);
           this.$emit("update", objectMaster);
