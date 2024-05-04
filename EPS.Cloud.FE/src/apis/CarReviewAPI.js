@@ -7,6 +7,11 @@ class CarReviewAPI extends BaseAPI {
   }
 
 
+    /**
+     * Handle like or unlike a post.
+     * @param {Object} object - The object to be passed in the request
+     * @return {Promise} The promise of the request
+     */
     async likeOrUnLikeAsync(object) {
     return request.post(this.url + "/like_or_unlike", object);
   }
@@ -23,12 +28,23 @@ class CarReviewAPI extends BaseAPI {
    * @param {type} make - The make of the car to get the question for
    * @return {type} The result of the request
    */
-  getQuestionByCar(make) {
+  getQuestionByCar(make, userId) {
     return request.get(
-      this.url + `/get_questions_by_car?make=${make}`
+      this.url + `/get_questions_by_car?make=${make}&userId=${userId}`
     );
   }
 
+  getOverview(make = '') {
+    if (make) {
+      return request.get(
+        this.url + `/get_overview_rating?make=${make}`
+      );
+    } else {
+      return request.get(
+        this.url + `/get_overview_rating`
+      );
+    }
+  }
  
   searchQuestionByTitle(title) {
     return request.get(
@@ -40,15 +56,15 @@ GetQuestionPopular() {
       this.url + `/get_questions_popular`
     );
   }
-GetQuestionByMake(make) {
+GetQuestionByMake(make, userId) {
     return request.get(
-      this.url + `/get_questions_by_make?make=${make}`
+      this.url + `/get_questions_by_make?make=${make}&userId=${userId}`
     );
   }
 
-  GetQuestionByModel(make, model) {
+  GetQuestionByModel(make, model, userId) {
     return request.get(
-     this.url + `/get_questions_by_model?make=${make}&model=${model}`
+     this.url + `/get_questions_by_model?make=${make}&model=${model}&userId=${userId}`
     );
   }
 }

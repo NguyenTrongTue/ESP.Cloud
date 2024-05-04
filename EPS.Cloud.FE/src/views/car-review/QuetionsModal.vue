@@ -34,7 +34,7 @@
                     <div class="title">Đánh giá tổng thể</div>
                     <div class="rating">
 
-                        <MRatingV2 @updateRating="handleUpdateRating" />
+                       <starrating :rating="objectMaster?.rating?.toFixed(2)" :disableClick="false" size="30" @update="handleUpdateRating"/>
                     </div>
                 </div>
 
@@ -111,6 +111,7 @@ export default {
     methods: {
         handleUpdateRating(rating) {
             this.objectMaster.rating = rating;
+
         },
         show() {
             this.showPopup = true;

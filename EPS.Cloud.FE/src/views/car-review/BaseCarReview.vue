@@ -10,6 +10,9 @@ export default {
             titleQuestions: "",
             titleListQuestions: "",
             titlePopularQuestions: "",
+            topRatingTitle: "",
+            topRatingDesc: '',
+            objectOverviewMaster: {},
             listQuestionNavigator: [
                 {
                     text: 'Chủ để',
@@ -24,6 +27,11 @@ export default {
         }
     },
     methods: {
+        /**
+         * Handles the start of the questions page based on the current route name and parameters.
+         *
+         * @return {void} This function does not return anything.
+         */
         handleStartQuestionsPage() {
             try {
                 const name = this.$route.name;
@@ -43,8 +51,9 @@ export default {
                             title: `Câu hỏi ${make}`,
                             titleQuestions: `Đánh giá phổ biến theo ${make}`,
                             titlePopular: `Câu hỏi phổ biến về mẫu xe ${make}`,
-                            callbackGetQuestions: async () => await CarReviewAPI.GetQuestionByMake(make),
-                            callbackGetAnswers: async () => await AnswerAPI.getAnswerRecently(this.getAnswerParam),
+                            topRatingTitle: `Tổng quan về xếp hạng xe ${make}`,
+                            callbackGetQuestions: async () => await CarReviewAPI.GetQuestionByMake(make, user.user_id),
+                            getOverview: async () => await CarReviewAPI.getOverview(make),
 
                         }
                         );
@@ -64,8 +73,9 @@ export default {
                             title: `Câu hỏi ${this.getAnswerParam.make} ${this.getAnswerParam.model}`,
                             titleQuestions: `Đánh giá phổ biến theo ${this.getAnswerParam.make} ${this.getAnswerParam.model}`,
                             titlePopular: `Câu hỏi phổ biến về mẫu xe ${this.getAnswerParam.make} ${this.getAnswerParam.model}`,
-                            callbackGetQuestions: async () => await CarReviewAPI.GetQuestionByModel(this.getAnswerParam.make, this.getAnswerParam.model),
-                            callbackGetAnswers: async () => await AnswerAPI.getAnswerRecently(this.getAnswerParam),
+                            topRatingTitle: `Tổng quan về xếp hạng xe ${make}`,
+                            callbackGetQuestions: async () => await CarReviewAPI.GetQuestionByModel(this.getAnswerParam.make, this.getAnswerParam.model, user.user_id),
+                            getOverview:  async () => await CarReviewAPI.getOverview(make),
                         }
                         );
                         break;
@@ -89,8 +99,9 @@ export default {
                             title: `Câu hỏi ${title} ${year}`,
                             titleQuestions: `Đánh giá phổ biến theo ${title}`,
                             titlePopular: `Câu hỏi phổ biến về xe ${title} ${year}`,
-                            callbackGetQuestions: async () => await CarReviewAPI.GetQuestionByModel(this.getAnswerParam.make, this.getAnswerParam.model),
-                            callbackGetAnswers: async () => await AnswerAPI.getAnswerRecently(this.getAnswerParam),
+                            topRatingTitle: `Tổng quan về xếp hạng xe ${make}`,
+                            callbackGetQuestions: async () => await CarReviewAPI.GetQuestionByModel(this.getAnswerParam.make, this.getAnswerParam.model, user.user_id),
+                            getOverview:  async () => await CarReviewAPI.getOverview(make),
                         }
                         );
                         break;
@@ -100,8 +111,9 @@ export default {
                             title: 'Đánh giá và xếp hạng xe',
                             titleQuestions: `Tìm đánh giá cho bất kỳ chiếc xe nào`,
                             titlePopular: `Câu hỏi phổ biến gần đây`,
+                            topRatingTitle: "Xe được đánh giá cao nhất",
                             callbackGetQuestions: async () => await CarReviewAPI.getQuestionPopular(user.user_id),
-                            callbackGetAnswers: async () => await AnswerAPI.getAnswerRecently(this.getAnswerParam),
+                            getOverview: async () => await CarReviewAPI.getOverview(),
                         });
                         break;
                 }
@@ -110,14 +122,25 @@ export default {
             }
         },
 
+        /**
+         * Sets the default values for the component's state based on the provided step and objectMaster.
+         *
+         * @param {number} step - The step to set the currentStep to. Defaults to 0.
+         * @param {object} objectMaster - An object containing the title, titleQuestions, titlePopular, callbackGetQuestions, and callbackGetAnswers properties.
+         * @return {Promise<void>} A Promise that resolves once the default values have been set.
+         */
         async handleDefault(step = 0, objectMaster) {
             this.currentStep = step;
             this.titleQuestions = objectMaster.title;
             this.titleListQuestions = objectMaster.titleQuestions;
             this.titlePopularQuestions = objectMaster.titlePopular;
+            this.topRatingTitle = objectMaster.topRatingTitle;
             let datas = await objectMaster.callbackGetQuestions();
+            this.objectOverviewMaster = await objectMaster.getOverview();
             this.listQuestions = datas.data_1;
             this.listAnswerRecently = datas.data_2;
+            
+            
         },
         handleNavigator() {
 

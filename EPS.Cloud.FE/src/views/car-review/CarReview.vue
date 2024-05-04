@@ -42,6 +42,37 @@
       </div>
     </div>
 
+    <div class=" horizontal-separator mt-4">
+    </div>
+    <div class="mb-2 quetions__header_description mt-4 ">
+
+      {{ topRatingTitle }}
+
+      <div>
+        <div class="top_rating_description mt-1 mb-2">
+          <span v-if="currentStep === 0">
+
+            Xe <a class="top_rating__link" :href="computedLinkToTopRating(objectOverviewMaster)">{{ objectOverviewMaster.make }} {{ objectOverviewMaster.model }} {{ objectOverviewMaster.year }}</a>
+            đánh giá cao
+            nhất
+          </span>
+          <span v-else>
+
+Tổng cộng có <span class="bold">{{objectOverviewMaster.total_rating}}</span> lượt đánh giá xe {{objectOverviewMaster.make}}. Xếp hạng trung bình <span class="bold">{{objectOverviewMaster.avg_rating}}</span> trên 5 sao.
+
+
+          </span>
+        
+        </div>
+        <div class="top_rating_view mt-1 mb-2">
+          <starrating :rating="objectOverviewMaster?.avg_rating?.toFixed(2)"size="20" @update="handleUpdateRating"/>
+
+          <span class="top_rating_view_desc" >Tổng số {{objectOverviewMaster?.total_rating}} đáng giá</span>
+        </div>
+        <CarRating :objectOverviewMaster="objectOverviewMaster" />
+
+      </div>
+    </div>
 
     <div class="car_review__card mt-4">
       <div class="car_review__card_left">
@@ -80,7 +111,8 @@ import AnswerCard from './AnswerCard.vue';
 import carMixin from "@/mixins/carMixin.vue";
 import QuestionAPI from '@/apis/QuestionsAPI';
 import debounce from '@/utils/debounce';
-import BaseCarReview from './BaseCarReview.vue'
+import BaseCarReview from './BaseCarReview.vue';
+import CarRating from './CarRating.vue';
 export default {
   name: "CarReview",
   mixins: [carMixin],
@@ -88,7 +120,7 @@ export default {
   components: {
     QuetionsCard,
     QuetionsModal,
-    AnswerCard
+    AnswerCard, CarRating
   },
   props: {},
   computed: {
@@ -104,6 +136,9 @@ export default {
       }
     }
 
+
+
+   
 
   },
   data() {
@@ -133,7 +168,12 @@ export default {
   },
   methods: {
 
-
+ computedLinkToTopRating(objectOverviewMaster) {
+             const { year, model, make } = objectOverviewMaster;
+        const carName = make?.replace(/ /g, "-");
+        const modelSlug = model?.replace(/ /g, "-") || "";
+        return `${window.__baseURLFE}/car_review/${carName}/${modelSlug}/${year}`;
+    },
 
     /**
      * Handles showing the popup questions modal.

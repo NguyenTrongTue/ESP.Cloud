@@ -24,7 +24,7 @@ namespace ESP.Cloud.BE.Host.Controllers
         {
             try
             {
-               await _carReviewService.LikeOrUnLikeAsync(param);
+                await _carReviewService.LikeOrUnLikeAsync(param);
 
                 return Ok(1);
             }
@@ -124,11 +124,11 @@ namespace ESP.Cloud.BE.Host.Controllers
         /// <returns></returns>
         /// Created by: nttue 07/04/2024
         [HttpGet("get_questions_by_make")]
-        public async Task<IActionResult> GetQuestionByMake(string make)
+        public async Task<IActionResult> GetQuestionByMake(string make, Guid userId)
         {
             try
             {
-                var results = await _carReviewService.GetQuestionByMakeAsync(make);
+                var results = await _carReviewService.GetQuestionByMakeAsync(userId, make);
 
                 return Ok(results);
             }
@@ -146,11 +146,11 @@ namespace ESP.Cloud.BE.Host.Controllers
         /// <returns></returns>
         /// Created by: nttue 07/04/2024
         [HttpGet("get_questions_by_model")]
-        public async Task<IActionResult> GetQuestionByModel(string make, string model)
+        public async Task<IActionResult> GetQuestionByModel(string make, string model, Guid userId)
         {
             try
             {
-                var results = await _carReviewService.GetQuestionByModelAsync(make, model);
+                var results = await _carReviewService.GetQuestionByModelAsync(make, model, userId);
 
                 return Ok(results);
             }

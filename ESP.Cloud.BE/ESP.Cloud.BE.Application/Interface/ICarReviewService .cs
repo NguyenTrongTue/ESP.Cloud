@@ -44,7 +44,7 @@ namespace ESP.Cloud.BE.Application.Interface
         /// <param name="make"></param>
         /// <returns></returns>
         /// Created by: nttue 07/04/2024
-        Task<List<object>> GetQuestionByMakeAsync(string make);
+        Task<CarReviewData> GetQuestionByMakeAsync(Guid userId, string make);
         /// <summary>
         /// Hàm lấy thông tin câu hỏi theo model
         /// </summary>
@@ -53,6 +53,6 @@ namespace ESP.Cloud.BE.Application.Interface
         /// <param name="model"></param>
         /// <returns></returns>
         /// Created by: nttue 07/04/2024
-        Task<List<object>> GetQuestionByModelAsync(string make, string model);
+        Task<CarReviewData> GetQuestionByModelAsync(string make, string model, Guid userId);
     }
 }
