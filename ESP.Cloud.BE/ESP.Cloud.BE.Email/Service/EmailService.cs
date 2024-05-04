@@ -20,19 +20,7 @@ namespace ESP.Cloud.BE.Email
             email.Subject = emailDto.Subject;    
 
             var bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = $@"<html>
-                                    <head>
-                                        <style>
-                                           .title{{
-                                                color: red;
-                                            }}
-                                        </style>
-                                    </head>
-                                    <body>
-                                        <h1 class='title'>Xin chào!</h1>
-                                        <p>{emailDto.Body}</p>
-                                    </body>
-                                </html>";
+            bodyBuilder.HtmlBody = emailDto.HTMLBody;
 
             email.Body = bodyBuilder.ToMessageBody();
 

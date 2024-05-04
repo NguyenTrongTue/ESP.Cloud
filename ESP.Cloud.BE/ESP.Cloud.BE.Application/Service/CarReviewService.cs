@@ -33,16 +33,16 @@ namespace ESP.Cloud.BE.Application.Service
             return result;
         }
 
-        public async Task<List<object>> GetQuestionByMakeAsync(string make)
+        public async Task<CarReviewData> GetQuestionByMakeAsync(Guid userId, string make)
         {
-            var result = await _questionDL.GetQuestionByMakeAsync(make);
+            var result = await _questionDL.GetQuestionByMakeAsync(make, userId);
 
             return result;
         }
 
-        public async Task<List<object>> GetQuestionByModelAsync(string make, string model)
+        public async Task<CarReviewData> GetQuestionByModelAsync(string make, string model, Guid userId)
         {
-            var result = await _questionDL.GetQuestionByModelAsync(make, model);
+            var result = await _questionDL.GetQuestionByModelAsync(make, model, userId);
 
             return result;
         }

@@ -51,6 +51,12 @@ export default {
 
 
   methods: {
+    /**
+     * Formats a given date into a string representing the day, month, and year.
+     *
+     * @param {Date|string} date - The date to be formatted. Can be a Date object or a string.
+     * @return {string} The formatted date string in the format "Ngày dd/mm, yyyy".
+     */
     computedTime(date) {
       if (date) {
 
@@ -63,6 +69,11 @@ export default {
         return `Ngày ${day < 10 ? `0${day}` : day}/${month < 10 ? `0${month}` : month}, ${year}`;
       }
     },
+    /**
+     * Handles the like or unlike action for a post.
+     *
+     * @return {Promise<void>} - A promise that resolves when the action is complete.
+     */
     async handleLikeOrUnLikePost() {
       try {
 
