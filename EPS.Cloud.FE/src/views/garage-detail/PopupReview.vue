@@ -19,7 +19,7 @@
 
 
         <div class="review_rating flex-center mt-2 mb-2">
-          <MRatingV2 @updateRating="handleUpdateRating" />
+                        <starrating :rating="objectMaster?.rating?.toFixed(2)" :disableClick="false" size="30" @update="handleUpdateRating"/>
         </div>
 
         <div class="question_group__label mb-1">

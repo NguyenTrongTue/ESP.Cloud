@@ -130,16 +130,22 @@ export default {
          * @return {Promise<void>} A Promise that resolves once the default values have been set.
          */
         async handleDefault(step = 0, objectMaster) {
-            this.currentStep = step;
-            this.titleQuestions = objectMaster.title;
-            this.titleListQuestions = objectMaster.titleQuestions;
-            this.titlePopularQuestions = objectMaster.titlePopular;
-            this.topRatingTitle = objectMaster.topRatingTitle;
-            let datas = await objectMaster.callbackGetQuestions();
-            this.objectOverviewMaster = await objectMaster.getOverview();
-            this.listQuestions = datas.data_1;
-            this.listAnswerRecently = datas.data_2;
-            
+            try {
+                this.$store.commit("showLoading");
+                this.currentStep = step;
+                this.titleQuestions = objectMaster.title;
+                this.titleListQuestions = objectMaster.titleQuestions;
+                this.titlePopularQuestions = objectMaster.titlePopular;
+                this.topRatingTitle = objectMaster.topRatingTitle;
+                let datas = await objectMaster.callbackGetQuestions();
+                this.objectOverviewMaster = await objectMaster.getOverview();
+                this.listQuestions = datas.data_1;
+                this.listAnswerRecently = datas.data_2;
+                this.$store.commit("hideLoading");
+            }catch(e) {
+                console.log(e);
+                 this.$store.commit("hideLoading");
+            }
             
         },
         handleNavigator() {
