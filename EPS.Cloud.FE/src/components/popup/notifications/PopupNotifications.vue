@@ -98,23 +98,34 @@ export default {
     },
 
     methods: {
-
+        /**
+         * Handle viewing notifications for a specific item.
+         *
+         * @param {Object} item - The item to view notifications for.
+         * @return {Promise} - A promise representing the handling of viewing notifications.
+         * @author nttue 04.05.2024
+         */
         async handleViewNotification(item) {
-            if (item.refid && item.type === 0) {
-                console.log(item.refid)
-                var booking = await BookingAPI.getById(item.refid);
-                const objectBooking = {
-                    currentStep: 4,
-                    BookingInfo: booking,
-                    modeView: true
+            try {
+
+                if (item.refid && item.type === 0) {
+                    console.log(item.refid)
+                    var booking = await BookingAPI.getById(item.refid);
+                    const objectBooking = {
+                        currentStep: 4,
+                        BookingInfo: booking,
+                        modeView: true
+                    }
+                    this.$ms.cache.setCache("booking", objectBooking);
+                    this.$router.push({ path: `/booking/${booking.garage_id}` });
                 }
-                this.$ms.cache.setCache("booking", objectBooking);
-                this.$router.push({ path: `/booking/${booking.garage_id}` });
+                await NotificationAPI.updateUnRead(item.user_notifications_id);
+                this.datas.forEach(notify => {
+                    notify.unread = false;
+                });
+            } catch (e) {
+                console.log(e);
             }
-            await NotificationAPI.updateUnRead(item.user_notifications_id);
-            this.datas.forEach(notify => {
-                notify.unread = false;
-            });
         }
     },
 };
