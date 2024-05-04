@@ -32,8 +32,13 @@ namespace ESP.Cloud.BE.Application.Service.Base
 
 
             await _baseRepository.InsertAsync(entityCreate);
-
+            await AfterInsertEntity(entityCreateDto);
             return entityCreate;
+        }
+
+        protected virtual async Task AfterInsertEntity(TEntityCreateDto entityCreateDto)
+        {
+
         }
 
         /// <summary>

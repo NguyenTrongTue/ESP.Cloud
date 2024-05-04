@@ -9,7 +9,7 @@
         public Guid questions_id { get; set; }
 
         /// <summary>
-        /// Id người hỏi
+        /// Id ngưởi trả lời 
         /// </summary>
         public Guid user_id { get; set; }
         /// <summary>
@@ -32,5 +32,10 @@
         /// Tên người hỏi
         /// </summary>
         public string user_name { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Id của người đặt câu hỏi
+        /// </summary>
+        public Guid user_id_of_question { get; set; }
     }
 }

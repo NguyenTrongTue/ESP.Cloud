@@ -7,7 +7,7 @@ class NotificationAPI extends BaseAPI {
   }
 
   updateUnRead(payload) {
-    return request.put(this.url + "/update_unread", payload);
+    return request.put(this.url + "/update_unread?id=" + payload);
   }
 
  
