@@ -110,12 +110,19 @@ export default {
         },
 
         async handleDefault(step = 0, objectMaster) {
-            this.currentStep = step;
-            this.titleQuestions = objectMaster.title;
-            this.titleListQuestions = objectMaster.titleQuestions;
-            this.titlePopularQuestions = objectMaster.titlePopular;
-            this.listQuestions = await objectMaster.callbackGetQuestions();
-            this.listAnswerRecently = await objectMaster.callbackGetAnswers();;
+            try {
+                this.$store.commit("showLoading");
+                this.currentStep = step;
+                this.titleQuestions = objectMaster.title;
+                this.titleListQuestions = objectMaster.titleQuestions;
+                this.titlePopularQuestions = objectMaster.titlePopular;
+                this.listQuestions = await objectMaster.callbackGetQuestions();
+                this.listAnswerRecently = await objectMaster.callbackGetAnswers();;
+                this.$store.commit("hideLoading");
+            } catch(e) {
+                console.log(e);
+                this.$store.commit("hideLoading");
+            }
         },
         handleNavigator() {
 
