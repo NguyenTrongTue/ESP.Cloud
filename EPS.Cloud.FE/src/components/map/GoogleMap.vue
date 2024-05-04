@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       loader: new Loader({
-        apiKey: 'AIzaSyBRAmtI_jL74qMIFWazRRAApR1qdXCB16A',
+        apiKey: 'AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg',
         // 'AIzaSyAQ2Jcz1gngtqWN1w-mtQ2ja1i49EerB50', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
         version: "weekly",
         libraries: ["places"],

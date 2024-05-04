@@ -1,17 +1,25 @@
 <!-- MyComponent.vue -->
 <template>
-  <vue3starRatings v-model="myRating" :starSize="size" starColor="#ff9800" inactiveColor="#333333" :numberOfStars="5"
-    :disableClick="disableClick" />
-
+  
+<StarRating 
+v-model="myRating" 
+:rating="myRating"
+:fixed-points="2"
+:read-only="disableClick"
+:star-size="size"
+:show-rating="false"
+active-color="#e98b2f"
+@update:rating ="setRating"
+:border-width="1"
+></StarRating> 
 </template>
 
 <script>
-import vue3starRatings from "vue3-star-ratings";
-
+import StarRating from 'vue-star-rating';
 export default {
   components: {
-    vue3starRatings,
-  },
+  StarRating
+},
   props: {
     rating: {
       type: Number,
@@ -23,7 +31,7 @@ export default {
     },
     size: {
       type: Number,
-      default: 16
+      default: 18
     }
   },
   data() {
@@ -34,6 +42,12 @@ export default {
   watch: {
     rating(newVaue) {
       this.myRating = newVaue;
+    },
+    
+  },
+  methods: {
+    setRating(rating) {
+       this.$emit('update', rating);
     }
   }
 };

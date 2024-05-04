@@ -18,12 +18,11 @@
 
 
       <div class="quetions__header_description mb-2">
-        Nhận câu trả lời cho các vấn đề sửa chữa ô tô và câu hỏi về xe của bạn. Hỏi một thợ cơ khí để được giúp đỡ và
-        quay lại đường.</div>
+        Đọc những trải nghiệm thực tế từ những người có xe như bạn.</div>
 
       <div class="mt-4 mb-1 quetions__header_description">
 
-        Tìm kiếm câu hỏi cho chiếc xe của bạn
+        Nhập chi tiết xe của bạn để tìm đánh giá
       </div>
       <div class="find_quetions__top ">
 
@@ -37,52 +36,72 @@
           :items="yearList" :disabled="!objectMaster.model" />
 
         <div class="combobox_item flex-center">
-          <mbutton button-text="Tìm câu hỏi" :disabled="computedDisableBtn" type="link"
+          <mbutton button-text="Tìm đánh giá" :disabled="computedDisableBtn" type="link"
             :href="computedLinkByTilte(objectMaster)" />
         </div>
       </div>
     </div>
+
     <div class=" horizontal-separator mt-4">
     </div>
-    <div class="mt- mb-1 quetions__header_description mt-4">
+    <div class="mb-2 quetions__header_description mt-4 ">
 
-      Tìm kiếm một câu hỏi cụ thể?
-    </div>
-    <div class="search_input flex-between">
-      <div class="search_wrapper">
-        <minput v-model="question" class="quetions_input" ref="quetions" placeholderInput="Nhập tiêu đề câu hỏi"
-          @update="handleSearchQuestions" />
-        <div class="list_search" v-if="listSearchQuestions.length > 0">
-          <div class="search_item flex-between" v-for="( searchItem ) in  listSearchQuestions "
-            :key="searchItem.questions_id" @click="handleRedirectToAnswer(searchItem.questions_id)">
-            <span>{{ searchItem.questions_title }}</span>
+      {{ topRatingTitle }}
 
-            <micon type="ChevronRight" />
-          </div>
+      <div>
+        <div class="top_rating_description mt-1 mb-2">
+          <span v-if="currentStep === 0">
 
+            Xe <a class="top_rating__link" :href="computedLinkToTopRating(objectOverviewMaster)">{{ objectOverviewMaster.make }} {{ objectOverviewMaster.model }} {{ objectOverviewMaster.year }}</a>
+            đánh giá cao
+            nhất
+          </span>
+          <span v-else>
+
+Tổng cộng có <span class="bold">{{objectOverviewMaster.total_rating}}</span> lượt đánh giá xe {{objectOverviewMaster.make}}. Xếp hạng trung bình <span class="bold">{{objectOverviewMaster.avg_rating}}</span> trên 5 sao.
+
+
+          </span>
+        
         </div>
-      </div>
-      <div class="search_button flex-center " @click="handleShowPopupQuestions">
-        <mbutton button-text="Đặt câu hỏi" style="height: 46px;" class="none-background" />
-      </div>
+        <div class="top_rating_view mt-1 mb-2">
+          <starrating :rating="objectOverviewMaster?.avg_rating?.toFixed(2)"size="20" @update="handleUpdateRating"/>
 
+          <span class="top_rating_view_desc" >Tổng số {{objectOverviewMaster?.total_rating}} đáng giá</span>
+        </div>
+        <CarRating :objectOverviewMaster="objectOverviewMaster" />
+
+      </div>
     </div>
+
+    <div class="car_review__card mt-4">
+      <div class="car_review__card_left">
+        <img src="https://storage.googleapis.com/rp-production-public-content/nymoAnxCVpaLxthj8cUnjqHw"
+          alt="Ảnh của xe" />
+
+
+      </div>
+      <div class="car_review__card_right">
+        <div class="title mb-1">Xe của bạn có đáng giá 5 sao không?</div>
+        <div class="description mb-1 mb-2">Hãy để khách truy cập Garahunt biết bạn nghĩ gì về chiếc xe của mình.</div>
+
+        <mbutton button-text="Đánh giá xe của bạn" @click="handleShowPopupQuestions" />
+      </div>
+    </div>
+
     <div class="mt- mb-1 quetions__header_description mt-4">
       {{ titleListQuestions }}
     </div>
-    <div class="questions__list">
+    <div class="questions__list mb-4">
       <QuetionsCard v-for="( item, index ) in  listQuestions " :questionCardProps="item" :key="index" />
       <QuetionsModal ref="QuestionsModal" />
     </div>
     <div class="mt- mb-1 quetions__header_description mt-4">
-      {{ titlePopularQuestions }}
+      Một số đánh giá phổ biến
     </div>
-    <div class="list_answer ">
-
-      <AnswerCard v-for=" answer  in  listAnswerRecently " :key="answer.questions_id" :answer="answer"
-        @click="handleRedirectToAnswer(answer.questions_id)" />
-    </div>
+    <AnswerCard v-for=" answer  in  listAnswerRecently " :key="answer.questions_id" :answer="answer" />
   </div>
+
 </template>
 
 <script>
@@ -91,17 +110,17 @@ import QuetionsModal from './QuetionsModal.vue';
 import AnswerCard from './AnswerCard.vue';
 import carMixin from "@/mixins/carMixin.vue";
 import QuestionAPI from '@/apis/QuestionsAPI';
-import AnswerAPI from '@/apis/AnswerAPI';
 import debounce from '@/utils/debounce';
-import BaseQuestion from './BaseQuestion.vue'
+import BaseCarReview from './BaseCarReview.vue';
+import CarRating from './CarRating.vue';
 export default {
-  name: "Questions",
+  name: "CarReview",
   mixins: [carMixin],
-  extends: BaseQuestion,
+  extends: BaseCarReview,
   components: {
     QuetionsCard,
     QuetionsModal,
-    AnswerCard
+    AnswerCard, CarRating
   },
   props: {},
   computed: {
@@ -113,10 +132,13 @@ export default {
         const { year, model, make } = objectMaster;
         const carName = make?.replace(/ /g, "-");
         const modelSlug = model?.replace(/ /g, "-") || "";
-        return `${window.__baseURLFE}/questions/${carName}/${modelSlug}/${year}`;
+        return `${window.__baseURLFE}/car_review/${carName}/${modelSlug}/${year}`;
       }
     }
 
+
+
+   
 
   },
   data() {
@@ -142,17 +164,17 @@ export default {
   },
   mounted() {
     this.fetchMakes();
-    // this.fetchQuestionPopular();
-    // this.fetchAnswerRecently();
-
     this.handleStartQuestionsPage();
   },
   methods: {
 
-
-    handleRedirectToAnswer(questionsId) {
-      this.$router.push(`/answer/${questionsId}`);
+ computedLinkToTopRating(objectOverviewMaster) {
+             const { year, model, make } = objectOverviewMaster;
+        const carName = make?.replace(/ /g, "-");
+        const modelSlug = model?.replace(/ /g, "-") || "";
+        return `${window.__baseURLFE}/car_review/${carName}/${modelSlug}/${year}`;
     },
+
     /**
      * Handles showing the popup questions modal.
      */
@@ -161,14 +183,11 @@ export default {
     },
 
 
-    async fetchAnswerRecently() {
-      const result = await AnswerAPI.getAnswerRecently();
-      this.listAnswerRecently = result;
-    }
+
   },
 };
 </script>
 
 <style lang="scss">
-@import "./questions.scss";
+@import "./car-review.scss";
 </style>
