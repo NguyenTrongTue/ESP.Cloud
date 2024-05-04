@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ESP.Cloud.BE.Application.Param
+﻿namespace ESP.Cloud.BE.Application.Param
 {
     public class LikeOrUnLikeParam
     {
@@ -13,6 +7,9 @@ namespace ESP.Cloud.BE.Application.Param
         public Guid user_id { get; set; }
 
         public bool liked { get; set; } = false;
+        public string fullname { get; set; } = string.Empty;
+
+        public Guid user_id_of_car_review { get; set; } = Guid.Empty;
 
     }
 }

@@ -9,7 +9,12 @@ namespace ESP.Cloud.BE.Application.Interface
     public interface ICarReviewService : IBaseService<CarReviewEntity, CreateCarReviewDto, UpdateCarReviewDto>
     {
 
-
+        /// <summary>
+        /// Hàm xử lý khi người dùng like hoặc unlike bài review
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        /// Created by: nttue 04/05/2024
         Task LikeOrUnLikeAsync(LikeOrUnLikeParam param);
 
         /// <summary>

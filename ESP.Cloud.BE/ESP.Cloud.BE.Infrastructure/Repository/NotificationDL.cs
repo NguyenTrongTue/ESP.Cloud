@@ -21,7 +21,7 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
         public async Task UpdateUnReadNotificationAsync(Guid id)
         {
             var param = new Dictionary<string, object>();
-            var sql = $"UPDATE public.user_notifications\r\nSET unread = true\r\nWHERE user_notifications_id=@Id;";
+            var sql = $"UPDATE public.user_notifications\r\nSET unread = false\r\nWHERE user_notifications_id=@Id;";
 
             param.Add("@Id", id);
 

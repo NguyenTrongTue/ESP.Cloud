@@ -6,6 +6,11 @@ using ESP.Cloud.BE.Application.Param;
 using ESP.Cloud.BE.Application.Service.Base;
 using ESP.Cloud.BE.Core.DL;
 using ESP.Cloud.BE.Core.Model;
+using ESP.Cloud.BE.Infrastructure;
+using ESP.Cloud.BE.Infrastructure.Repository;
+using ESP.Cloud.BE.Model;
+using Microsoft.AspNetCore.SignalR;
+using System.Text.Json;
 
 namespace ESP.Cloud.BE.Application.Service
 {
@@ -13,10 +18,14 @@ namespace ESP.Cloud.BE.Application.Service
     {
         private readonly ICarReviewDL _questionDL;
         private readonly IUserLikesDL _userLikesDL;
-        public CarReviewService(ICarReviewDL questionDL, IUserLikesDL userLikesDL, IMapper mapper) : base(questionDL, mapper)
+        private readonly INotificationDL _notificationDL;
+        private readonly IHubContext<NotificationsHub, INotificationClient> _context;
+        public CarReviewService(ICarReviewDL questionDL, IUserLikesDL userLikesDL, IMapper mapper, IHubContext<NotificationsHub, INotificationClient> context, INotificationDL notificationDL) : base(questionDL, mapper)
         {
             _questionDL = questionDL;
             _userLikesDL = userLikesDL;
+            _context = context;
+            _notificationDL = notificationDL;
         }
 
         public async Task<CarReviewData> GetQuestionPopular(Guid userId)
@@ -118,25 +127,69 @@ namespace ESP.Cloud.BE.Application.Service
         public async Task LikeOrUnLikeAsync(LikeOrUnLikeParam param)
         {
 
-            if (param.liked == false)
+            try
             {
-                await _userLikesDL.DeteleUserLikes(param.car_review_id, param.user_id);
-            }
-            else
-            {
-                var entity = new UserLikesEntity()
+                if (param.liked == false)
                 {
+                    await _userLikesDL.DeteleUserLikes(param.car_review_id, param.user_id);
+                }
+                else
+                {
+                    var entity = new UserLikesEntity()
+                    {
 
-                    user_likes_id = Guid.NewGuid(),
-                    car_review_id = param.car_review_id,
-                    user_id = param.user_id,
-                    created_time = DateTime.Now
-                };
+                        user_likes_id = Guid.NewGuid(),
+                        car_review_id = param.car_review_id,
+                        user_id = param.user_id,
+                        created_time = DateTime.Now
+                    };
 
-                await _userLikesDL.InsertAsync(entity);
+                    await _userLikesDL.InsertAsync(entity);
+                    await SendNotificationWhenLike(param);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
 
+        }
+        /// <summary>
+        /// Hàm gửi thông báo về cho user khi có người khác like bài review của người đó
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        /// Created by: nttue 04/05/2024
+        private async Task SendNotificationWhenLike(LikeOrUnLikeParam entity)
+        {
+            try
+            {
+                if (entity.user_id != entity.user_id_of_car_review)
+                {
+                    var notifications = new List<Notifications>();
+                    var notification = new Notifications()
+                    {
+                        user_notifications_id = Guid.NewGuid(),
+                        user_id = entity.user_id_of_car_review,
+                        type = 2,
+                        unread = true,
+                        description = $"{entity.fullname} vừa thích bài review xe của bạn",
+                    };
+
+                    notifications.Add(notification);
+                    if (notifications.Count > 0)
+                    {
+                        var jsonData = JsonSerializer.Serialize(notifications);
+                        await _context.Clients.All.ReceiveNotification(jsonData);
+                        await _notificationDL.InsertBatchAsync(notifications);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
