@@ -49,17 +49,20 @@
       <div>
         <div class="top_rating_description mt-1 mb-2">
           <span v-if="currentStep === 0">
-            Xe <a class="top_rating__link" :href="computedLinkToTopRating(objectOverviewMaster)">{{ objectOverviewMaster.make }} {{ objectOverviewMaster.model }} {{ objectOverviewMaster.year }}</a>
+            Xe <a class="top_rating__link" :href="computedLinkToTopRating(objectOverviewMaster)">{{
+          objectOverviewMaster.make }} {{ objectOverviewMaster.model }} {{ objectOverviewMaster.year }}</a>
             đánh giá cao
             nhất
           </span>
           <span v-else>
-            Tổng cộng có <span class="bold">{{objectOverviewMaster.total_rating}}</span> lượt đánh giá xe {{objectOverviewMaster.make}}. Xếp hạng trung bình <span class="bold">{{objectOverviewMaster.avg_rating}}</span> trên 5 sao.
-          </span>        
+            Tổng cộng có <span class="bold">{{ objectOverviewMaster.total_rating }}</span> lượt đánh giá xe
+            {{ objectOverviewMaster.make }}. Xếp hạng trung bình <span class="bold">{{ objectOverviewMaster.avg_rating
+              }}</span> trên 5 sao.
+          </span>
         </div>
         <div class="top_rating_view mt-1 mb-2">
-          <starrating :rating="objectOverviewMaster?.avg_rating" size="20" @update="handleUpdateRating"/>
-          <span class="top_rating_view_desc" >Tổng số {{objectOverviewMaster?.total_rating}} đáng giá</span>
+          <starrating :rating="objectOverviewMaster?.avg_rating" size="20" @update="handleUpdateRating" />
+          <span class="top_rating_view_desc">Tổng số {{ objectOverviewMaster?.total_rating }} đáng giá</span>
         </div>
         <CarRating :objectOverviewMaster="objectOverviewMaster" />
 
@@ -91,7 +94,9 @@
     <div class="mt- mb-1 quetions__header_description mt-4">
       Một số đánh giá phổ biến
     </div>
-    <AnswerCard v-for=" answer  in  listAnswerRecently " :key="answer.questions_id" :answer="answer" />
+    <AnswerCard v-for=" answer  in  paginationAnswerList " :key="answer.questions_id" :answer="answer" />
+
+    <pagination :currentPage="currentPage" @handleChangePage="handleChangePage" :length="listAnswerRecently?.length" />
   </div>
 
 </template>
@@ -126,22 +131,18 @@ export default {
         const modelSlug = model?.replace(/ /g, "-") || "";
         return `${window.__baseURLFE}/car_review/${carName}/${modelSlug}/${year}`;
       }
+    },
+    paginationAnswerList() {
+      return this.listAnswerRecently.slice(this.currentPage * 5, this.currentPage * 5 + 5);
     }
-
-
-
-   
-
   },
   data() {
-
     return {
-
       question: "",
       listQuestions: [],
       listSearchQuestions: [],
       listAnswerRecently: [],
-
+      currentPage: 0,
     }
   },
   watch: {
@@ -159,18 +160,20 @@ export default {
     this.handleStartQuestionsPage();
   },
   methods: {
-
+    handleChangePage(page) {
+      this.currentPage = page;
+    },
     /**
      * Generates a link to the top rating for a given car review.
      *
      * @param {Object} objectOverviewMaster - The object containing the car review details.
      * @return {string} The generated link to the top rating for the car review.
      */
- computedLinkToTopRating(objectOverviewMaster) {
-             const { year, model, make } = objectOverviewMaster;
-        const carName = make?.replace(/ /g, "-");
-        const modelSlug = model?.replace(/ /g, "-") || "";
-        return `${window.__baseURLFE}/car_review/${carName}/${modelSlug}/${year}`;
+    computedLinkToTopRating(objectOverviewMaster) {
+      const { year, model, make } = objectOverviewMaster;
+      const carName = make?.replace(/ /g, "-");
+      const modelSlug = model?.replace(/ /g, "-") || "";
+      return `${window.__baseURLFE}/car_review/${carName}/${modelSlug}/${year}`;
     },
 
     /**

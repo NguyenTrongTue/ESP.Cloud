@@ -71,7 +71,7 @@ export default {
           modelValue: "",
           data: [
             {
-              text: "Khoảng cách",
+              text: "Khoảng cách gần nhất",
               value: "distance",
               id: 1,
             },
