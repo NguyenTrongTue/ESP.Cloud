@@ -19,7 +19,7 @@ export default {
     return {
       loader: new Loader({
         apiKey: 'AIzaSyAhtXqRtOvufgWEQD0kNz3zqzAUN7NxVZo',
-        // 'AIzaSyBRAmtI_jL74qMIFWazRRAApR1qdXCB16A', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+        // 'AIzaSyAhtXqRtOvufgWEQD0kNz3zqzAUN7NxVZo', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
         version: "weekly",
         libraries: ["places"]
 
