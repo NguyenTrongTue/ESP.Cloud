@@ -18,8 +18,8 @@ export default {
   data() {
     return {
       loader: new Loader({
-        apiKey: 'AIzaSyAhtXqRtOvufgWEQD0kNz3zqzAUN7NxVZo',
-        // 'AIzaSyAhtXqRtOvufgWEQD0kNz3zqzAUN7NxVZo', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+        apiKey: 'AIzaSyBRAmtI_jL74qMIFWazRRAApR1qdXCB16A',
+        // 'AIzaSyBRAmtI_jL74qMIFWazRRAApR1qdXCB16A', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
         version: "weekly",
         libraries: ["places"]
 
