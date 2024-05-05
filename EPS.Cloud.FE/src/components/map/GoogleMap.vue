@@ -21,7 +21,8 @@ export default {
         apiKey: 'AIzaSyBRAmtI_jL74qMIFWazRRAApR1qdXCB16A',
         // 'AIzaSyBRAmtI_jL74qMIFWazRRAApR1qdXCB16A', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
         version: "weekly",
-        libraries: ["places"],
+        libraries: ["places"]
+
       }),
       map: null,
       center: this.centerProp,
@@ -65,12 +66,7 @@ export default {
         });
         this.directionsService = new google.maps.DirectionsService();
 
-        const { PinElement } = await google.maps.importLibrary(
-          "marker"
-        );
-        this.pinElement = new PinElement({
-          glyphColor: "#FBBC04",
-        });;
+
         if (!this.center.lat || !this.center.lng) {
           let value = this.$ms.cache.getCache("coords");
           if (value) {
@@ -79,18 +75,18 @@ export default {
               lng: value.longitude,
             };
           }
-          console.log(this.center);
         }
         this.map = new google.maps.Map(this.$el, {
           center: { lat: this.center.lat, lng: this.center.lng },
           zoom: 13,
+          mapId: "cfca60cfc0efaeaf",
         });
 
         this.directionsRenderer.setMap(this.map);
 
         const infowindow = new this.google.maps.InfoWindow();
         this.infowindow = infowindow;
-        this.handleViewLocations();
+        await this.handleViewLocations();
       } catch (error) {
         console.log(error);
       }
@@ -98,21 +94,24 @@ export default {
     /**
      * Handle viewing locations on the map.
      */
-    handleViewLocations() {
+    async handleViewLocations() {
       try {
         if (this.google) {
-
+          this.markers = [];
+          // const { AdvancedMarkerElement, PinElement } = await this.google.maps.importLibrary(
+          //   "marker",
+          // );
           this.locations.forEach((location) => {
 
-
-            const priceTag = document.createElement('div');
-            priceTag.className = 'price-tag';
-            priceTag.textContent = '$2.5M';
+            const image = window.__baseURLFE + "/src/assets/img/location.png";
             let marker = new this.google.maps.Marker({
               map: this.map,
               position: { lat: location.latitude, lng: location.longitude },
-              content: this.pinElement.element
+              // content: pin.element,
+              // icon: image
             });
+
+
 
             marker.addListener("click", () =>
               this.hanleShowInfoWindow(location, marker)

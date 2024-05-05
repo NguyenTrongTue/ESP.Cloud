@@ -197,7 +197,7 @@
           <ReviewItem v-for="(review, index) in reviews" :key="index" :review="review" />
         </div>
 
-        <Panigation :currentPage="currentPage" @handleChangePage="handleChangePage" :length="garage?.total_rating" />
+        <pagination :currentPage="currentPage" @handleChangePage="handleChangePage" :length="garage?.total_rating" />
       </div>
     </div>
 
@@ -207,14 +207,12 @@
 <script>
 import GarageAPI from '@/apis/GarageAPI';
 import ReviewItem from '@/views/garage-detail/ReviewItem.vue';
-import Panigation from '@/views/garage-detail/Panigation.vue';
 import PopupReview from './PopupReview.vue'
 export default {
   name: "GarageDetail",
   props: {},
   components: {
     ReviewItem,
-    Panigation,
     PopupReview
   },
   data() {
