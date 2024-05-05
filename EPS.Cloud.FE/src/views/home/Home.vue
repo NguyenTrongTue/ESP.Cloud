@@ -54,8 +54,6 @@ export default {
       };
       this.asignCenter();
     } else {
-
-
       this.center = {
         lat: 21.037776,
         lng: 105.782996,
