@@ -5,7 +5,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from langchain_community.agent_toolkits import create_sql_agent
 from langchain_openai import ChatOpenAI
-os.environ["OPENAI_API_KEY"] = "sk-proj-DdHbVrf5Ur6gW1gc3KJpT3BlbkFJ8PWDD54Y6mUKzudbOizM"
+
 # db = SQLDatabase.from_uri("sqlite:///Chinook.db")
 # print(db.dialect)
 # print(db.get_usable_table_names())
