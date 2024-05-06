@@ -32,7 +32,7 @@ export default {
 
                 switch (name) {
                     case 'Make':
-                        this.getAnswerParam.make = make.replace(/-/g, " ");
+                        this.getAnswerParam.make = make.replace(/_/g, " ");
                         this.listQuestionNavigator.push({
                             text: make,
                             grade: 1
@@ -49,8 +49,8 @@ export default {
                         );
                         break;
                     case 'Model':
-                        this.getAnswerParam.make = make.replace(/-/g, " ");
-                        this.getAnswerParam.model = model.replace(/-/g, " ");
+                        this.getAnswerParam.make = make.replace(/_/g, " ");
+                        this.getAnswerParam.model = model.replace(/_/g, " ");
                         this.listQuestionNavigator.push({
                             text: make,
                             grade: 1
@@ -69,8 +69,8 @@ export default {
                         );
                         break;
                     case 'Year':
-                        this.getAnswerParam.make = make.replace(/-/g, " ");
-                        this.getAnswerParam.model = model.replace(/-/g, " ");
+                        this.getAnswerParam.make = make.replace(/_/g, " ");
+                        this.getAnswerParam.model = model.replace(/_/g, " ");
                         this.getAnswerParam.year = year;
                         let title = `${this.getAnswerParam.make} ${this.getAnswerParam.model} `;
                         this.listQuestionNavigator.push({
@@ -119,7 +119,7 @@ export default {
                 this.listQuestions = await objectMaster.callbackGetQuestions();
                 this.listAnswerRecently = await objectMaster.callbackGetAnswers();;
                 this.$store.commit("hideLoading");
-            } catch(e) {
+            } catch (e) {
                 console.log(e);
                 this.$store.commit("hideLoading");
             }
