@@ -57,23 +57,28 @@ export default {
   computed: {
     computedLink() {
       return (make) => {
-        const carName = this.questionCardProps.car_name.replace(/ /g, "-");
-        const formattedMake = make?.toString()?.replace(/ /g, "-") || "";
-        return `${window.__baseURLFE}/questions/${carName}/${formattedMake}`;
+        const formattedMake = make?.toString()?.replace(/ /g, "_") || "";
+        if (!this.questionCardProps.model) {
+
+          const carName = this.questionCardProps.car_name.replace(/ /g, "_");
+          return `${window.__baseURLFE}/questions/${carName}/${formattedMake}`;
+        } else {
+          return `${window.__baseURLFE}/questions/${this.questionCardProps.make}/${this.questionCardProps.model}/${formattedMake}`;
+        }
       };
     },
     computedLinkByTilte() {
       return questionCardProps => {
 
         const { year, model, make } = questionCardProps;
-        const carName = make.replace(/ /g, "-");
+        const carName = make.replace(/ /g, "_");
 
         if (year) {
-          const modelSlug = model?.replace(/ /g, "-") || "";
+          const modelSlug = model?.replace(/ /g, "_") || "";
           return `${window.__baseURLFE}/questions/${carName}/${modelSlug}/${year}`;
         }
         if (model) {
-          const modelSlug = model?.replace(/ /g, "-") || "";
+          const modelSlug = model?.replace(/ /g, "_") || "";
           return `${window.__baseURLFE}/questions/${carName}/${modelSlug}`;
         }
         if (make) {

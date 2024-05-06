@@ -127,8 +127,8 @@ export default {
     computedLinkByTilte() {
       return objectMaster => {
         const { year, model, make } = objectMaster;
-        const carName = make?.replace(/ /g, "-");
-        const modelSlug = model?.replace(/ /g, "-") || "";
+        const carName = make?.replace(/ /g, "_");
+        const modelSlug = model?.replace(/ /g, "_") || "";
         return `${window.__baseURLFE}/car_review/${carName}/${modelSlug}/${year}`;
       }
     },
@@ -171,8 +171,8 @@ export default {
      */
     computedLinkToTopRating(objectOverviewMaster) {
       const { year, model, make } = objectOverviewMaster;
-      const carName = make?.replace(/ /g, "-");
-      const modelSlug = model?.replace(/ /g, "-") || "";
+      const carName = make?.replace(/ /g, "_");
+      const modelSlug = model?.replace(/ /g, "_") || "";
       return `${window.__baseURLFE}/car_review/${carName}/${modelSlug}/${year}`;
     },
 
