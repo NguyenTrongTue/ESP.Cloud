@@ -115,8 +115,8 @@ export default {
     computedLinkByTilte() {
       return objectMaster => {
         const { year, model, make } = objectMaster;
-        const carName = make?.replace(/ /g, "-");
-        const modelSlug = model?.replace(/ /g, "-") || "";
+        const carName = make?.replace(/ /g, "_");
+        const modelSlug = model?.replace(/ /g, "_") || "";
         return `${window.__baseURLFE}/questions/${carName}/${modelSlug}/${year}`;
       }
     },

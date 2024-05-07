@@ -3,9 +3,6 @@ using ESP.Cloud.BE.Core.BaseDL;
 using ESP.Cloud.BE.Core.DL;
 using ESP.Cloud.BE.Core.Model;
 using ESP.Cloud.BE.Infrastructure.Repository.Base;
-using Newtonsoft.Json;
-using System.Data;
-using System.Reflection;
 using static Dapper.SqlMapper;
 
 namespace ESP.Cloud.BE.Infrastructure.Repository

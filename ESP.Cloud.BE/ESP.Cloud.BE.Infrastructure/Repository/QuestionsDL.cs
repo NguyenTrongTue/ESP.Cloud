@@ -57,10 +57,10 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
         {
             var paramDicnary = new Dictionary<string, object>
                 {
-                    { $"@make", $"%{make.Replace("-", " ")}%" }
+                    { $"@make", $"%{make}%" }
                 };
             var param = new DynamicParameters(paramDicnary);
-            var sql = "select make || ' ' || model as car_name,make, model, count(*) as total_question, jsonb_agg(year) as list_popular from questions q where make  ilike  @make group by make, model order by make asc;";
+            var sql = "select make || ' ' || model as car_name,make, model, count(*) as total_question, jsonb_agg(distinct year) as list_popular from questions q where make  ilike  @make group by make, model order by make asc;";
             var questions = await _uow.Connection.QueryAsync<object>(sql, param);
 
             return questions.ToList();
@@ -70,8 +70,8 @@ namespace ESP.Cloud.BE.Infrastructure.Repository
         {
             var paramDicnary = new Dictionary<string, object>
                 {
-                 { $"@make", $"%{make.Replace("-", " ")}%" },
-                    { $"@model", $"%{model.Replace("-", " ")}%" }
+                 { $"@make", $"%{make}%" },
+                    { $"@model", $"%{model}%" }
                 };
             var param = new DynamicParameters(paramDicnary);
             var sql = "select make || ' ' || model || ' ' || year as car_name,make, model, year, count(*) as total_question from questions q where make  ilike  @make and model ilike @model group by make, model, year order by make asc;";

@@ -41,7 +41,7 @@ export default {
                 let user = this.$ms.cache.getCache("user");
                 switch (name) {
                     case 'CarMake':
-                        this.getAnswerParam.make = make.replace(/-/g, " ");
+                        this.getAnswerParam.make = make.replace(/_/g, " ");
                         this.listQuestionNavigator.push({
                             text: make,
                             grade: 1
@@ -59,8 +59,8 @@ export default {
                         );
                         break;
                     case 'CarModel':
-                        this.getAnswerParam.make = make.replace(/-/g, " ");
-                        this.getAnswerParam.model = model.replace(/-/g, " ");
+                        this.getAnswerParam.make = make.replace(/_/g, " ");
+                        this.getAnswerParam.model = model.replace(/_/g, " ");
                         this.listQuestionNavigator.push({
                             text: make,
                             grade: 1
@@ -75,13 +75,13 @@ export default {
                             titlePopular: `Câu hỏi phổ biến về mẫu xe ${this.getAnswerParam.make} ${this.getAnswerParam.model}`,
                             topRatingTitle: `Tổng quan về xếp hạng xe ${make}`,
                             callbackGetQuestions: async () => await CarReviewAPI.GetQuestionByModel(this.getAnswerParam.make, this.getAnswerParam.model, user.user_id),
-                            getOverview:  async () => await CarReviewAPI.getOverview(make),
+                            getOverview: async () => await CarReviewAPI.getOverview(make),
                         }
                         );
                         break;
                     case 'CarYear':
-                        this.getAnswerParam.make = make.replace(/-/g, " ");
-                        this.getAnswerParam.model = model.replace(/-/g, " ");
+                        this.getAnswerParam.make = make.replace(/_/g, " ");
+                        this.getAnswerParam.model = model.replace(/_/g, " ");
                         this.getAnswerParam.year = year;
                         let title = `${this.getAnswerParam.make} ${this.getAnswerParam.model} `;
                         this.listQuestionNavigator.push({
@@ -101,7 +101,7 @@ export default {
                             titlePopular: `Câu hỏi phổ biến về xe ${title} ${year}`,
                             topRatingTitle: `Tổng quan về xếp hạng xe ${make}`,
                             callbackGetQuestions: async () => await CarReviewAPI.GetQuestionByModel(this.getAnswerParam.make, this.getAnswerParam.model, user.user_id),
-                            getOverview:  async () => await CarReviewAPI.getOverview(make),
+                            getOverview: async () => await CarReviewAPI.getOverview(make),
                         }
                         );
                         break;
@@ -142,11 +142,11 @@ export default {
                 this.listQuestions = datas.data_1;
                 this.listAnswerRecently = datas.data_2;
                 this.$store.commit("hideLoading");
-            }catch(e) {
+            } catch (e) {
                 console.log(e);
-                 this.$store.commit("hideLoading");
+                this.$store.commit("hideLoading");
             }
-            
+
         },
         handleNavigator() {
 
