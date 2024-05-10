@@ -122,7 +122,7 @@ export default {
             try {
 
                 this.isGettingData = true;
-                var response = await axios.post("http://127.0.0.1:5000/get-message", { question });
+                var response = await axios.post("http://150.95.114.153:5022/get-message", { question });
                 if (response.data) {
 
                     const { message } = response.data;
