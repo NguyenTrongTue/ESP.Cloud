@@ -3,12 +3,15 @@
     <SideBar :locationProps="locations" @sortBy="handleSortBy" @typeCars="handleTypeCars" @openTime="handleOpenTime"
       @services="handleServices" @showPostion="handleShowPostion" />
     <GoogleMap :center="center" :locations="locations" ref="google-map" />
+
+    <ChatBot />
   </div>
 </template>
 
 <script>
 import GoogleMap from "@/components/map/GoogleMap.vue";
 import SideBar from "@/components/sidebar/SideBar.vue";
+import ChatBot from "@/components/chatbot/MChatBot.vue";
 import Test from "@/components/Test.vue";
 import GarageAPI from "@/apis/GarageAPI";
 export default {
@@ -16,6 +19,7 @@ export default {
     GoogleMap,
     SideBar,
     Test,
+    ChatBot
   },
   data() {
     return {

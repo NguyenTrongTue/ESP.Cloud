@@ -11,9 +11,17 @@ body {
   overflow: overlay;
   color: #424242;
 }
+pre {
+  font-family: "notosans", sans-serif;
+}
 button,
 input {
   outline: none;
+}
+input {
+  &::placeholder {
+    font-family: "notosans", sans-serif;
+  }
 }
 
 a {
@@ -24,12 +32,13 @@ a:focus-visible {
     outline: 0;
 }
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #b8bcc3;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
