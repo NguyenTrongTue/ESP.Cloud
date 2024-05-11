@@ -4,3 +4,4 @@ pandas==2.2.2
 sqlalchemy==2.0.30
 langchain_openai==0.1.6
 flask_cors==4.0.1
+langchain==0.1.20
