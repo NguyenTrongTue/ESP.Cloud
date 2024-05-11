@@ -28,7 +28,7 @@ def get_message():
 
 
 def train_model(question):
-    os.environ["OPENAI_API_KEY"] = "sk-proj-5fIg6XGj31oEhEf4gOQYT3BlbkFJRIy316L9XTwOg1aU2zB3"
+    os.environ["OPENAI_API_KEY"] = "sk-proj-hCirZu6lq6FduKvleqEiT3BlbkFJhUjtJWZvjhMLZ5eLwpAN"
 
     engine = create_engine("sqlite:///garage.db")
     db = SQLDatabase(engine=engine)

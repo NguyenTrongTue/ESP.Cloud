@@ -115,14 +115,14 @@ export default {
             let question = this.question;
             this.question = "";
             await this.callDataGetResult(question);
-            this.scrollLastChat();
+
 
         },
         async callDataGetResult(question) {
             try {
 
                 this.isGettingData = true;
-                var response = await axios.post("http://150.95.114.153:5022/get-message", { question });
+                var response = await axios.post("http://150.95.114.153:5022/get-message", { question: question + " kinh độ và vĩ độ hiện tại của tôi là 21.037776 và 105.782996" });
                 if (response.data) {
 
                     const { message } = response.data;
@@ -132,6 +132,8 @@ export default {
                     });
                 }
                 this.isGettingData = false;
+                this.scrollLastChat();
+
             } catch (e) {
                 this.isGettingData = false;
             }
