@@ -5,6 +5,7 @@ import Estimate from "@/views/estimate/Estimate.vue";
 import Booking from "@/views/booking/Booking.vue";
 import Promo from "@/views/promo/Promo.vue";
 import Questions from "@/views/questions/Questions.vue";
+import CarReview from "@/views/car-review/CarReview.vue";
 import Answer from "@/views/questions/Answer.vue";
 import HistoryBooking from "@/views/history-booking/HistoryBooking.vue";
 import Login from "@/views/login/Login.vue";
@@ -56,33 +57,34 @@ const routes = [
     meta: { requiresAuth: false, title: "Thảo luận" },
    
   },
-{
-  name: "questions",
-  component: Questions,
-  path: "/questions",
-  meta: { requiresAuth: false, title: "Thảo luận" },
-  children: [
-    {
-      name: "Make",
-      path: ':make', 
-      component: Questions,
-       
-    },
-    {
-      name: "Model",
-      path: ':make/:model', 
-      component: Questions,
-       
-    },
-    {
-      name: "Year",
-      path: ':make/:model/:year', 
-      component: Questions,
-       
-    }
-  ]
-}
-,
+  {
+    path: "/questions",
+    component: Questions,
+    name: "Questions",
+    meta: { requiresAuth: false, title: "Thảo luận" },
+    // children: [
+    //   { path: ":make", name: "Make", component: Questions },
+    //   { path: ":make/:model", name: "Model", component: Questions },
+    //   { path: ":make/:model/:year", name: "Year", component: Questions },
+    // ],
+  },
+        { path: "/questions/:make", name: "Make", component: Questions },
+      { path: "/questions/:make/:model", name: "Model", component: Questions },
+      { path: "/questions/:make/:model/:year", name: "Year", component: Questions },
+  {
+    path: "/car_review",
+    name: "CarReview",
+    component: CarReview,
+    meta: { requiresAuth: false, title: "Đáng giá" },
+    // children: [
+    //   { path: ":make", name: "CarMake", component: CarReview },
+    //   { path: ":make/:model", name: "CarModel", component: CarReview },
+    //   { path: ":make/:model/:year", name: "CarYear", component: CarReview },
+    // ],
+  },
+  { path: "/car_review/:make", name: "CarMake", component: CarReview },
+  { path: "/car_review/:make/:model", name: "CarModel", component: CarReview },
+  { path: "/car_review/:make/:model/:year", name: "CarYear", component: CarReview },
   {
     name: "history-booking",
     component: HistoryBooking,

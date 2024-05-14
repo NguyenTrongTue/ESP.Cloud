@@ -224,14 +224,23 @@
      padding-bottom: 32px;
     .summary {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         gap: 10px;
+         width: 100%;
         .icon-summanry {
             display: flex;
             align-items: center;
         }
         .rating {
             font-size: 16px;
+            margin-left: 12px;
+        }
+        .summary__left{
+            flex: 1;
+        }
+        button {
+            width: 150px;
         }
     }
 }
@@ -289,4 +298,20 @@ font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.popup__review {
+
+    width: 40rem;
+}
+
+.popup__review_body {
+    padding: 6px 12px;
+}
+
+.review_rating {
+   span {
+    margin-left: 10px;
+   }
+
 }

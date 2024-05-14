@@ -146,7 +146,7 @@ function handleClickOutSide(currentTag, parentTag, callback) {
       var tag = currentTag,
         result = false;
       while (!result && tag && tag !== document) {
-        if (tag.className && tag.className.includes(parentTag, callback)) {
+        if (tag.className && tag.className?.includes(parentTag, callback)) {
           result = true;
         } else {
           tag = tag.parentElement;

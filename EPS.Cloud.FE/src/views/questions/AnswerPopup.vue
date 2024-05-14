@@ -2,29 +2,31 @@
 
   <div class="answer_popup" v-if="showPopup">
 
-    <minput name="Conteent" v-model="answer.answers_content" ref="Conteent" type-component="textarea" :maxLength="1000"
+    <minput name="Content" v-model="answer.answers_content" ref="Content" type-component="textarea" :maxLength="1000"
       default-text="Thêm câu trả lời tại đây" />
 
     <div class="anser_footer mt-2">
       <mbutton button-text="Bỏ qua" @click="hide" class="none-background" />
-      <mbutton button-text="Gửi câu trả lời" @click="handleSubmitAnser" />
+      <mbutton button-text="Gửi câu trả lời" @click="handleSubmit" />
     </div>
   </div>
 
 </template>
 
 <script>
-import AnswersAPI from '@/apis/AnswerAPI'
+import AnswersAPI from '@/apis/AnswerAPI';
+import enterFormMixin from "@/mixins/enterFormMixin.vue";
 export default {
   name: "AnswerPopup",
+  mixins: [enterFormMixin],
   props: {
     isReply: {
       type: Boolean,
       default: false,
     },
-    questionId: {
-      type: String,
-      default: "",
+    question: {
+      type: Object,
+      default: {},
       required: true
     },
     replyToAnswerId: {
@@ -49,7 +51,7 @@ export default {
     show() {
       this.showPopup = true;
     },
-    async handleSubmitAnser() {
+    async handleSubmit() {
       try {
 
         if (!this.answer.answers_content) {
@@ -58,12 +60,13 @@ export default {
         } else {
           let user = this.$ms.cache.getCache("user");
           const objectMaster = {
-            questions_id: this.questionId,
+            questions_id: this.question.questions_id,
             user_id: user.user_id,
             user_name: user.fullname,
             answers_content: this.answer.answers_content,
             is_reply: this.isReply,
-            reply_to_answer_id: this.replyToAnswerId
+            reply_to_answer_id: this.replyToAnswerId,
+            user_id_of_question: this.question.user_id,
           }
           await AnswersAPI.post(objectMaster);
           this.$emit("update", objectMaster);

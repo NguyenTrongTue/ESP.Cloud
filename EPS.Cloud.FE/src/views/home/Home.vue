@@ -3,21 +3,23 @@
     <SideBar :locationProps="locations" @sortBy="handleSortBy" @typeCars="handleTypeCars" @openTime="handleOpenTime"
       @services="handleServices" @showPostion="handleShowPostion" />
     <GoogleMap :center="center" :locations="locations" ref="google-map" />
+
+    <ChatBot />
   </div>
 </template>
 
 <script>
 import GoogleMap from "@/components/map/GoogleMap.vue";
 import SideBar from "@/components/sidebar/SideBar.vue";
+import ChatBot from "@/components/chatbot/MChatBot.vue";
 import Test from "@/components/Test.vue";
 import GarageAPI from "@/apis/GarageAPI";
-import { useGeolocation } from "@vueuse/core";
-// const { coords } = useGeolocation();
 export default {
   components: {
     GoogleMap,
     SideBar,
     Test,
+    ChatBot
   },
   data() {
     return {
@@ -32,7 +34,7 @@ export default {
         SortBy: "",
         ListServiceNames: [],
         CarType: "",
-        TimeOpen: 0,
+        TimeOpen: 1,
         take: 20,
         skip: 0,
       },
@@ -49,28 +51,25 @@ export default {
   },
   async mounted() {
     let value = this.$ms.cache.getCache("coords");
-    if (value) {
+    if (value?.latitude && value?.longitude) {
       this.center = {
         lat: value.latitude,
         lng: value.longitude,
       };
+      this.asignCenter();
     } else {
+      this.center = {
+        lat: 21.037776,
+        lng: 105.782996,
 
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-
-        };
-      });
-
-
+      };
       this.$ms.cache.setCache("coords", {
         latitude: this.center.lat,
         longitude: this.center.lng,
       });
+      this.asignCenter();
     }
-    this.asignCenter();
+
 
   },
   watch: {
@@ -129,25 +128,28 @@ export default {
       this.searchObject.ListServiceNames = values;
     },
     asignCenter() {
-      this.searchObject.Coordinates = {
-        latitude: +this.center.lat,
-        longitude: +this.center.lng,
+      if (this.center.lat && this.center.lng) {
+
+        this.searchObject.Coordinates = {
+          latitude: +this.center.lat,
+          longitude: +this.center.lng,
+        }
       };
 
-      fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${+this.center
-          .lat},${+this.center.lng}&key=${window.__congfigGoogleMapAPI}`
-      )
+      // fetch(
+      //   `https://maps.googleapis.com/maps/api/geocode/json?latlng=${+this.center
+      //     .lat},${+this.center.lng}&key=${window.__congfigGoogleMapAPI}`
+      // )
 
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log(data);
 
-          this.$ms.cache.setCache("currentAddress", data);
-        })
-        .catch((error) => {
-          console.error("Lỗi:", error);
-        });
+      //     this.$ms.cache.setCache("currentAddress", data);
+      //   })
+      //   .catch((error) => {
+      //     console.error("Lỗi:", error);
+      //   });
     },
     async searchData(newObject) {
       const me = this;

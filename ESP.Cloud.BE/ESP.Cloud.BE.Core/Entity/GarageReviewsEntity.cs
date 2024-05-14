@@ -13,31 +13,31 @@ namespace ESP.Cloud.BE.Core.Model
         /// Khóa chính của bảng 'garage_reviews'
         /// </summary>
         [Key]
-        public Guid GarageReviewsId { get; set; }
+        public Guid garage_reviews_id { get; set; }
 
         /// <summary>
         /// Khóa ngoại trỏ đến bảng 'garage'
         /// </summary>
-        public Guid? GarageId { get; set; }
+        public Guid? garage_id { get; set; }
 
         /// <summary>
         /// Khóa ngoại trỏ đến bảng 'user'
         /// </summary>
-        public Guid? UserId { get; set; }
+        public Guid? user_id { get; set; }
 
         /// <summary>
         /// Bình luận về gara
         /// </summary>
-        public string Comment { get; set; } = string.Empty;
+        public string comment { get; set; } = string.Empty;
 
         /// <summary>
         /// Điểm đánh giá
         /// </summary>
-        public int? Rating { get; set; } = 0;
+        public int? rating { get; set; } = 0;
 
         /// <summary>
         /// Đường dẫn đến hình ảnh
         /// </summary>
-        public string Image { get; set; } = string.Empty;
+        public string image { get; set; } = string.Empty;
     }
 }

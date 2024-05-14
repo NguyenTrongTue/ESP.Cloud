@@ -1,6 +1,6 @@
 @import "@/styles/mixin.scss";
 .info-window {
-  width: 300px;
+  width: var(--width-window-info);
 }
 .info-window__top {
   margin-bottom: 10px;
@@ -25,12 +25,12 @@
   }
 }
 .info-window__top-img {
-  width: 300px;
-  height: 160px;
+  width: var(--width-window-info);
+  height: 180px;
   object-fit: cover;
 }
 .info-window__bottom {
-  padding: 4px;
+  padding: 0 12px;
   img,
   svg {
     width: 20px;
@@ -51,7 +51,8 @@
   line-height: 20px;
   color: #424242;
   margin: 4px 0;
-  width: 290px;
+  // width: calc(var(--width-window-info) - 10px);
+  width: 100%;
   display: flex;
   .address-text {
     flex: 1;
@@ -65,9 +66,9 @@
 .facebook,
 .phone {
   display: flex;
+  align-items: center;
   margin: 4px 0;
   span {
-    margin-left: 4px;
     font-size: 14px;
   }
 }
@@ -121,4 +122,10 @@ a {
     line-height: 24px;
     color: #424242;
   }
+}
+.window_info__icon {
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }

@@ -1,51 +1,28 @@
 <template>
   <div class="panigation mt-2 mb-2 flex-between">
-    <div
-      class="panigation__left"
-      @click="prevPage"
-      :class="disablePrevBtn && 'disable'"
-    >
+    <div class="panigation__left" @click="prevPage" :class="disablePrevBtn && 'disable'">
       <span>Trước</span>
     </div>
     <div class="panigation__center flex-center">
-      <div
-        class="panigation__center-item"
-        :class="this.pageNumber === 0 && 'current-page'"
-        @click="handleSelectedPage(0)"
-      >
+      <div class="panigation__center-item" :class="pageNumber === 0 && 'current-page'" @click="handleSelectedPage(0)">
         <span>1</span>
       </div>
-      <div
-        v-show="
-          (this.pageNumber >= 0 && this.pageNumber < 2) || lastPageNumber === 2
-        "
-        class="group-select"
-      >
-        <div
-          class="panigation__center-item"
-          :class="this.pageNumber === 1 && 'current-page'"
-          @click="handleSelectedPage(1)"
-        >
+      <div v-show="(pageNumber >= 0 && pageNumber < 2 && lastPageNumber > 1) || lastPageNumber === 2 || lastPageNumber === 1
+      " class="group-select">
+        <div class="panigation__center-item" :class="pageNumber === 1 && 'current-page'" @click="handleSelectedPage(1)">
           <span>{{ 2 }}</span>
         </div>
       </div>
 
-      <div
-        class="group-select"
-        v-show="
-          this.pageNumber >= 2 &&
-          this.pageNumber <= lastPageNumber - 2 &&
-          lastPageNumber !== 2
-        "
-      >
+      <div class="group-select" v-show="pageNumber >= 2 &&
+      pageNumber <= lastPageNumber - 2 &&
+      lastPageNumber !== 2
+      ">
         <div class="pointer">
           <div @click="onReducePage" class="panigation__center-item">...</div>
         </div>
 
-        <div
-          class="panigation__center-item current-page"
-          @click="handleSelectedPage(pageNumber)"
-        >
+        <div class="panigation__center-item current-page" @click="handleSelectedPage(pageNumber)">
           <span>{{ pageNumber + 1 }}</span>
         </div>
       </div>
@@ -54,37 +31,22 @@
         <div class="panigation__center-item">...</div>
       </div>
 
-      <div
-        class="group-select"
-        v-show="
-          this.pageNumber >= lastPageNumber - 1 &&
-          this.pageNumber <= lastPageNumber + 1 &&
-          lastPageNumber >= 3
-        "
-      >
-        <div
-          class="panigation__center-item"
-          :class="this.pageNumber === lastPageNumber - 1 && 'current-page'"
-          @click="handleSelectedPage(lastPageNumber - 1)"
-        >
+      <div class="group-select" v-show="pageNumber >= lastPageNumber - 1 &&
+      pageNumber <= lastPageNumber + 1 &&
+      lastPageNumber >= 3
+      ">
+        <div class="panigation__center-item" :class="pageNumber === lastPageNumber - 1 && 'current-page'"
+          @click="handleSelectedPage(lastPageNumber - 1)">
           <span>{{ lastPageNumber }}</span>
         </div>
       </div>
 
-      <div
-        v-show="lastPageNumber > 2"
-        class="panigation__center-item"
-        :class="this.pageNumber === lastPageNumber && 'current-page'"
-        @click="handleSelectedPage(lastPageNumber)"
-      >
+      <div v-show="length / pageSize > 2" class="panigation__center-item"
+        :class="pageNumber === lastPageNumber && 'current-page'" @click="handleSelectedPage(lastPageNumber)">
         <span>{{ lastPageNumber + 1 }}</span>
       </div>
     </div>
-    <div
-      class="panigation__right"
-      @click="nextPage"
-      :class="disableNextBtn && 'disable'"
-    >
+    <div class="panigation__right" @click="nextPage" :class="disableNextBtn && 'disable'">
       <span>Sau</span>
     </div>
   </div>
@@ -122,6 +84,7 @@ export default {
     },
     lastPageNumber() {
       let value = this.length / this.pageSize;
+
       return value % 1 === 0 ? Math.floor(value) - 1 : Math.floor(value);
     },
   },

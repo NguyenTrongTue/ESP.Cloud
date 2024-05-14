@@ -63,8 +63,7 @@
         </div>
       </div>
       <div class="search_button flex-center " @click="handleShowPopupQuestions">
-        <mbutton button-text="Đặt câu hỏi" style="height: 46px;"
-         class="none-background" />
+        <mbutton button-text="Đặt câu hỏi" style="height: 46px;" class="none-background" />
       </div>
 
     </div>
@@ -80,9 +79,12 @@
     </div>
     <div class="list_answer ">
 
-      <AnswerCard v-for=" answer  in  listAnswerRecently " :key="answer.questions_id" :answer="answer"
+      <AnswerCard v-for=" answer  in  paginationAnswerList " :key="answer.questions_id" :answer="answer"
         @click="handleRedirectToAnswer(answer.questions_id)" />
+
+
     </div>
+    <pagination :currentPage="currentPage" @handleChangePage="handleChangePage" :length="listAnswerRecently?.length" />
   </div>
 </template>
 
@@ -94,7 +96,8 @@ import carMixin from "@/mixins/carMixin.vue";
 import QuestionAPI from '@/apis/QuestionsAPI';
 import AnswerAPI from '@/apis/AnswerAPI';
 import debounce from '@/utils/debounce';
-import BaseQuestion from './BaseQuestion.vue'
+import BaseQuestion from './BaseQuestion.vue';
+
 export default {
   name: "Questions",
   mixins: [carMixin],
@@ -112,22 +115,24 @@ export default {
     computedLinkByTilte() {
       return objectMaster => {
         const { year, model, make } = objectMaster;
-        const carName = make?.replace(/ /g, "-");
-        const modelSlug = model?.replace(/ /g, "-") || "";
+        const carName = make?.replace(/ /g, "_");
+        const modelSlug = model?.replace(/ /g, "_") || "";
         return `${window.__baseURLFE}/questions/${carName}/${modelSlug}/${year}`;
       }
+    },
+    paginationAnswerList() {
+      return this.listAnswerRecently.slice(this.currentPage * 5, this.currentPage * 5 + 5);
     }
-
-
   },
   data() {
 
     return {
 
       question: "",
+      currentPage: 0,
       listQuestions: [],
       listSearchQuestions: [],
-      listAnswerRecently: [],
+      listAnswerRecently: []
 
     }
   },
@@ -147,10 +152,13 @@ export default {
     // this.fetchAnswerRecently();
 
     this.handleStartQuestionsPage();
+
   },
+
   methods: {
-
-
+    handleChangePage(page) {
+      this.currentPage = page;
+    },
     handleRedirectToAnswer(questionsId) {
       this.$router.push(`/answer/${questionsId}`);
     },

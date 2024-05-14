@@ -18,6 +18,7 @@
   <Next v-if="type == 'Next'" />
   <ArrowRight v-if="type == 'ArrowRight'" />
   <Stars v-if="type == 'Stars'" :width="width" :height="height" />
+  <StarsV2 v-if="type == 'StarsV2'" :width="width" :height="height" />
   <Note v-if="type == 'Note'" />
   <Avatar v-if="type == 'Avatar'" />
   <Search v-if="type == 'Search'" />
@@ -39,6 +40,7 @@
   <Check v-if="type == 'Check'" />
   <Popular v-if="type == 'Popular'" />
   <Answer v-if="type == 'Answer'" />
+  <Like v-if="type == 'Like'" />
 </template>
 
 <script>
@@ -81,6 +83,8 @@ import Notify from "./Notify.vue";
 import Check from "./Check.vue";
 import Popular from "./Popular.vue";
 import Answer from "./Answer.vue";
+import StarsV2 from "./StarsV2.vue";
+import Like from "./Like.vue";
 
 export default {
   name: "Icon",
@@ -138,7 +142,9 @@ export default {
     Notify,
     Check,
     Popular,
-    Answer
+    Answer,
+    StarsV2,
+    Like
   },
 };
 </script>

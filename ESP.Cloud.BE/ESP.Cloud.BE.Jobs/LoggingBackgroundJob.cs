@@ -2,7 +2,6 @@
 using ESP.Cloud.BE.Email;
 using ESP.Cloud.BE.Email.Interface;
 using ESP.Cloud.BE.Infrastructure;
-using ESP.Cloud.BE.Infrastructure.Repository;
 using ESP.Cloud.BE.Model;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
@@ -45,7 +44,9 @@ public class LoggingBackgroundJob : IJob
                 var notification = new Notifications()
                 {
                     user_notifications_id = Guid.NewGuid(),
+                    refid = booking.booking_history_id,
                     user_id = booking.user_id,
+                    type = 0,
                     unread = true,
                     description = $"Bạn có lịch sửa xe vào {bookingDate.Hour} giờ {(bookingDate.Minute > 0 ? bookingDate.Minute.ToString() : "")} chiều nay."
                 };

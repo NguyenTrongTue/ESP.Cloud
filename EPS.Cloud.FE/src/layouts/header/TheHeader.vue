@@ -8,9 +8,8 @@
         <router-link to="/"> <span>Tìm gara</span></router-link>
         <router-link to="/estimator"> <span>Ước tính</span></router-link>
         <router-link to="/promo"> <span>Khuyến mãi</span></router-link>
-        <router-link to="/history-booking">
-          <span>Lịch sử sửa chữa</span></router-link>
         <router-link to="/questions"> <span>Thảo luận</span></router-link>
+        <router-link to="/car_review"> <span>Review xe</span></router-link>
       </div>
     </div>
     <div class="header__right">
@@ -20,7 +19,8 @@
       <div class="header__right-user flex-center" @click="showPopupNotification = !showPopupNotification">
         <div class="icon-notification">
           <micon type="Notify" />
-          <span className="badge flex-center">{{ notificationsUnread.length }}</span>
+          <span className="badge flex-center" v-if="notificationsUnread.length > 0">{{ notificationsUnread.length
+            }}</span>
         </div>
 
         <PopupNotifications class="popup-notification" :notificationsProps="notifications"
@@ -102,13 +102,23 @@ export default {
       });
     },
 
-    handleLogout() {
-      this.$ms.cache.deleteCache("user");
-      this.user = null;
-      this.showPopupAvatar = false;
-      this.$router.push({
-        path: "/",
-      });
+    async handleLogout() {
+      try {
+
+        this.$store.commit("showLoading");
+        this.$ms.cache.deleteCache("user");
+        await new Promise((resovle) =>
+          setTimeout(resovle, 500));
+        this.user = null;
+        this.showPopupAvatar = false;
+        this.$router.push({
+          path: "/",
+        });
+        this.$store.commit("hideLoading");
+      } catch (e) {
+        this.$store.commit("hideLoading");
+        console.log(e);
+      }
     },
     handleMessage(data) {
       let filterData = JSON.parse(data).filter(item => item.user_id === '00000000-0000-0000-0000-000000000000'

@@ -9,19 +9,26 @@
       <div class="main-info">
         <div class="main-info__center">
           <div class="sidebar-item__left">
-            <img :src="garage?.image" alt="Ảnh của gara" />
+            <img :src="garage?.image.split(';')[0]" alt="Ảnh của gara" />
           </div>
           <div class="sidebar-item__right">
             <div class="gara-name__wrapper">
-              <div class="gara-name">{{ garage?.garage_name }}</div>
+
+              <mtooltip :content="garage?.garage_name" class="gara-name" :arrow="false">
+                <div class="gara-name">{{ garage?.garage_name }}</div>
+              </mtooltip>
+
               <div class="rating">
                 <micon type="Stars" />
-                <div>{{ garage?.avg_rating }}</div>
+                <div>{{ garage?.avg_rating.toFixed(2) }}</div>
                 <span>({{ garage?.total_rating }})</span>
               </div>
             </div>
             <div class="address">
-              <span class="address-text">{{ garage?.address }} </span><span class="fz-12">(2.8 km)</span>
+              <mtooltip :content="garage?.garage_name" class="address-text" :arrow="false">
+                <span class="address-text">{{ garage?.address }} </span>
+              </mtooltip>
+              <span class="fz-12">(2.8 km)</span>
             </div>
 
             <div class="facebook">
@@ -34,10 +41,10 @@
         </div>
         <div class="time-open fz-14">
           <span :class="computedbuildOpenTimeText.split('·')[0].includes('Đang mở')
-                ? 'active'
-                : 'close'
+              ? 'active'
+              : 'close'
               ">{{ computedbuildOpenTimeText.split("·")[0] }}</span>
-          <span> · </span>
+          <span>&nbsp;·&nbsp;</span>
           <span>{{ computedbuildOpenTimeText.split("·")[1] }}</span>
         </div>
         <slot name="main-info__1"></slot>
@@ -45,7 +52,7 @@
       </div>
     </div>
     <div class="next-steps-footer flex-center">
-      <button class="next-step pointer" @click="handleNextStep">
+      <button class="next-step pointer" @click="handleSubmit">
         <span>Tiếp tục</span>
         <micon type="ArrowRight" />
       </button>
@@ -54,6 +61,7 @@
 </template>
 <script>
 import validateMixin from "@/mixins/validateMixin.vue";
+import enterFormMixin from "@/mixins/enterFormMixin.vue";
 export default {
   emits: ["nextStep"],
   props: {
@@ -62,7 +70,7 @@ export default {
       default: null,
     },
   },
-  mixins: [validateMixin],
+  mixins: [validateMixin, enterFormMixin],
   data() {
     return {
       garage: this.garageProps,
@@ -94,7 +102,7 @@ export default {
     },
   },
   methods: {
-    handleNextStep() {
+    handleSubmit() {
       this.$emit("nextStep");
     },
   },

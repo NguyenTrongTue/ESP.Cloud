@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-item">
     <div class="sidebar-item__left">
-      <img :src="location.image" alt="Ảnh của gara" />
+      <img :src="location?.image?.split(';')[0]" alt="Ảnh của gara" />
     </div>
     <div class="sidebar-item__right">
       <div class="gara-name__wrapper">
@@ -17,7 +17,8 @@
           alt="Ảnh của gara" />
 
         <mtooltip :content="location.address" class="address-text" :arrow="false"><span>{{ location.address }} </span>
-        </mtooltip><span>({{ location.distance.toFixed(2) }} km)</span>
+        </mtooltip>
+        <span>({{ location.distance.toFixed(2) }} km)</span>
       </div>
       <div class="time-open">
         <Clock style="color: rgb(0, 60, 255)" />
@@ -42,7 +43,12 @@
       <div class="button-wrapper">
         <mbutton :button-text="$t('Booking')" :icon="icon1" type="icon" @click="handleBooking($event, location)" />
         <mbutton :button-text="$t('Direction')" :icon="icon2" type="icon" @click="handleDirecting($event)" />
-        <mbutton :button-text="$t('Share')" :icon="icon3" type="icon" @click="handleSharing" />
+
+
+        <ShareNetwork network="facebook" :url="location.garage_website">
+          <mbutton :button-text="$t('Share')" :icon="icon3" type="icon" />
+        </ShareNetwork>
+
       </div>
     </div>
   </div>

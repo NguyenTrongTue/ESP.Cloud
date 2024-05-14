@@ -42,5 +42,19 @@
         /// Bình luận về đặt chỗ
         /// </summary>
         public string? phone { get; set; } = string.Empty;
+
+
+        /// <summary>
+        /// Nhãn hiệu của xe (Ví dụ: Toyota, Honda, ...)
+        /// </summary>
+        public string make { get; set; } = string.Empty;
+        /// <summary>
+        /// Mô hình của xe (Ví dụ: Camry, Accord, ...)
+        /// </summary>
+        public string model { get; set; } = string.Empty;
+        /// <summary>
+        /// Năm sản xuất
+        /// </summary>
+        public int? year { get; set; }
     }
 }

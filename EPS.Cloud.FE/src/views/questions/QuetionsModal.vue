@@ -57,8 +57,7 @@
 
             </div>
             <div class="question_modal__footer">
-                <mbutton button-text="Gửi câu hỏi" class="mb-2" :disabled="computedDisableBtn"
-                    @click="handleSubmitQuestion" />
+                <mbutton button-text="Gửi câu hỏi" class="mb-2" :disabled="computedDisableBtn" @click="handleSubmit" />
             </div>
         </div>
 
@@ -71,9 +70,10 @@
 <script>
 import carMixin from "@/mixins/carMixin.vue";
 import QuestionAPI from '@/apis/QuestionsAPI';
+import enterFormMixin from "@/mixins/enterFormMixin.vue";
 export default {
     name: "QuetionsModal",
-    mixins: [carMixin],
+    mixins: [carMixin, enterFormMixin],
     props: {
 
     },
@@ -100,12 +100,25 @@ export default {
         show() {
             this.showPopup = true;
         },
-        async handleSubmitQuestion() {
-            let user = this.$ms.cache.getCache("user");
-            this.objectMaster.user_id = user.user_id;
-            this.objectMaster.user_name = user.fullname;
-            await QuestionAPI.post(this.objectMaster);
-            this.showPopup = false;
+        async handleSubmit() {
+            try {
+                this.$store.commit("showLoading");
+                let user = this.$ms.cache.getCache("user");
+                this.objectMaster.user_id = user.user_id;
+                this.objectMaster.user_name = user.fullname;
+
+                await QuestionAPI.post(this.objectMaster);
+
+                this.$store.commit("showToast", {
+                    label: "Câu hỏi được đăng thành công",
+                    type: 'success'
+                });
+                this.showPopup = false;
+                this.$store.commit("hideLoading")
+            } catch (e) {
+                console.log(e);
+                this.$store.commit("hideLoading")
+            }
         }
     },
 };

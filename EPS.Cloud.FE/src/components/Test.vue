@@ -1,83 +1,5 @@
 <template>
   <div style="width: 300px; height: 180px"></div>
-  <!-- <GoogleMap
-    api-key="AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg"
-    style="width: 100%; height: 100%"
-    :center="center"
-    :zoom="13"
-  >
-    <Marker
-      v-for="(location, i) in locations"
-      :options="{
-        position: { lat: location.latitude, lng: location.longitude },
-      }"
-      :key="i"
-    >
-      <div class="custom-marker">
-        <div class="custom-marker__img"><Stars /></div>
-        <div>{{ location.rating }}</div>
-        <span>({{ location.numberOfReviews }})</span>
-      </div>
-      <InfoWindow ref="info-window">
-        <div class="info-window">
-          <div class="info-window__top">
-            <img
-            s
-              src="https://storage.googleapis.com/rp-production-public-content/3z624a2usqnwc07nb8ni93deixc7"
-              alt="Ảnh của gara"
-            />
-          </div>
-          <div class="info-window__bottom">
-            <div class="gara-name__wrapper">
-              <div class="gara-name">{{ location.garage_name }}</div>
-              <div class="rating">
-                <Stars />
-                <div>{{ location.total_rating }}</div>
-                <span>(40)</span>
-              </div>
-            </div>
-            <div class="address">
-              <img
-                src="https://www.gstatic.com/images/icons/material/system_gm/1x/place_gm_blue_24dp.png"
-                alt="Ảnh của gara"
-              />
-
-              <span class="address-text">{{ location.address }}</span>
-              <span> ({{ location.distance.toFixed(2) }} km)</span>
-            </div>
-            <div class="time-open">
-              <Clock style="color: rgb(0, 60, 255)" />
-              <span>{{ location.open_time }}</span>
-            </div>
-            <div class="facebook">
-              <img
-                src="https://www.gstatic.com/images/icons/material/system_gm/1x/public_gm_blue_24dp.png"
-                alt="Ảnh của gara"
-              />
-              <a :href="location.garage_website" target="_blank"
-                >facebook.com</a
-              >
-            </div>
-            <div class="phone">
-              <img
-                src="https://www.gstatic.com/images/icons/material/system_gm/1x/phone_gm_blue_24dp.png"
-                alt="Ảnh của gara"
-              />
-
-              <span>{{ location.phone }}</span>
-            </div>
-            <button class="booking">Đặt lịch</button>
-          </div>
-        </div>
-      </InfoWindow>
-    </Marker>
-    <CustomMarker
-      :options="{
-        position: { lat: center.lat, lng: center.lng },
-      }"
-      ><div class="current-location"></div
-    ></CustomMarker>
-  </GoogleMap> -->
 
   <div class="map" id="map" style="width: 100%; height: 100%"></div>
 </template>
@@ -182,5 +104,4 @@ export default {
 };
 </script>
 <style lang="scss">
-// @import "./google-map.scss";
-</style>
+// @import "./google-map.scss";</style>

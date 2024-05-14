@@ -8,9 +8,9 @@ import MyEmitter from "tiny-emitter/instance";
 import MResources from "@/helper/resources";
 import store from "@/store";
 import { moudle } from "@/utils/index";
-import VueTippy from "vue-tippy";
 import { Tippy } from "vue-tippy";
 import "tippy.js/dist/tippy.css";
+import VueSocialSharing from 'vue-social-sharing';
 
 // components
 import MInputPri from "@/components/input/MInputPri.vue";
@@ -28,6 +28,7 @@ import InputRadio from "./components/radio/MRadio.vue";
 import MRating from "./components/rating/MRating.vue";
 import StarRating from "@/components/star-rating/StarRating.vue";
 import PromoFilter from "@/components/promo-filter/PromoFilter.vue";
+import MSkeleton from "@/components/skeleton/MSkeleton.vue";
 import PromoItem from "./components/promo-item/PromoItem.vue";
 import Pagination from "./components/pagination/Pagination.vue";
 const app = createApp(App);
@@ -55,6 +56,6 @@ app.component("starrating", StarRating);
 app.component("promofilter", PromoFilter);
 app.component("promoitem", PromoItem);
 app.component("pagination", Pagination);
+app.component("skeleton", MSkeleton);
 app.directive("click-outside", clickOutsideDirective);
-
-app.use(i18n).use(router).use(store).mount("#app");
+app.use(VueSocialSharing).use(i18n).use(router).use(store).mount("#app");

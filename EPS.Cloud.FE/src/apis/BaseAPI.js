@@ -13,7 +13,7 @@ class BaseAPI {
    * @author: nttue (20/07/2023)
    */
   getById(id) {
-    return request.get(this.url + `/id=${id}`);
+    return request.get(this.url + `/${id}`);
   }
   /**
    * @description hàm lấy dữ liệu
