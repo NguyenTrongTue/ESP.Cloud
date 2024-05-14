@@ -6,7 +6,7 @@ namespace ESP.Cloud.BE.Core.Model
     /// <summary>
     /// Bảng lưu lịch sử đặt xe của người dùng.
     /// </summary>
-    [Table("booking_history")]
+    [Table("garage_service")]
     public class GarageServicesEntity
     {
         /// <summary>

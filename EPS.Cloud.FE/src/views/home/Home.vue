@@ -69,8 +69,6 @@ export default {
       });
       this.asignCenter();
     }
-
-
   },
   watch: {
     "coords.latitude"(newValue) {
@@ -112,9 +110,6 @@ export default {
   },
   methods: {
 
-    handleMessage(data) {
-      console.log(data);
-    },
     handleSortBy(value) {
       this.searchObject.SortBy = value;
     },

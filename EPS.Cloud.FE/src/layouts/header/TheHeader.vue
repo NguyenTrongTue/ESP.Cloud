@@ -13,9 +13,7 @@
       </div>
     </div>
     <div class="header__right">
-      <div class="header__right-user flex-center">
-        <micon type="Search" />
-      </div>
+
       <div class="header__right-user flex-center" @click="showPopupNotification = !showPopupNotification">
         <div class="icon-notification">
           <micon type="Notify" />

@@ -115,14 +115,14 @@ export default {
             let question = this.question;
             this.question = "";
             await this.callDataGetResult(question);
-            this.scrollLastChat();
+
 
         },
         async callDataGetResult(question) {
             try {
-
+                // http://150.95.114.153:5022
                 this.isGettingData = true;
-                var response = await axios.post("http://150.95.114.153:5022/get-message", { question });
+                var response = await axios.post("http://127.0.0.1:5000/get-message", { question: question + " kinh độ và vĩ độ hiện tại của tôi là 21.037776 và 105.782996" });
                 if (response.data) {
 
                     const { message } = response.data;
@@ -130,11 +130,82 @@ export default {
                         message: message,
                         is_sender: false
                     });
+                    if (question.toLowerCase().includes("đường đi")) {
+
+                        this.getLatitudeAndLongitude(message);
+                    }
                 }
                 this.isGettingData = false;
+                this.scrollLastChat();
+
             } catch (e) {
                 this.isGettingData = false;
             }
+        },
+        getLatitudeAndLongitude(inputString) {
+            const regex = /latitude: ([\d.]+), longitude: ([\d.]+)/;
+            const regex1 = /vĩ độ: ([\d.]+), kinh độ: ([\d.]+)/;
+            const match = inputString.match(regex);
+            const match1 = inputString.match(regex1);
+            const regex2 = /vĩ độ ([\d.]+) và kinh độ ([\d.]+)/;
+            const match2 = inputString.match(regex2);
+            const regex3 = /latitude ([\d.]+) and longitude ([\d.]+)/;
+            const match3 = inputString.match(regex3);
+            const regex4 = /latitude ([\d.]+), longitude ([\d.]+)/;
+            const match4 = inputString.match(regex4);
+            if (match) {
+                const latitude = parseFloat(match[1]);
+                const longitude = parseFloat(match[2]);
+
+
+                window.open(
+                    `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+                    "_blank"
+                );
+
+            } else if (match1) {
+                const latitude = parseFloat(match1[1]);
+                const longitude = parseFloat(match1[2]);
+
+
+                window.open(
+                    `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+                    "_blank"
+                );
+            } else if (match2) {
+                const latitude = parseFloat(match2[1]);
+                const longitude = parseFloat(match2[2]);
+
+
+                window.open(
+                    `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+                    "_blank"
+                );
+            }
+            else if (match3) {
+                const latitude = parseFloat(match3[1]);
+                const longitude = parseFloat(match3[2]);
+
+
+                window.open(
+                    `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+                    "_blank"
+                );
+            }
+            else if (match4) {
+                const latitude = parseFloat(match4[1]);
+                const longitude = parseFloat(match4[2]);
+
+
+                window.open(
+                    `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+                    "_blank"
+                );
+            }
+            else {
+                console.log("Không tìm thấy giá trị vĩ độ và kinh độ trong chuỗi.");
+            }
+
         }
 
     },

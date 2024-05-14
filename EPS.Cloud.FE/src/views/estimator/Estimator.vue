@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="top__right ng-heading-5 ng-font-neutral-50 pointer">
-          Thoát
+         <a href="/"> Thoát</a>
         </div>
       </div>
     </template>

@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       loader: new Loader({
-        apiKey: window.__congfigGoogleMapAPI,
+        apiKey: 'AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg',
         // 'AIzaSyA3CW-b93d_dqjIORH8CLZCypUMM1BXX7w', //"AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
         version: "weekly",
         libraries: ["places"]
@@ -44,7 +44,7 @@ export default {
       handler(newLocations) {
         if (newLocations && newLocations.length > 0) {
           this.locationsList = newLocations;
-          this.handleViewLocations();
+          this.initMap();
         }
       },
       deep: true,
@@ -56,17 +56,6 @@ export default {
       try {
         const google = await this.loader.load();
         this.google = google;
-        this.directionsRenderer = new google.maps.DirectionsRenderer({
-          draggable: true,
-          map,
-          polylineOptions: {
-            strokeColor: "#034efc",
-            strokeWeight: 8,
-          },
-        });
-        this.directionsService = new google.maps.DirectionsService();
-
-
         if (!this.center.lat || !this.center.lng) {
           let value = this.$ms.cache.getCache("coords");
           if (value) {
@@ -81,9 +70,6 @@ export default {
           zoom: 13,
           mapId: "cfca60cfc0efaeaf",
         });
-
-        this.directionsRenderer.setMap(this.map);
-
         const infowindow = new this.google.maps.InfoWindow();
         this.infowindow = infowindow;
         await this.handleViewLocations();
@@ -98,21 +84,13 @@ export default {
       try {
         if (this.google) {
           this.markers = [];
-          // const { AdvancedMarkerElement, PinElement } = await this.google.maps.importLibrary(
-          //   "marker",
-          // );
-          this.locations.forEach((location) => {
 
-            const image = window.__baseURLFE + "/src/assets/img/location.png";
+          this.locations.forEach((location) => {
             let marker = new this.google.maps.Marker({
               map: this.map,
               position: { lat: location.latitude, lng: location.longitude },
-              // content: pin.element,
-              // icon: image
+
             });
-
-
-
             marker.addListener("click", () =>
               this.hanleShowInfoWindow(location, marker)
             );
@@ -122,21 +100,6 @@ export default {
       } catch (e) {
         console.log(e);
       }
-    },
-    calculateAndDisplayRoute(dest) {
-      this.directionsService
-        .route({
-          origin: { lat: this.center.lat, lng: this.center.lng },
-          destination: { lat: dest.latitude, lng: dest.longitude },
-          travelMode: google.maps.TravelMode.DRIVING,
-          avoidTolls: true,
-        })
-        .then((response) => {
-          this.directionsRenderer.setDirections(response);
-        })
-        .catch((e) =>
-          console.log("Directions request failed due to " + e.status)
-        );
     },
     generateInfoWindowContent() {
       return `<div ref="info-window">
@@ -224,24 +187,6 @@ export default {
             </div>
           </div>
         </div>
-      </div>`;
-    },
-    generateMarkerContent(location) {
-      return `<div class="custom-marker">
-        <div class="custom-marker__img"> <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="13"
-                  height="13"
-                  fill="#E98B2F"
-                  viewBox="0 0 256 256"
-                  class="ng-mr4 ng-ml4"
-                >
-                  <path
-                    d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"
-                  ></path>
-                </svg></div>
-        <div> ${location.rating}</div>
-        <span>( ${location.numberOfReviews})</span>
       </div>`;
     },
     hanleShowInfoWindow(location, marker) {
