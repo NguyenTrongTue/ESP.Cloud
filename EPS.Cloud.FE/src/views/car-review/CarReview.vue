@@ -3,11 +3,11 @@
   <div class="questions">
     <div class="question__header">
       <div class="question__navigator mb-1">
-        <div class="question__navigator_item" v-for="(item, index) in  listQuestionNavigator " :key="item.grade"><span
+        <div class="question__navigator_item" v-for="(item, index) in  listQuestionNavigator " :key="item.grade"><a
             class="question__navigator_text pointer" :class="{
           'active':
             index === listQuestionNavigator.length - 1
-        }" @click="handleNavigator(item)">{{ item.text }}</span>
+        }" :href="handleNavigator(item)">{{ item.text }}</a>
           <span v-if="index < listQuestionNavigator.length - 1">&nbsp/&nbsp</span>
         </div>
 
@@ -160,6 +160,22 @@ export default {
     this.handleStartQuestionsPage();
   },
   methods: {
+    handleNavigator(item) {
+      console.log(item);
+      let link = `${window.__baseURLFE}/car_review/`;
+      switch (item.grade) {
+        case 1:
+          return link + `${item.text}`;
+        case 2:
+          return link + `${this.listQuestionNavigator[1].text}/${this.listQuestionNavigator[2].text}`;
+
+        case 3:
+          return link + `${this.listQuestionNavigator[1].text}/${this.listQuestionNavigator[2].text}/${this.listQuestionNavigator[3].text}`;
+        default:
+          return link;
+
+      }
+    },
     handleChangePage(page) {
       this.currentPage = page;
     },

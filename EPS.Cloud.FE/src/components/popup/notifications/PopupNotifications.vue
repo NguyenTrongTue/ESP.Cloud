@@ -19,7 +19,8 @@
         <div class="notifications__body">
             <div class="notifications_item flex-between" :class="{
                     'unread': item.unread
-                }" v-for="(item, index) in computedNotifications" :key="index" @click="handleViewNotification(item)">
+                }" v-for="(item, index) in computedNotifications" :key="index" @click="handleViewNotification(item)"
+                v-if="computedNotifications.length > 0">
                 <div class="notifications_item__right flex-center ">
 
                     <img v-if="item.type == 0" src="@/assets/img/download.png" alt="icon" />
@@ -33,6 +34,10 @@
                 </div>
 
                 <div v-if="item.unread" class="notification__unread"></div>
+            </div>
+            <div v-else class="no_notification">
+                <img src="@/assets/img/notification.png" alt="icon" />
+                <div class="no_notification_title">Bạn chưa có thông báo nào</div>
             </div>
 
 
