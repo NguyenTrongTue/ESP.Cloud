@@ -7,8 +7,7 @@
         <div class="main-info">
           <div class="main-info__center">
             <div class="sidebar-item__left">
-              <img src="https://storage.googleapis.com/rp-production-public-content/puz5muru666yt3hfcbrs86b222f8"
-                alt="Ảnh của gara" />
+              <img :src="garage?.image.split(';')[0]" alt="Ảnh của gara" />
             </div>
             <div class="sidebar-item__right">
               <div class="gara-name__wrapper">
