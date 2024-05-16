@@ -2,14 +2,11 @@
     position: absolute;
     top: 50%;
     right: 20px;
-    background-color: rgb(37, 143, 192);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s ease;
+    img {
+        width: 150px;
+        height: 150px;
+    }
    
 }
 

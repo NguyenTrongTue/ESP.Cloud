@@ -202,6 +202,7 @@
     </div>
 
     <PopupReview :garageProps="garage" @updateReview="handleUpdateReview" ref="PopupReview" />
+    <back-to-top />
 </template>
 
 <script>
@@ -282,6 +283,7 @@ export default {
 
 
   methods: {
+
     handleOpenPopupReview() {
       this.$refs.PopupReview.show();
     },

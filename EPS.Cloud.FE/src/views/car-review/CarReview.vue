@@ -161,7 +161,7 @@ export default {
   },
   methods: {
     handleNavigator(item) {
-      console.log(item);
+
       let link = `${window.__baseURLFE}/car_review/`;
       switch (item.grade) {
         case 1:

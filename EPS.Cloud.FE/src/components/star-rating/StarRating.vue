@@ -23,7 +23,7 @@ export default {
 },
   props: {
     rating: {
-      type: Number,
+      type: [Number, String],
       default: 4
     },
     disableClick: {
