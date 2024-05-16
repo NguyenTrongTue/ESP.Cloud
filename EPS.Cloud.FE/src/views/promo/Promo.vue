@@ -1,18 +1,6 @@
 <template>
   <div class="promo-page-wrapper">
-    <div class="promo-filter-left">
-      <promofilter
-        title="Lọc theo thời gian"
-        @selected-filter="handleFilterByTime"
-        :filterItems="timeFilterType"
-        
-      />
-      <promofilter
-        title="Lọc theo mẫu xe"
-        @selected-filter="handleFilterByCarName"
-        :filterItems="carFilterType"
-      />
-    </div>
+    
     <div class="promo-list-right">
       <div class="article-list">
         <div class="article-large" v-if="pagiArticles.length > 0">
