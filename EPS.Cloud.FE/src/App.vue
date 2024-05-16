@@ -1,10 +1,10 @@
 <template>
-  <DefaultLayout :show-header="showHeader"
-    ><router-view></router-view
-  ></DefaultLayout>
+  <DefaultLayout :show-header="showHeader"><router-view></router-view></DefaultLayout>
   <MToast></MToast>
   <MDialog />
   <mloading />
+
+  <back-to-top />
 </template>
 
 <script>
@@ -19,10 +19,10 @@ export default {
     DefaultLayout,
     MToast,
     MDialog,
-    MLoading,
+    MLoading
   },
 
-  mounted() {},
+  mounted() { },
   computed: {
     showHeader() {
       const routeMeta = this.$route.meta;
@@ -30,5 +30,7 @@ export default {
       return !(routeMeta && routeMeta.showHeader === false);
     },
   },
+  methods: {
+  }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
 
   <div class="chatbot" @click="handleShowPopupChat" v-if="showChatBot">
-    <img src="@/assets/img/chatbot-white.png" alt="icon" />
+    <img src="@/assets/img/mybot.gif" alt="icon" />
   </div>
 
   <PopupChat ref="PopupChat" @close="handleHidePopupChat" />

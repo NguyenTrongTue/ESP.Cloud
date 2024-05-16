@@ -31,6 +31,9 @@ import PromoFilter from "@/components/promo-filter/PromoFilter.vue";
 import MSkeleton from "@/components/skeleton/MSkeleton.vue";
 import PromoItem from "./components/promo-item/PromoItem.vue";
 import Pagination from "./components/pagination/Pagination.vue";
+import BackToTop from "@/components/back-to-top/BackToTop.vue";
+
+
 const app = createApp(App);
 
 // config
@@ -57,5 +60,6 @@ app.component("promofilter", PromoFilter);
 app.component("promoitem", PromoItem);
 app.component("pagination", Pagination);
 app.component("skeleton", MSkeleton);
+app.component("back-to-top", BackToTop);
 app.directive("click-outside", clickOutsideDirective);
 app.use(VueSocialSharing).use(i18n).use(router).use(store).mount("#app");
