@@ -37,17 +37,24 @@ export default {
     };
   },
   watch: {},
-
   methods: {
+    /**
+     * Handles the process of resetting the password, including showing loading state, 
+     * requesting a new password from the AuthAPI, displaying success message, and handling errors.
+     *
+     * @return {Promise<void>} A promise that resolves once the password reset process is complete
+     * @author nttue 17.05.2024
+     */
     async handleResetPassword() {
       try {
         if (!this.handleValidate()) {
           this.$store.commit("showLoading");
           await AuthAPI.getNewPassword(this.user.email);
-          this.$store.commit(
-            "dialog/setErrorMessage",
-            "Vui lòng kiểm tra email để xác nhận mật khẩu!"
-          );
+
+          this.$store.commit("showToast", {
+            label: "Mật khẩu đã được gửi về email. Vui lòng kiểm tra email để xác nhận mật khẩu!",
+            type: 'success'
+          });
           this.handleClose();
           this.$store.commit("hideLoading")
         }
@@ -60,9 +67,21 @@ export default {
         this.$store.commit("hideLoading")
       }
     },
+    /**
+     * Closes the current modal by setting the 'show' property to false.
+     *
+     * @return {void} No return value.
+     * @author nttue 17.05.2024
+     */
     handleClose() {
       this.show = false;
     },
+    /**
+     * Open the current modal by setting the 'show' property to false.
+     *
+     * @return {void} No return value.
+     * @author nttue 17.05.2024
+     */
     handleShow() {
       this.show = true;
     },

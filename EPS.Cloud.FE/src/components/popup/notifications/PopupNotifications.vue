@@ -7,7 +7,7 @@
             <div class="notifications_filter flex-start">
                 <div class="notifications_filter__item  flex-center" v-for="(item) in filterType" :key="item.id" :class="{
                     'active': item.id == currentFilterType
-                }" @click="currentFilterType = item.id">
+                }" @click="handleChooseCurrentFilter($event, item)">
                     <span>{{ item.text }}</span>
 
                 </div>
@@ -79,13 +79,19 @@ export default {
         }
     },
     computed: {
+        /**
+         * A computed property that filters notifications based on the currentFilterType.
+         *
+         * @return {Array} The filtered array of notifications.
+        * @author nttue 17.05.2024
+         */
         computedNotifications() {
 
             if (this.currentFilterType == 0) {
                 return this.datas
             }
             else if (this.currentFilterType == 1) {
-                return this.datas.filter(item => item.type == 0)
+                return this.datas.filter(item => item.unread)
             }
 
         },
@@ -93,33 +99,53 @@ export default {
     },
     watch: {
         notificationsProps: {
+            /**
+             * A function to handle new notifications.
+             *
+             * @param {Object} newNotifications - The new notifications to be handled
+             * @return {void} No return value
+             * @author nttue 17.05.2024
+             */
             handler(newNotifications) {
-                this.datas = newNotifications
-
-                console.log(this.datas);
+                this.datas = newNotifications;
             },
             deep: true
         }
     },
 
     methods: {
-
+        handleChooseCurrentFilter($event, item) {
+            $event.stopPropagation();
+            this.currentFilterType = item.id;
+        },
+        /**
+         * A function to handle viewing notifications.
+         *
+         * @param {Object} item - The notification item to be viewed
+         * @return {Promise} - A promise representing the result of the function execution
+         * @author nttue 17.05.2024
+         */
         async handleViewNotification(item) {
-            if (item.refid && item.type === 0) {
-                console.log(item.refid)
-                var booking = await BookingAPI.getById(item.refid);
-                const objectBooking = {
-                    currentStep: 4,
-                    BookingInfo: booking,
-                    modeView: true
+            try {
+
+                if (item.refid && item.type === 0) {
+
+                    var booking = await BookingAPI.getById(item.refid);
+                    const objectBooking = {
+                        currentStep: 4,
+                        BookingInfo: booking,
+                        modeView: true
+                    }
+                    this.$ms.cache.setCache("booking", objectBooking);
+                    this.$router.push({ path: `/booking/${booking.garage_id}` });
                 }
-                this.$ms.cache.setCache("booking", objectBooking);
-                this.$router.push({ path: `/booking/${booking.garage_id}` });
+                await NotificationAPI.updateUnRead(item.user_notifications_id);
+                this.datas.forEach(notify => {
+                    notify.unread = false;
+                });
+            } catch (error) {
+                console.log(error);
             }
-            await NotificationAPI.updateUnRead(item.user_notifications_id);
-            this.datas.forEach(notify => {
-                notify.unread = false;
-            });
         }
     },
 };

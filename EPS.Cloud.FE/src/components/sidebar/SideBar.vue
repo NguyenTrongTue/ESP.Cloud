@@ -45,10 +45,16 @@ export default {
     MFilter,
   },
   props: {
+    /**
+     * Danh sách các garage
+     */
     locationProps: {
       type: Array,
       default: [],
     },
+    /**
+     * Cờ kiểm tra có để chế độ filter hay không
+     */
     noneFilter: {
       type: Boolean,
       default: false,
@@ -58,6 +64,9 @@ export default {
     return {
       filtering: [],
       listFilter: [
+        /**
+         * Lọc theo loại xe
+         */
         {
           text: "Loại xe",
           id: "typeCars",
@@ -65,6 +74,9 @@ export default {
           choose: "radio",
           modelValue: "",
         },
+        /**
+        * Lọc theo khoảng cách hoặc đánh giá
+        */
         {
           text: "Sắp xếp theo",
           id: "sortBy",
@@ -83,6 +95,9 @@ export default {
           ],
           choose: "radio",
         },
+        /**
+        * Lọc theo thời gian mở cửa
+        */
         {
           id: "openTime",
           text: "Giờ mở cửa",
@@ -111,6 +126,9 @@ export default {
           ],
           choose: "radio",
         },
+        /**
+        * Lọc theo dịch vụ sửa xe
+        */
         {
           id: "services",
           text: "Dịch vụ",
@@ -118,8 +136,11 @@ export default {
           choose: "checkbox",
         },
       ],
+      /**
+        * Danh sách các garage
+        */
       locations: [],
-      currentIndexFilter: -1,
+      currentIndexFilter: -1, // Cờ điểm kiểm tra filter đang được bật để người dùng chọn.
     };
   },
   emits: ["sortBy", "typeCars", "openTime", "showPosition"],
@@ -258,36 +279,43 @@ export default {
      * @return {void} 
      */
     async initialData() {
-      let carsList = this.$ms.cache.getCache("cars");
-      let servicesList = this.$ms.cache.getCache("services");
-      if (carsList && carsList.length >= 0) {
-        this.listFilter[0].data = [...carsList];
-      } else {
-        let cars = await GarageAPI.getCars();
-        let dataConvert = cars.map((item, index) => {
-          return {
-            text: item.make,
-            value: item.make,
-            id: index,
-          };
-        });
-        this.listFilter[0].data = [...dataConvert];
-        this.$ms.cache.setCache("cars", dataConvert);
-      }
+      try {
 
-      if (servicesList && servicesList.length >= 0) {
-        this.listFilter[3].data = [...servicesList];
-      } else {
-        let services = await GarageAPI.getGarageServices();
-        let dataConvert = services.map((item, index) => {
-          return {
-            text: item.service_name,
-            value: false,
-            id: index,
-          };
-        });
-        this.listFilter[3].data = [...dataConvert];
-        this.$ms.cache.setCache("services", dataConvert);
+        let carsList = this.$ms.cache.getCache("cars");
+        let servicesList = this.$ms.cache.getCache("services");
+        if (carsList && carsList.length >= 0) {
+          this.listFilter[0].data = [...carsList];
+        } else {
+          let cars = await GarageAPI.getCars();
+          let dataConvert = cars.map((item, index) => {
+            return {
+              text: item.make,
+              value: item.make,
+              id: index,
+            };
+          });
+          this.listFilter[0].data = [...dataConvert];
+          this.$ms.cache.setCache("cars", dataConvert);
+        }
+
+        if (servicesList && servicesList.length >= 0) {
+          this.listFilter[3].data = [...servicesList];
+        } else {
+          let services = await GarageAPI.getGarageServices();
+          let dataConvert = services.map((item, index) => {
+            return {
+              text: item.service_name,
+              value: false,
+              id: index,
+            };
+          });
+          this.listFilter[3].data = [...dataConvert];
+          this.$ms.cache.setCache("services", dataConvert);
+
+        }
+      }
+      catch (e) {
+        console.log(e);
       }
     },
     /**
@@ -298,34 +326,15 @@ export default {
      * @return {void}
      */
     showFilter(event, index) {
-      if (this.findParent(event.target, "filter-gara")) {
+      // Nếu sự kiện người dùng click chứa filter-gara thì không làm gì cả.
+      if (this.$ms.common.findParent(event.target, "filter-gara", 'filter__item')) {
         return;
-      } else {
+      }
+      // Ngược lại gọi vào hàm toggleFilter để bật tắt chế độ filter.
+      else {
         this.toggleFilter(index);
       }
     },
-
-    /**
-     * Finds the parent element of a given tag that contains a specific class name.
-     *
-     * @param {HTMLElement} currentTag - The current HTML element to start searching from.
-     * @param {string} targetTag - The class name to search for in the parent elements.
-     * @return {boolean} Returns true if the parent element with the specified class name is found, otherwise false.
-     */
-    findParent(currentTag, targetTag) {
-      var tag = currentTag,
-        result = false;
-      while (!result && tag.className != "filter__item") {
-        if (tag.className.includes(targetTag)) {
-          result = true;
-        } else {
-          tag = currentTag.parentElement;
-        }
-      }
-
-      return result;
-    },
-
     /**
      * Emits a "showPosition" event with the provided index and location.
      *
