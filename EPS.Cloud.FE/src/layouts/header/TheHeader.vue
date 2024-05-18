@@ -14,7 +14,7 @@
     </div>
     <div class="header__right">
 
-      <div class="header__right-user flex-center" @click="showPopupNotification = !showPopupNotification">
+      <div class="header__right-user flex-center" @click="showPopupNotification = !showPopupNotification;">
         <div class="icon-notification">
           <micon type="Notify" />
           <span className="badge flex-center" v-if="notificationsUnread.length > 0">{{ notificationsUnread.length
@@ -79,6 +79,7 @@ export default {
   },
 
   methods: {
+
     handleClickOutSidePopup() {
       this.$ms.common.handleClickOutSide(event.target, "header__right-user", () => {
         this.showPopupNotification = false
@@ -100,6 +101,13 @@ export default {
       });
     },
 
+    /**
+     * Asynchronously handles the logout process by committing loading state, deleting user cache,
+     * setting user to null, hiding the avatar popup, and redirecting to the home page.
+     *
+     * @return {Promise<void>} - A promise indicating the completion of the logout process.
+     * @author nttue 17.05.2024
+     */
     async handleLogout() {
       try {
 
@@ -118,6 +126,12 @@ export default {
         console.log(e);
       }
     },
+    /**
+     * Asynchronously handles incoming data to filter and update notifications.
+     *
+     * @param {any} data - The data to be processed for notifications.
+     * @author nttue 17.05.2024
+     */
     handleMessage(data) {
       let filterData = JSON.parse(data).filter(item => item.user_id === '00000000-0000-0000-0000-000000000000'
         || item.user_id === this.user.user_id
@@ -145,22 +159,27 @@ export default {
    * Đăng ký sự kiện resize cho widow
    */
   mounted() {
-    const user = this.$ms.cache.getCache("user");
-    this.fetchNotifications();
-    if (user) {
-      this.user = user;
+    try {
+
+      const user = this.$ms.cache.getCache("user");
+      this.fetchNotifications();
+      if (user) {
+        this.user = user;
+      }
+
+      SignalRService.start()
+        .then(() => {
+          console.log("Kết nối thành công tới thông báo hệ thống");
+        })
+        .catch(error => {
+          console.error("Kết nối thất bại:", error);
+        });
+
+
+      SignalRService.on("ReceiveNotification", this.handleMessage);
+    } catch (e) {
+      console.log(e);
     }
-
-    SignalRService.start()
-      .then(() => {
-        console.log("Kết nối thành công tới thông báo hệ thống");
-      })
-      .catch(error => {
-        console.error("Kết nối thất bại:", error);
-      });
-
-
-    SignalRService.on("ReceiveNotification", this.handleMessage);
   },
   // beforeUnmount() {
   //   SignalRService.disconnect();

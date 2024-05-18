@@ -143,27 +143,54 @@ function formatAmount(amount) {
  * @author nttue 30.03.2024
  */
 function handleClickOutSide(currentTag, parentTag, callback) {
-      var tag = currentTag,
-        result = false;
-      while (!result && tag && tag !== document) {
-        if (tag.className && tag.className?.includes(parentTag, callback)) {
+  try {
+    var tag = currentTag,
+    result = false;
+    while (!result && tag && tag !== document) {
+      if (tag.className && typeof tag.className === 'string' && tag.className?.includes(parentTag)) {
           result = true;
         } else {
           tag = tag.parentElement;
         }
       }
-  if (result) {
-    return;
-  } else {
-    callback();  
+      if (result) {
+        return;
+      } else {
+        callback();  
       }
-  
+  } catch (e) {
+    console.log(e);
+  } 
 }
+
+/**
+ * Finds the parent element of a given tag that contains a specific class name.
+ *
+ * @param {HTMLElement} currentTag - The current HTML element to start searching from.
+ * @param {string} targetTag - The class name to search for in the parent elements.
+ * @return {boolean} Returns true if the parent element with the specified class name is found, otherwise false.
+ * @author nttue 30.03.2024
+ */
+function findParent(currentTag, targetTag, parentTagName) {
+    var tag = currentTag,
+    result = false;
+    while (!result && !tag.className.includes(parentTagName) && tag !== document) {
+    if (tag.className.includes(targetTag)) {
+      result = true;
+    } else {
+      tag = currentTag.parentElement;
+    }
+    }
+    return result;
+}
+
+//tag.className.includes(parentTagName)
 export const common = {
   upperCaseName,
   convertDate,
   buildOpenTimeText,
   formatAmount,
   handleClickOutSide,
-  formatTime
+  formatTime,
+  findParent
 };
