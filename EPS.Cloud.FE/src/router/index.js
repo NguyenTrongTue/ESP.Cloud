@@ -54,14 +54,14 @@ const routes = [
     name: "answer",
     path: "/answer/:id",
     component: Answer,
-    meta: { requiresAuth: false, title: "Thảo luận" },
+    meta: { requiresAuth: true, title: "Thảo luận" },
    
   },
   {
     path: "/questions",
     component: Questions,
     name: "Questions",
-    meta: { requiresAuth: false, title: "Thảo luận" },
+    meta: { requiresAuth: true, title: "Thảo luận" },
     // children: [
     //   { path: ":make", name: "Make", component: Questions },
     //   { path: ":make/:model", name: "Model", component: Questions },
@@ -75,7 +75,7 @@ const routes = [
     path: "/car_review",
     name: "CarReview",
     component: CarReview,
-    meta: { requiresAuth: false, title: "Đáng giá" },
+    meta: { requiresAuth: true, title: "Đáng giá" },
     // children: [
     //   { path: ":make", name: "CarMake", component: CarReview },
     //   { path: ":make/:model", name: "CarModel", component: CarReview },
