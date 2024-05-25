@@ -1,5 +1,6 @@
 import { format, register } from 'timeago.js';
 
+class CommonFunc {
 /**
  * Returns an array of strings based on the given number and index.
  *
@@ -8,7 +9,7 @@ import { format, register } from 'timeago.js';
  * @return {array} An array of strings based on the given number and index.
  * @author nttue 30.03.2024
  */
-function localeFunc(number, index) {
+ localeFunc(number, index) {
   return [
     ['vừa xong', 'một lúc'],
     ['%s giây trước', 'trong %s giây'],
@@ -36,8 +37,8 @@ function localeFunc(number, index) {
  * @return {type} the formatted time in 'vi-custom' locale
  * @author nttue 30.03.2024
  */
-function formatTime(time) {
-  register('vi-custom', localeFunc);
+ formatTime(time) {
+  register('vi-custom', this.localeFunc);
   return   format(time, 'vi-custom');
 }
 
@@ -47,13 +48,13 @@ function formatTime(time) {
  * @returns {string} String with first letter of each word capitalized
  * @author nttue 30.03.2024
  */
-function upperCaseName(value = "") {
+ upperCaseName(value = "") {
   return value
     .split(" ")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
-function convertDate(day) {
+ convertDate(day) {
   let result = "";
   switch (day) {
     case 1:
@@ -89,7 +90,7 @@ function convertDate(day) {
  * @param {string} timeClose - The closing time in HH:mm format
  * @return {string} The text representation of the open time
  */
-function buildOpenTimeText(timeOpen, timeClose) {
+ buildOpenTimeText(timeOpen, timeClose) {
   if (timeOpen && timeClose) {
     const current = new Date();
     const open = new Date(
@@ -123,7 +124,7 @@ function buildOpenTimeText(timeOpen, timeClose) {
   return "";
 }
 
-function formatAmount(amount) {
+ formatAmount(amount) {
   if (amount) {
     let formattedAmount = amount
       .toString()
@@ -142,7 +143,7 @@ function formatAmount(amount) {
  * @return {boolean} Returns true if the target tag is found in the parent elements, otherwise false.
  * @author nttue 30.03.2024
  */
-function handleClickOutSide(currentTag, parentTag, callback) {
+ handleClickOutSide(currentTag, parentTag, callback) {
   try {
     var tag = currentTag,
     result = false;
@@ -171,7 +172,7 @@ function handleClickOutSide(currentTag, parentTag, callback) {
  * @return {boolean} Returns true if the parent element with the specified class name is found, otherwise false.
  * @author nttue 30.03.2024
  */
-function findParent(currentTag, targetTag, parentTagName) {
+ findParent(currentTag, targetTag, parentTagName) {
     var tag = currentTag,
     result = false;
     while (!result && !tag.className.includes(parentTagName) && tag !== document) {
@@ -183,14 +184,5 @@ function findParent(currentTag, targetTag, parentTagName) {
     }
     return result;
 }
-
-//tag.className.includes(parentTagName)
-export const common = {
-  upperCaseName,
-  convertDate,
-  buildOpenTimeText,
-  formatAmount,
-  handleClickOutSide,
-  formatTime,
-  findParent
-};
+}
+export default new CommonFunc();

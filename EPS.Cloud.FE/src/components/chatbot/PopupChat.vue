@@ -86,8 +86,19 @@ export default {
 
     },
     methods: {
+        getChatsFromCache() {
+            try {
+                const chats = this.$ms.cache.getCache('chat');
+                if (chats && chats.length > 0) {
+                    this.listChats = [...chats];
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        },
         show() {
             this.showPopup = true;
+            this.getChatsFromCache();
             this.scrollLastChat();
 
         },
@@ -108,22 +119,27 @@ export default {
         },
 
         async handleSubmit() {
-            this.listChats.push({
-                message: this.question,
-                is_sender: true
-            });
-            let question = this.question;
-            this.question = "";
-            await this.callDataGetResult(question);
+            try {
+                this.listChats.push({
+                    message: this.question,
+                    is_sender: true
+                });
+                let question = this.question;
+                this.question = "";
+                this.scrollLastChat();
+                await this.callDataGetResult(question);
+                this.$ms.cache.setCache('chat', this.listChats);
 
-
+            } catch (error) {
+                console.log(error);
+            }
         },
         async callDataGetResult(question) {
             try {
                 // http://150.95.114.153:5022
                 this.isGettingData = true;
-                let questionText = question.includes('gần nhất') ? question + " kinh độ và vĩ độ hiện tại của tôi là 21.037776 và 105.782996" : question;
-                var response = await axios.post("http://150.95.114.153:5022/get-message", { question: questionText });
+                let questionText = question.includes('gần') || question.includes('xa') || question.includes('khoảng cách') ? question + ". Vĩ độ hiện tại của tôi là 21.037776 và kinh độ hiện tại của tôi 105.782996" : question;
+                var response = await axios.post("http://127.0.0.1:5000/get-message", { question: questionText + ' .Trả lời câu hỏi bằng Tiếng Việt' });
                 if (response.data) {
 
                     const { message } = response.data;
@@ -131,6 +147,7 @@ export default {
                         message: message,
                         is_sender: false
                     });
+                    this.$ms.cache.setCache('chat', this.listChats);
                     if (question.toLowerCase().includes("đường đi")) {
 
                         this.getLatitudeAndLongitude(message);
