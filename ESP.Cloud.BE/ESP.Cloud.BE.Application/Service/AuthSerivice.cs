@@ -83,7 +83,7 @@ namespace ESP.Cloud.BE.Application.Service
                 var userExists = await _userDL.GetUserByEmailAsync(userDto.email);
                 if (userExists != null)
                 {
-                    throw new NotFoundException(Resource.UserExists);
+                    throw new ConflictException( Resource.UserExists);
                 }
                 AuthHelper.CreatePassword(userDto.password, out byte[] passwordHash, out byte[] passwordSalt);
                 var user = _mapper.Map<UserEntity>(userDto);

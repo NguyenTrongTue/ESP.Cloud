@@ -105,6 +105,7 @@ export default {
                 "Email hoặc mật khẩu người dùng không chính xác. Vui lòng kiểm tra lại!",
               type: "error",
             });
+            this.$refs['Email'].focus();
           }
           this.$store.commit("hideLoading")
         }

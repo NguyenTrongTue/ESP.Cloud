@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { cache } from "@/utils/cache";
+import Cache from "@/utils/cache";
+import store from "@/store";
 import Home from "@/views/home/Home.vue";
 import Estimate from "@/views/estimate/Estimate.vue";
 import Booking from "@/views/booking/Booking.vue";
@@ -117,7 +118,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let value = cache.getCache("user");
+  let value = Cache.getCache("user");
 
   function changeTitle(to) {
     if (to.meta.title) {
@@ -134,7 +135,14 @@ router.beforeEach((to, from, next) => {
     if (auth) {
       changeTitle(to);
     } else {
+
       next({ name: "login" });
+
+      store.commit("showToast", {
+        label:
+          "Vui lòng đăng nhập để sử dụng tính năng!",
+        type: "error",
+      });
     }
   } else {
     changeTitle(to);

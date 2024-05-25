@@ -143,15 +143,25 @@ export default {
       try {
         if (!this.handleValidate()) {
           this.$store.commit("showLoading");
-          await AuthAPI.register(this.user);
-          this.$store.commit("showToast", {
-            label: "Tạo tài khoản thành công",
-            type: 'success'
-          });
+          var result = await AuthAPI.register(this.user);
+          if (result.errorCode === this.$Enums.ErrorEnums.Conflict) {
+            this.$store.commit("showToast", {
+              label: "Tài khoản người đã tồn tại. Vui lòng kiểm tra lại!",
+              type: 'error'
+            });
+            this.$refs['Email'].focus();
+            // this.$nextTick(() => {
+            // })
+          } else {
+            this.$store.commit("showToast", {
+              label: "Tạo tài khoản thành công",
+              type: 'success'
+            });
+            this.$router.push({
+              path: "/login",
+            });
+          }
           this.$store.commit("hideLoading")
-          this.$router.push({
-            path: "/login",
-          });
         }
       } catch (e) {
         console.log(e);

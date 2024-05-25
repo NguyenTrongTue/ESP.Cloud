@@ -10,8 +10,8 @@
     <div class="input-wrapper">
       <component :is="typeComponent" class="input" ref="minput" :type="typeInput ? typeInput : 'text'" :rules="rules"
         :name="name" :error="error" :value="dataValue" :style="{ 'text-align': textAlign }"
-        :placeholder="placeholderInput" :tabindex="tabIndex" @input="onInput" @focus="$event.target.select()"
-        :maxlength="maxLength > 0 && maxLength" @blur="onBlur(name)" spellcheck="false" />
+        :placeholder="placeholderInput" :tabindex="tabIndex" @input="onInput" :maxlength="maxLength > 0 && maxLength"
+        @blur="onBlur(name)" spellcheck="false" />
       <component :is="showIcon2 ? icon2 : icon1" class="input__icon" @click="clickIcon"></component>
     </div>
     <div class="flex-between">
@@ -183,8 +183,7 @@ export default {
      */
     focus() {
       this.$nextTick(() => {
-        this.$refs.input.select();
-        this.$refs.input.focus();
+        this.$refs.minput.focus();
       });
     },
     /**

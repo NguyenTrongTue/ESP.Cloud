@@ -8,6 +8,7 @@ import MyEmitter from "tiny-emitter/instance";
 import MResources from "@/helper/resources";
 import store from "@/store";
 import { moudle } from "@/utils/index";
+import enums from "@/helper/enum";
 import { Tippy } from "vue-tippy";
 import "tippy.js/dist/tippy.css";
 import VueSocialSharing from 'vue-social-sharing';
@@ -34,13 +35,15 @@ import Pagination from "./components/pagination/Pagination.vue";
 import BackToTop from "@/components/back-to-top/BackToTop.vue";
 
 
+
 const app = createApp(App);
 
 // config
 app.config.globalProperties.$emitter = MyEmitter;
 app.config.globalProperties.$route = router;
 app.config.globalProperties.$ms = moudle;
-app.config.globalProperties.$MResources = MResources;
+app.config.globalProperties.$MResources = MResources; 
+app.config.globalProperties.$Enums = enums;
 // conponents
 app.component("minput", MInputPri);
 app.component("mbutton", MButton);

@@ -127,8 +127,6 @@ export default {
                     this.percentThreeStars = (this.objectOverviewMaster?.three_stars / this.objectOverviewMaster?.total_rating) * 100;
                     this.percentTwoStars = (this.objectOverviewMaster?.two_stars / this.objectOverviewMaster?.total_rating) * 100;
                     this.percentOneStars = (this.objectOverviewMaster?.one_stars / this.objectOverviewMaster?.total_rating) * 100;
-
-                    console.log(this.percentFiveStars, this.percentFourStars, this.percentThreeStars, this.percentTwoStars, this.percentOneStars);
                 }
             } catch (e) {
                 console.log(e);
