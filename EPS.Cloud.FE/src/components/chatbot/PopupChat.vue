@@ -139,7 +139,7 @@ export default {
                 // http://150.95.114.153:5022
                 this.isGettingData = true;
                 let questionText = question.includes('gần') || question.includes('xa') || question.includes('khoảng cách') ? question + ". Vĩ độ hiện tại của tôi là 21.037776 và kinh độ hiện tại của tôi 105.782996" : question;
-                var response = await axios.post("http://127.0.0.1:5000/get-message", { question: questionText + ' .Trả lời câu hỏi bằng Tiếng Việt' });
+                var response = await axios.post("http://150.95.114.153:5022/get-message", { question: questionText + ' .Trả lời câu hỏi bằng Tiếng Việt' });
                 if (response.data) {
 
                     const { message } = response.data;
